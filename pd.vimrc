@@ -63,22 +63,55 @@ set autoindent
 " 高亮第80列
 set colorcolumn=80
 
-" 自动折行
-set linebreak
+" 自动折行(这个是硬折行)
+"set linebreak
+
+
+" 自动换行
+set wrap
 
 " 让退格键能正常退格
 set backspace=indent,eol,start
 " Vim默认左右方向键不会切换到下一行，调一下，让<>,h,l,[,]都可以换行
 set whichwrap+=<,>,h,l,[,]
 
-"============================================= KEYS MAPPING =========================================
+"============================================= KEYS MAPPING ==================
 " 用kj来替换ESC
 inoremap kj <Esc>
 
 " :W 表示sudo权限强制保存
 command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 
-"============================================= plugins =========================================
+" tab替代
+set expandtab "tab to spaces
+set smarttab  "删除会自动删除等同于tab数量的空格
+set shiftround ">>和<<会处理没对齐的情况
+" indent
+set autoindent smartindent shiftround
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4                " insert mode tab and backspace use 4 spaces
+
+" 简化在不同窗口中移动的操作
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" 以下来自
+" https://coderwall.com/p/if9mda/automatically-set-paste-mode-in-vim-when-pasting-in-insert-mode
+" 简化复制粘贴
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+"============================================= plugins ========================
 
 " 安装plug.vim插件管理器，依赖curl
 " 这一段必须在 plug#begin()之前
@@ -91,15 +124,23 @@ endif
 " 在这一段需要的插件
 
 " 颜色主题
-if empty(glob('~/.vim/colors/qdark.vim'))
-  silent !curl -fLo ~/.vim/colors/qdark.vim --create-dirs
-  \ https://raw.githubusercontent.com/pavel-belikov/vim-qdark/master/colors/qdark.vim
-endif
 
 " 插件
 call plug#begin('~/.vim/plugged')
+Plug 'chriskempson/base16-vim'
 call plug#end()
 
 
 
-colorscheme qdark
+" ===============================插件配置=====================================
+" 主题设置
+" 使用256位颜色
+set termguicolors
+set t_Co=256
+let base16colorspace=256
+colorscheme base16-oceanicnext
+
+" ===============================语言配置=====================================
+
+au bufnewfile *.sh 0r ~/.vim/template/shell.tpl
+au bufnewfile *.py 0r ~/.vim/template/python.tpl

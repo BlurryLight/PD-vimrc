@@ -104,6 +104,10 @@ autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 " 部分快捷键
 " 用kj来替换ESC
 inoremap kj <Esc>
+" F2复制粘贴模式
+set pastetoggle=<F2> 
+" <F3>关闭开启数字行号
+nnoremap <F2> :set nu! nu?<CR>
 " :W 表示sudo权限强制保存
 command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 " <leader>q退出
@@ -113,6 +117,21 @@ nnoremap <leader>w :w<CR>
 " Upper U to redo
 nnoremap U <C-r>
 
+" search improvement
+" 默认按/和<space>进入正则搜索
+map <space> /
+nnoremap / /\v
+vnoremap / /\v
+" <leader>/关闭搜索高亮
+noremap <silent><leader>/ :nohls<CR>
+
+" 一个我自己不太习惯的特性
+" 省略一个shift
+ nnoremap ; :
+" 复制选中到系统剪贴板
+" 需要+clipboard特性支持
+" debian的包里目测只有vim-gtk带这个特性
+vnoremap <leader>y "+y
 "select all
 map <Leader>sa ggVG"
 " Shift+H goto head of the line, Shift+L goto end of the line

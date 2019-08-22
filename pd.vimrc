@@ -295,6 +295,13 @@ let g:glsl_file_extensions = '*.glsl,*.vsh,*.fsh,*.vert,*.tesc,*.tese,*.geom,*.f
 
 
 " Youcompleteme
+" 让按键更正常
+" 当有补全列表时，回车等于补全
+" 当没有补全列表时，回车等于插入新行
+inoremap <expr> <cr> ((pumvisible())?("\<C-y>"):("\<cr>"))
+" 关闭每次都要load conf的提示
+let g:ycm_confirm_extra_conf = 0
+"
 " 语义补全
 let g:ycm_semantic_triggers =  {
             \ 'c,cpp': ['re!\w{4}'],

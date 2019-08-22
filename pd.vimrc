@@ -86,16 +86,17 @@ set whichwrap+=<,>,h,l,[,]
 " 以下来自
 " https://coderwall.com/p/if9mda/automatically-set-paste-mode-in-vim-when-pasting-in-insert-mode
 " 简化复制粘贴
-let &t_SI .= "\<Esc>[?2004h"
-let &t_EI .= "\<Esc>[?2004l"
-
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-
-function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
-endfunction
+" 不需要这个了
+"let &t_SI .= "\<Esc>[?2004h"
+"let &t_EI .= "\<Esc>[?2004l"
+"
+"inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+"
+"function! XTermPasteBegin()
+"  set pastetoggle=<Esc>[201~
+"  set paste
+"  return ""
+"endfunction
 
 " 自动去除部分文件的行尾空格
 autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
@@ -105,7 +106,7 @@ autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 " 用kj来替换ESC
 inoremap kj <Esc>
 " F2复制粘贴模式
-set pastetoggle=<F2> 
+set pastetoggle=<F3>
 " <F3>关闭开启数字行号
 nnoremap <F2> :set nu! nu?<CR>
 " :W 表示sudo权限强制保存
@@ -118,10 +119,12 @@ nnoremap <leader>w :w<CR>
 nnoremap U <C-r>
 
 " search improvement
-" 默认按/和<space>进入正则搜索
-map <space> /
-nnoremap / /\v
-vnoremap / /\v
+" 默认按/和<space>进入very magic mode
+" 我很喜欢这个功能，然而这个功能在fakeVIM上不能用
+" 所以只能禁用了
+"map <space> /
+"nnoremap / /\v
+"vnoremap / /\v
 " <leader>/关闭搜索高亮
 noremap <silent><leader>/ :nohls<CR>
 
@@ -216,6 +219,11 @@ Plug 'Valloric/YouCompleteMe',{'do':'./install.py --clang-completer', 'for': ['c
 " ycm generator
 Plug 'rdnetto/YCM-Generator',{'branch': 'stable'}
 
+" NERD commenter
+" 快速注释
+Plug 'scrooloose/nerdcommenter'
+
+"
 call plug#end()
 
 
@@ -298,7 +306,40 @@ let g:ycm_show_diagnostics_ui = 0
 "let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_key_list_select_completion = ['<c-j>', '<c-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>', '<c-k>']
-"===============================语言配置=====================================
+
+
+" nerd commenter注释
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Add your own custom formats or override the defaults
+"let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not
+let g:NERDToggleCheckAllLines = 1
+
+" 快速注释，为了和多数IDE保持一致，可以映射到<C-/>上
+" 不，我错了，<C-/>在vim里不能用
+" from https://github.com/scrooloose/nerdcommenter/issues/267#issuecomment-248839961
+" 可以用<leader>cc来切换和打开注释
+autocmd! VimEnter * call s:fcy_nerdcommenter_map()
+function! s:fcy_nerdcommenter_map()
+    nmap <leader>cc <plug>NERDCommenterToggle
+    vmap <leader>cc <plug>NERDCommenterToggle gv
+endfunction
+""===============================语言配置=====================================
 
 au bufnewfile *.sh 0r ~/.vim/template/shell.tpl
 au bufnewfile *.py 0r ~/.vim/template/python.tpl

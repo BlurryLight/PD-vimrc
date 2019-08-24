@@ -107,6 +107,8 @@ autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 inoremap kj <Esc>
 " F2复制粘贴模式
 set pastetoggle=<F3>
+" shift + insert 粘贴系统剪贴板的内容
+inoremap <S-Insert> <ESC>"+p`]a 
 " <F3>关闭开启数字行号
 nnoremap <F2> :set nu! nu?<CR>
 " :W 表示sudo权限强制保存
@@ -164,6 +166,10 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+
+" 移动后再次重新选中
+vnoremap < <gv
+vnoremap > >gv"
 
 
 "============================================= plugins ========================

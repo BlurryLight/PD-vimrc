@@ -198,7 +198,7 @@ Plug 'scrooloose/nerdtree'
 " 需要GNU global配合
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 " ALE 静态检查
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 
 " C++ 增强高亮
 Plug 'octol/vim-cpp-enhanced-highlight'
@@ -274,19 +274,19 @@ noremap <leader>fp :<C-U><C-R>=printf("LeaderfFunction!")<CR><CR>
 
 " ALE配置
 " 把错误信息输出到airline上
-let g:ale_linters_explicit = 1
-let g:ale_completion_delay = 500
-let g:ale_echo_delay = 20
-let g:ale_lint_delay = 500
-let g:ale_echo_msg_format = '[%linter%] %code: %%s'
-let g:ale_lint_on_text_changed = 'normal'
-let g:ale_lint_on_insert_leave = 1
-let g:airline#extensions#ale#enabled = 1
-
-let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
-let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
-let g:ale_c_cppcheck_options = ''
-let g:ale_cpp_cppcheck_options = ''
+" let g:ale_linters_explicit = 1
+" let g:ale_completion_delay = 500
+" let g:ale_echo_delay = 20
+" let g:ale_lint_delay = 500
+" let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+" let g:ale_lint_on_text_changed = 'normal'
+" let g:ale_lint_on_insert_leave = 1
+" let g:airline#extensions#ale#enabled = 1
+"
+" let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
+" let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
+" let g:ale_c_cppcheck_options = ''
+" let g:ale_cpp_cppcheck_options = ''
 
 " neoformat设置
 " format on save
@@ -312,8 +312,8 @@ let g:ycm_confirm_extra_conf = 0
 let g:ycm_semantic_triggers =  {
             \ 'c,cpp': ['re!\w{4}'],
             \}
-" 取消ycm的静态检查，有ALE了
-let g:ycm_show_diagnostics_ui = 0
+" 静态检查
+let g:ycm_show_diagnostics_ui = 1
 "let g:ycm_min_num_identifier_candidate_chars = 2
 " 用ycm generator感觉会更好
 "let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'

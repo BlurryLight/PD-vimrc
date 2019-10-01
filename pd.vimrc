@@ -229,6 +229,16 @@ Plug 'rdnetto/YCM-Generator',{'branch': 'stable'}
 " 快速注释
 Plug 'scrooloose/nerdcommenter'
 
+" markdown
+" markdown suit
+" 不好用
+" Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+" markdown preview
+" need pip install --user smdv
+" 不好用+1 渲染速度很快，但是mathjax是坏的，考虑了一下我的博客采用Katex
+" 另寻其他插件
+" Plug 'suan/vim-instant-markdown', {'for': 'markdown','branch':'dev'}
+
 "
 call plug#end()
 
@@ -352,6 +362,7 @@ function! s:fcy_nerdcommenter_map()
     nmap <leader>cc <plug>NERDCommenterToggle
     vmap <leader>cc <plug>NERDCommenterToggle gv
 endfunction
+
 ""===============================语言配置=====================================
 
 au bufnewfile *.sh 0r ~/.vim/template/shell.tpl

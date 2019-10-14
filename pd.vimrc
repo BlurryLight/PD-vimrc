@@ -240,9 +240,11 @@ Plug 'scrooloose/nerdcommenter'
 " Plug 'suan/vim-instant-markdown', {'for': 'markdown','branch':'dev'}
 "
 " Another one
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } ,'for': 'markdown'}
 
-"
+" Clang C++ color
+Plug 'jeaye/color_coded'
+
 call plug#end()
 
 

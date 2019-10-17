@@ -1,0 +1,180 @@
+"         DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+"                     Version 2, December 2004
+
+"  Copyright (C) 2004 Sam Hocevar <sam@hocevar.net>
+
+"  Everyone is permitted to copy and distribute verbatim or modified
+"  copies of this license document, and changing it is allowed as long
+"  as the name is changed.
+
+"             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+"    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+"   0. You just DO WHAT THE FUCK YOU WANT TO.
+
+
+"============================================= basic settings =========================================
+"禁止swap file
+set noswapfile
+" I don't care the f**king vi
+set nocompatible
+
+" 强化正则表达式,没有magic，正则表达式近乎无法使用
+set magic
+
+" 显示
+set number      "行号
+syntax on
+set ruler      "行号和列号
+
+" 加大移动距离
+set scrolloff=10
+
+" 增强标题显示
+set title
+
+" 离开窗口时自动保存，回到窗口时自动更新
+au FocusGained,BufEnter * :silent! !
+au FocusLost,WinLeave * :silent! w
+
+" 简写信息，并关闭乌干达可怜儿童
+set shortmess+=atI
+
+"打开自动探测文件类型和缩进
+filetype on
+filetype plugin on
+filetype indent on
+
+"设置leader
+let mapleader = ','
+let g:mapleader = ','
+
+"设置文件编码
+" 内部编码
+set encoding=utf-8
+" 读取文件时候顺序猜测编码
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+" 用于屏幕显示的编码
+set termencoding=utf-8
+
+
+" 自动缩进
+set autoindent
+
+" 高亮第80列
+set colorcolumn=80
+
+" 自动折行(这个是硬折行)
+"set linebreak
+
+" 高亮选中
+set hlsearch
+
+" 自动换行
+set wrap
+
+" 设置默认进行大小写不敏感查找
+set ignorecase
+" " 如果有一个大写字母，则切换到大小写敏感查找
+set smartcase
+"
+
+" 让退格键能正常退格
+set backspace=indent,eol,start
+" Vim默认左右方向键不会切换到下一行，调一下，让<>,h,l,[,]都可以换行
+set whichwrap+=<,>,h,l,[,]
+
+" 以下来自
+" https://coderwall.com/p/if9mda/automatically-set-paste-mode-in-vim-when-pasting-in-insert-mode
+" 简化复制粘贴
+" 不需要这个了
+"let &t_SI .= "\<Esc>[?2004h"
+"let &t_EI .= "\<Esc>[?2004l"
+"
+"inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+"
+"function! XTermPasteBegin()
+"  set pastetoggle=<Esc>[201~
+"  set paste
+"  return ""
+"endfunction
+
+" 自动去除部分文件的行尾空格
+autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
+
+"============================================= KEYS MAPPING ==================
+" 部分快捷键
+" 用kj来替换ESC
+inoremap kj <Esc>
+" F2复制粘贴模式
+set pastetoggle=<F3>
+" shift + insert 粘贴系统剪贴板的内容
+inoremap <S-Insert> <ESC>"+p`]a 
+" <F3>关闭开启数字行号
+nnoremap <F2> :set nu! nu?<CR>
+" :W 表示sudo权限强制保存
+command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
+" <leader>q退出
+nnoremap <leader>q :q<CR>
+" <leader>w保存
+nnoremap <leader>w :w<CR>
+" Upper U to redo
+nnoremap U <C-r>
+
+" search improvement
+" 默认按/和<space>进入very magic mode
+" 我很喜欢这个功能，然而这个功能在fakeVIM上不能用
+" 所以只能禁用了
+"map <space> /
+"nnoremap / /\v
+"vnoremap / /\v
+" <leader>/关闭搜索高亮
+noremap <silent><leader>/ :nohls<CR>
+
+" 一个我自己不太习惯的特性
+" 省略一个shift
+ nnoremap ; :
+" 复制选中到系统剪贴板
+" 需要+clipboard特性支持
+" debian的包里目测只有vim-gtk带这个特性
+vnoremap <leader>y "+y
+"select all
+map <Leader>sa ggVG"
+" Shift+H goto head of the line, Shift+L goto end of the line
+nnoremap H ^
+nnoremap L $
+
+" command mode, ctrl-a to head， ctrl-e to tail
+cnoremap <C-j> <t_kd>
+cnoremap <C-k> <t_ku>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+
+
+
+" tab替代
+set expandtab "tab to spaces
+set smarttab  "删除会自动删除等同于tab数量的空格
+set shiftround ">>和<<会处理没对齐的情况
+" indent
+set autoindent smartindent shiftround
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4                " insert mode tab and backspace use 4 spaces
+
+" 简化在不同窗口中移动的操作
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" 移动后再次重新选中
+vnoremap < <gv
+vnoremap > >gv"
+
+
+
+""===============================语言配置=====================================
+
+au bufnewfile *.sh 0r ~/.vim/template/shell.tpl
+au bufnewfile *.py 0r ~/.vim/template/python.tpl

@@ -182,6 +182,8 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" tagbar
+nmap <F4> :TagbarToggle<CR>
 " 在这一段需要的插件
 
 " 颜色主题
@@ -244,6 +246,11 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } ,'for': 
 
 " Clang C++ color
 Plug 'jeaye/color_coded'
+
+" tagbar
+" leaderF的tag显示更全，但是这个的效果更好
+Plug 'majutsushi/tagbar'
+
 
 call plug#end()
 
@@ -334,7 +341,9 @@ let g:ycm_show_diagnostics_ui = 1
 "let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_key_list_select_completion = ['<c-j>', '<c-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>', '<c-k>']
-
+" <leader>gd 跳转定义和声明
+nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_goto_buffer_command = 'vertical-split'
 
 " nerd commenter注释
 " Add spaces after comment delimiters by default
@@ -449,7 +458,6 @@ let g:mkdp_port = ''
 " preview page title
 " ${name} will be replace with the file name
 let g:mkdp_page_title = '「${name}」'
-
 
 ""===============================语言配置=====================================
 

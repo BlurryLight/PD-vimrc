@@ -259,7 +259,11 @@ call plug#end()
 " ===============================插件配置=====================================
 " 主题设置
 " 使用256位颜色
-set termguicolors
+if exists('+termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+      set termguicolors
+endif
 set t_Co=256
 let base16colorspace=256
 colorscheme base16-oceanicnext

@@ -173,6 +173,145 @@ vnoremap < <gv
 vnoremap > >gv"
 
 
+"============================================= plugins ========================
+
+" 安装plug.vim插件管理器，依赖curl
+" 这一段必须在 plug#begin()之前
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" tagbar
+nmap <F4> :TagbarToggle<CR>
+" 在这一段需要的插件
+
+" 颜色主题
+
+" 插件
+call plug#begin('~/.vim/plugged')
+" auto complete
+Plug 'lifepillar/vim-mucomplete'
+" base16主题
+Plug 'chriskempson/base16-vim'
+" Airline
+Plug 'vim-airline/vim-airline'
+" 文件树
+Plug 'scrooloose/nerdtree'
+" 模糊查找
+" 需要GNU global配合
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+" ALE 静态检查
+" Plug 'dense-analysis/ale'
+
+" C++ 增强高亮
+Plug 'octol/vim-cpp-enhanced-highlight'
+" Cmake support
+Plug 'ilyachur/cmake4vim'
+" taglist
+" 不需要 leaderF自带这个功能
+" Plug 'liuchengxu/vista.vim'
+
+" auto pair
+Plug 'jiangmiao/auto-pairs'
+
+
+" NERD commenter
+" 快速注释
+Plug 'scrooloose/nerdcommenter'
+
+" markdown
+" markdown suit
+" 不好用
+" Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+" markdown preview
+" need pip install --user smdv
+" 不好用+1 渲染速度很快，但是mathjax是坏的，考虑了一下我的博客采用Katex
+" 另寻其他插件
+" Plug 'suan/vim-instant-markdown', {'for': 'markdown','branch':'dev'}
+"
+" tagbar
+" leaderF的tag显示更全，但是这个的效果更好
+Plug 'majutsushi/tagbar'
+
+
+call plug#end()
+
+" ===============================插件配置=====================================
+" 主题设置
+" 使用256位颜色
+set termguicolors
+set t_Co=256
+let base16colorspace=256
+colorscheme base16-oceanicnext
+"colorscheme qdark
+
+" mucomplete
+set completeopt+=menuone
+ set completeopt+=noselect
+ let g:mucomplete#enable_auto_at_startup = 1
+
+" nerdtree 配置
+" 下面两行：当打开一个文件夹时，自动打开nerdtree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+
+" <leader><n>打开nerdtree
+nnoremap <leader>n :NERDTreeToggle<CR>
+
+" 关闭vim当只剩下nerdtree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" leadF配置
+" 自动更新索引
+let g:Lf_GtagsAutoGenerate = 1
+" <leader>fr搜索光标所在词语并允许跳转
+noremap <leader>fg :<C-U><C-R>=printf("Leaderf! gtags -g %s --auto-jump", expand("<cword>"))<CR><CR>
+
+" <leader>fr搜索光标所在词语的引用并允许跳转
+noremap <leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
+
+" <leader>fr搜索光标所在词语的定义并允许跳转
+noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
+" <leader>fb 显示本文件tag
+noremap <leader>fb :<C-U><C-R>=printf("LeaderfBufTag")<CR><CR>
+
+" <leader>fp 显示本文件函数列表
+noremap <leader>fp :<C-U><C-R>=printf("LeaderfFunction!")<CR><CR>
+
+" nerd commenter注释
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Add your own custom formats or override the defaults
+"let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not
+let g:NERDToggleCheckAllLines = 1
+
+" 快速注释，为了和多数IDE保持一致，可以映射到<C-/>上
+" 不，我错了，<C-/>在vim里不能用
+" from https://github.com/scrooloose/nerdcommenter/issues/267#issuecomment-248839961
+" 可以用<leader>cc来切换和打开注释
+
+autocmd! VimEnter * call s:fcy_nerdcommenter_map()
+function! s:fcy_nerdcommenter_map()
+    nmap <leader>cc <plug>NERDCommenterToggle
+    vmap <leader>cc <plug>NERDCommenterToggle gv
+endfunction
 
 ""===============================语言配置=====================================
 

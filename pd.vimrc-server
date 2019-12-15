@@ -110,7 +110,7 @@ inoremap kj <Esc>
 set pastetoggle=<F3>
 " shift + insert 粘贴系统剪贴板的内容
 inoremap <S-Insert> <ESC>"+p`]a 
-" <F3>关闭开启数字行号
+" <F2>关闭开启数字行号
 nnoremap <F2> :set nu! nu?<CR>
 " :W 表示sudo权限强制保存
 command W :execute ':silent w !sudo tee % > /dev/null' | :edit!

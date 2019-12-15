@@ -144,8 +144,8 @@ nnoremap H ^
 nnoremap L $
 
 " command mode, ctrl-a to head， ctrl-e to tail
-cnoremap <C-j> <t_kd>
-cnoremap <C-k> <t_ku>
+"cnoremap <C-j> <t_kd>
+"cnoremap <C-k> <t_ku>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
@@ -467,3 +467,18 @@ let g:mkdp_page_title = '「${name}」'
 
 au bufnewfile *.sh 0r ~/.vim/template/shell.tpl
 au bufnewfile *.py 0r ~/.vim/template/python.tpl
+
+" only support c file
+" I don't use vim to write C++ code
+" I'd to admit vscode and Qtcreator do much better than vim when writting
+" C++ code, especially when templates joining the party.
+
+" command Make will call make and then cwindow which
+" opens a 3 line error window if any errors are found.
+" " If no errors, it closes any open cwindow.
+autocmd filetype c set makeprg=gcc\ -O2\ -lpthread\ -std=c99\ -g\ %\ -o\ %<  
+autocmd filetype c nnoremap <leader>r :silent make\|redraw!\|cw<CR>
+" quickfix move
+nnoremap <leader>j  :cn<CR>
+nnoremap <leader>r  :cp<CR>
+

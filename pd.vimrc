@@ -245,7 +245,9 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } ,'for': 'markdown'}
 
 " Clang C++ color
-Plug 'jeaye/color_coded'
+" a little tricky
+" disabled
+" Plug 'jeaye/color_coded'
 
 " tagbar
 " leaderF的tag显示更全，但是这个的效果更好

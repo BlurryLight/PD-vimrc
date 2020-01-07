@@ -105,11 +105,11 @@ autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 " 部分快捷键
 " 用kj来替换ESC
 inoremap kj <Esc>
-" F2复制粘贴模式
+" F3复制粘贴模式
 set pastetoggle=<F3>
 " shift + insert 粘贴系统剪贴板的内容
 inoremap <S-Insert> <ESC>"+p`]a 
-" <F3>关闭开启数字行号
+" <F2>关闭开启数字行号
 nnoremap <F2> :set nu! nu?<CR>
 " :W 表示sudo权限强制保存
 command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
@@ -478,7 +478,7 @@ au bufnewfile *.py 0r ~/.vim/template/python.tpl
 " command Make will call make and then cwindow which
 " opens a 3 line error window if any errors are found.
 " " If no errors, it closes any open cwindow.
-autocmd filetype c set makeprg=gcc\ -O2\ -lpthread\ -std=c99\ -g\ %\ -o\ %<  
+autocmd filetype c set makeprg=gcc\ -O2\ -lpthread\ -std=gnu99\ -g\ %\ -o\ %<  
 autocmd filetype c nnoremap <leader>r :silent make\|redraw!\|cw<CR>
 " quickfix move
 nnoremap <leader>j  :cn<CR>

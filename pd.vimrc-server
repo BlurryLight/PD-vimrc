@@ -213,6 +213,9 @@ Plug 'ilyachur/cmake4vim'
 " 不需要 leaderF自带这个功能
 " Plug 'liuchengxu/vista.vim'
 
+" 代码异步格式化
+Plug 'sbdchd/neoformat'
+
 " auto pair
 Plug 'jiangmiao/auto-pairs'
 
@@ -241,7 +244,11 @@ call plug#end()
 " ===============================插件配置=====================================
 " 主题设置
 " 使用256位颜色
-set termguicolors
+if exists('+termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+      set termguicolors
+endif
 set t_Co=256
 let base16colorspace=256
 colorscheme base16-oceanicnext
@@ -313,7 +320,14 @@ function! s:fcy_nerdcommenter_map()
     vmap <leader>cc <plug>NERDCommenterToggle gv
 endfunction
 
+" neoformat设置
+" format on save
+augroup fmt
+    autocmd!
+    autocmd BufWritePre * undojoin | Neoformat
+augroup END"
+
 ""===============================语言配置=====================================
 
-au bufnewfile *.sh 0r ~/.vim/template/shell.tpl
+"au bufnewfile *.sh 0r ~/.vim/template/shell.tpl
 au bufnewfile *.py 0r ~/.vim/template/python.tpl

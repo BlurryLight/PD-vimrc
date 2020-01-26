@@ -107,8 +107,11 @@ autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 inoremap kj <Esc>
 " F3复制粘贴模式
 set pastetoggle=<F3>
-" shift + insert 粘贴系统剪贴板的内容
+" leader + p 在输入模式粘贴代码
+inoremap <Leader>p <ESC><F3>pa<F3>
+" shift + insert || <leader>P 粘贴系统剪贴板的内容
 inoremap <S-Insert> <ESC>"+p`]a 
+inoremap <leader>P <ESC>"+p`]a 
 " <F2>关闭开启数字行号
 nnoremap <F2> :set nu! nu?<CR>
 " :W 表示sudo权限强制保存
@@ -182,8 +185,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" tagbar
-nmap <F4> :TagbarToggle<CR>
+
 " 在这一段需要的插件
 
 " 颜色主题
@@ -204,11 +206,19 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 " C++ 增强高亮
 Plug 'octol/vim-cpp-enhanced-highlight'
+
+" Skywind的异步执行
+Plug 'skywind3000/asyncrun.vim'
+
 " Cmake support
-Plug 'ilyachur/cmake4vim'
-" taglist
-" 不需要 leaderF自带这个功能
-" Plug 'liuchengxu/vista.vim'
+" 下面这个插件感觉不太ok
+"Plug 'ilyachur/cmake4vim'
+Plug 'vhdirk/vim-cmake'
+"简单用法
+" :CMake编译，可以和asyncrun联动，可以传递参数
+" :CMakeclean 清理build文件夹
+
+
 
 " 代码异步格式化
 Plug 'sbdchd/neoformat'
@@ -225,7 +235,9 @@ Plug 'Valloric/YouCompleteMe',{'do':'./install.py --clang-completer', 'for': ['c
 " 不太好用
 "Plug 'tenfyzhong/CompleteParameter.vim'
 " ycm generator
-Plug 'rdnetto/YCM-Generator',{'branch': 'stable'}
+" CMake做了很多工作，不需要这个了
+" Plug 'rdnetto/YCM-Generator',{'branch': 'stable'}
+
 
 " NERD commenter
 " 快速注释
@@ -254,6 +266,11 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } ,'for': 
 Plug 'majutsushi/tagbar'
 
 
+" tag生成
+Plug 'ludovicchabant/vim-gutentags'
+
+" cpp语法加强
+Plug 'octol/vim-cpp-enhanced-highlight'
 call plug#end()
 
 
@@ -271,6 +288,10 @@ let base16colorspace=256
 colorscheme base16-oceanicnext
 "colorscheme qdark
 
+" tagbar
+nnoremap <F4> :TagbarToggle<CR>
+nnoremap <leader>t :TagbarToggle<CR>
+inoremap <leader>t :TagbarToggle<CR>
 
 " nerdtree 配置
 " 下面两行：当打开一个文件夹时，自动打开nerdtree
@@ -465,13 +486,33 @@ let g:mkdp_port = ''
 " ${name} will be replace with the file name
 let g:mkdp_page_title = '「${name}」'
 
-""===============================语言配置=====================================
+" tag自动生成
+"let s:vim_tags = expand('~/.cache/tags')
+"let g:gutentags_cache_dir = s:vim_tags
+" 生成.tags
+let g:gutentags_ctags_tagfile = '.tags'
+
+
+" cpp语法高亮加强
+let g:cpp_posix_standard = 1 "打开POSIX高亮"
+let g:cpp_experimental_template_highlight = 1 "template "
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_scope_highlight = 1
+let g:cpp_class_decl_highlight = 1
+
+" CMake配置
+let g:cmake_project_generator="Ninja" "默认ninja 
+let g:cmake_export_compile_commands = 1
+let g:cmake_ycm_symlinks = 1 "自动生成ycm
+
+"===============================语言配置=====================================
+
 
 au bufnewfile *.sh 0r ~/.vim/template/shell.tpl
 au bufnewfile *.py 0r ~/.vim/template/python.tpl
 
 " only support c file
-" I don't use vim to write C++ code
+" I rarely use vim to write C++ code
 " I'd to admit vscode and Qtcreator do much better than vim when writting
 " C++ code, especially when templates joining the party.
 

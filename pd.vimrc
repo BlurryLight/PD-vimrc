@@ -174,6 +174,14 @@ map <C-l> <C-W>l
 vnoremap < <gv
 vnoremap > >gv"
 
+" tabpage
+" <leader>tb 创建tab
+" <leader>tc 关闭tab
+nnoremap <leader>tb :tabnew<CR>
+inoremap <leader>tb <ESC>:tabnew<CR>
+nnoremap <leader>tc :tabclose<CR>
+
+
 
 "============================================= plugins ========================
 
@@ -525,3 +533,19 @@ autocmd filetype c nnoremap <leader>r :silent make\|redraw!\|cw<CR>
 nnoremap <leader>j  :cn<CR>
 nnoremap <leader>r  :cp<CR>
 
+" 高亮所在行的行号
+" 必须放在主题的后面，覆盖主题设置
+" 强迫症杀手
+highlight CursorLine cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
+set cursorline
+
+" for error highlight，防止错误整行标红导致看不清
+" 从k-vim里面拿过来的
+highlight clear SpellBad
+highlight SpellBad term=standout ctermfg=1 term=underline cterm=underline
+highlight clear SpellCap
+highlight SpellCap term=underline cterm=underline
+highlight clear SpellRare
+highlight SpellRare term=underline cterm=underline
+highlight clear SpellLocal
+highlight SpellLocal term=underline cterm=underline

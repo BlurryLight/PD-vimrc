@@ -107,11 +107,9 @@ autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 inoremap kj <Esc>
 " F3复制粘贴模式
 set pastetoggle=<F3>
-" leader + p 在输入模式粘贴代码
-inoremap <Leader>p <ESC><F3>pa<F3>
 " shift + insert || <leader>P 粘贴系统剪贴板的内容
-inoremap <S-Insert> <ESC>"+p`]a 
-inoremap <leader>P <ESC>"+p`]a 
+inoremap <S-Insert> <ESC>"+pa
+inoremap <leader>P <ESC>"+pa
 " <F2>关闭开启数字行号
 nnoremap <F2> :set nu! nu?<CR>
 " :W 表示sudo权限强制保存
@@ -277,8 +275,19 @@ Plug 'majutsushi/tagbar'
 " tag生成
 Plug 'ludovicchabant/vim-gutentags'
 
-" cpp语法加强
+" cpp语法高亮加强
 Plug 'octol/vim-cpp-enhanced-highlight'
+
+" c/c++ header / source 跳转
+Plug  'derekwyatt/vim-fswitch'
+
+
+"rainbow parens
+Plug 'luochen1990/rainbow'
+let g:rainbow_active = 1
+
+" echodoc
+Plug 'Shougo/echodoc.vim'
 call plug#end()
 
 
@@ -512,6 +521,29 @@ let g:cpp_class_decl_highlight = 1
 let g:cmake_project_generator="Ninja" "默认ninja 
 let g:cmake_export_compile_commands = 1
 let g:cmake_ycm_symlinks = 1 "自动生成ycm
+
+" C/C++源代码跳转
+" gf去头文件
+" <C+w>gf 在新窗口打开
+" C+] 利用tag跳转, C+i C+o跳转buffer
+" 还有接下来的定义
+
+nnoremap <leader>sw :FSSplitAbove<CR>
+nnoremap <leader>ss :FSSplitBelow<CR>
+nnoremap <leader>sa :FSSplitLeft<CR>
+nnoremap <leader>sd :FSSplitRight<CR>
+
+" 参数提示
+"To use echodoc, you must increase 'cmdheight' value.
+set cmdheight=2
+let g:echodoc_enable_at_startup = 1
+" Or, you could use vim's popup window feature.
+" let g:echodoc#enable_at_startup = 1
+" let g:echodoc#type = 'popup'
+" " To use a custom highlight for the popup window,
+" " change Pmenu to your highlight group
+" highlight link EchoDocPopup Pmenu
+
 
 "===============================语言配置=====================================
 

@@ -24,7 +24,6 @@ set magic
 
 " 显示
 set number      "行号
-syntax on
 set ruler      "行号和列号
 
 " 加大移动距离
@@ -102,14 +101,19 @@ set whichwrap+=<,>,h,l,[,]
 " 自动去除部分文件的行尾空格
 autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 
+" ctag路径
+set tags=./.tags;,.tags,tags
+
+
 "============================================= KEYS MAPPING ==================
 " 部分快捷键
 " 用kj来替换ESC
 inoremap kj <Esc>
-" F2复制粘贴模式
+" F3复制粘贴模式
 set pastetoggle=<F3>
-" shift + insert 粘贴系统剪贴板的内容
-inoremap <S-Insert> <ESC>"+p`]a 
+" shift + insert || <leader>P 粘贴系统剪贴板的内容
+inoremap <S-Insert> <ESC>"+pa
+inoremap <leader>P <ESC>"+pa
 " <F2>关闭开启数字行号
 nnoremap <F2> :set nu! nu?<CR>
 " :W 表示sudo权限强制保存
@@ -145,8 +149,8 @@ nnoremap H ^
 nnoremap L $
 
 " command mode, ctrl-a to head， ctrl-e to tail
-cnoremap <C-j> <t_kd>
-cnoremap <C-k> <t_ku>
+"cnoremap <C-j> <t_kd>
+"cnoremap <C-k> <t_ku>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
@@ -172,6 +176,14 @@ map <C-l> <C-W>l
 vnoremap < <gv
 vnoremap > >gv"
 
+" tabpage
+" <leader>tb 创建tab
+" <leader>tc 关闭tab
+nnoremap <leader>tb :tabnew<CR>
+inoremap <leader>tb <ESC>:tabnew<CR>
+nnoremap <leader>tc :tabclose<CR>
+
+
 
 "============================================= plugins ========================
 
@@ -183,8 +195,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" tagbar
-nmap <F4> :TagbarToggle<CR>
+
 " 在这一段需要的插件
 
 " 颜色主题
@@ -207,11 +218,19 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 " C++ 增强高亮
 Plug 'octol/vim-cpp-enhanced-highlight'
+
+" Skywind的异步执行
+Plug 'skywind3000/asyncrun.vim'
+
 " Cmake support
-Plug 'ilyachur/cmake4vim'
-" taglist
-" 不需要 leaderF自带这个功能
-" Plug 'liuchengxu/vista.vim'
+" 下面这个插件感觉不太ok
+"Plug 'ilyachur/cmake4vim'
+Plug 'vhdirk/vim-cmake'
+"简单用法
+" :CMake编译，可以和asyncrun联动，可以传递参数
+" :CMakeclean 清理build文件夹
+
+
 
 " 代码异步格式化
 Plug 'sbdchd/neoformat'
@@ -239,6 +258,22 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'majutsushi/tagbar'
 
 
+" tag生成
+Plug 'ludovicchabant/vim-gutentags'
+
+" cpp语法高亮加强
+Plug 'octol/vim-cpp-enhanced-highlight'
+
+" c/c++ header / source 跳转
+Plug  'derekwyatt/vim-fswitch'
+
+
+"rainbow parens
+Plug 'luochen1990/rainbow'
+let g:rainbow_active = 1
+
+" echodoc
+Plug 'Shougo/echodoc.vim'
 call plug#end()
 
 " ===============================插件配置=====================================
@@ -253,6 +288,10 @@ set t_Co=256
 let base16colorspace=256
 colorscheme base16-oceanicnext
 "colorscheme qdark
+
+" tagbar
+nnoremap <F4> :TagbarToggle<CR>
+nnoremap <leader>t :TagbarToggle<CR>
 
 " mucomplete
 set completeopt+=menuone
@@ -326,8 +365,80 @@ augroup fmt
     autocmd!
     autocmd BufWritePre * undojoin | Neoformat
 augroup END"
+" tag自动生成
+"let s:vim_tags = expand('~/.cache/tags')
+"let g:gutentags_cache_dir = s:vim_tags
+" 生成.tags
+let g:gutentags_ctags_tagfile = '.tags'
+
+
+" cpp语法高亮加强
+let g:cpp_posix_standard = 1 "打开POSIX高亮"
+let g:cpp_experimental_template_highlight = 1 "template "
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_scope_highlight = 1
+let g:cpp_class_decl_highlight = 1
+
+" CMake配置
+let g:cmake_project_generator="Ninja" "默认ninja 
+let g:cmake_export_compile_commands = 1
+let g:cmake_ycm_symlinks = 1 "自动生成ycm
+
+" C/C++源代码跳转
+" gf去头文件
+" <C+w>gf 在新窗口打开
+" C+] 利用tag跳转, C+i C+o跳转buffer
+" 还有接下来的定义
+
+nnoremap <leader>sw :FSSplitAbove<CR>
+nnoremap <leader>ss :FSSplitBelow<CR>
+nnoremap <leader>sa :FSSplitLeft<CR>
+nnoremap <leader>sd :FSSplitRight<CR>
+
+" 参数提示
+"To use echodoc, you must increase 'cmdheight' value.
+set cmdheight=2
+let g:echodoc_enable_at_startup = 1
+" Or, you could use vim's popup window feature.
+" let g:echodoc#enable_at_startup = 1
+" let g:echodoc#type = 'popup'
+" " To use a custom highlight for the popup window,
+" " change Pmenu to your highlight group
+" highlight link EchoDocPopup Pmenu
+
 
 ""===============================语言配置=====================================
 
 "au bufnewfile *.sh 0r ~/.vim/template/shell.tpl
 au bufnewfile *.py 0r ~/.vim/template/python.tpl
+
+" only support c file
+" I rarely use vim to write C++ code
+" I'd to admit vscode and Qtcreator do much better than vim when writting
+" C++ code, especially when templates joining the party.
+
+" command Make will call make and then cwindow which
+" opens a 3 line error window if any errors are found.
+" " If no errors, it closes any open cwindow.
+autocmd filetype c set makeprg=gcc\ -O2\ -lpthread\ -std=gnu99\ -g\ %\ -o\ %<  
+autocmd filetype c nnoremap <leader>r :silent make\|redraw!\|cw<CR>
+" quickfix move
+nnoremap <leader>j  :cn<CR>
+nnoremap <leader>r  :cp<CR>
+
+" 高亮所在行的行号
+" 必须放在主题的后面，覆盖主题设置
+" 强迫症杀手
+highlight CursorLine cterm=NONE ctermbg=NONE ctermfg=NONE guibg=NONE guifg=NONE
+set cursorline
+
+" for error highlight，防止错误整行标红导致看不清
+" 从k-vim里面拿过来的
+highlight clear SpellBad
+highlight SpellBad term=standout ctermfg=1 term=underline cterm=underline
+highlight clear SpellCap
+highlight SpellCap term=underline cterm=underline
+highlight clear SpellRare
+highlight SpellRare term=underline cterm=underline
+highlight clear SpellLocal
+highlight SpellLocal term=underline cterm=underline

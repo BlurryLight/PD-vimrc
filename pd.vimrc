@@ -102,7 +102,7 @@ set whichwrap+=<,>,h,l,[,]
 autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 
 " ctag路径
-set tags=./tags,tags;
+set tags=./.tags;,.tags,tags
 
 
 "============================================= KEYS MAPPING ==================

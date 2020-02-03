@@ -101,6 +101,10 @@ set whichwrap+=<,>,h,l,[,]
 " 自动去除部分文件的行尾空格
 autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 
+" ctag路径
+set tags=./tags,tags;
+
+
 "============================================= KEYS MAPPING ==================
 " 部分快捷键
 " 用kj来替换ESC
@@ -308,7 +312,6 @@ colorscheme base16-oceanicnext
 " tagbar
 nnoremap <F4> :TagbarToggle<CR>
 nnoremap <leader>t :TagbarToggle<CR>
-inoremap <leader>t :TagbarToggle<CR>
 
 " nerdtree 配置
 " 下面两行：当打开一个文件夹时，自动打开nerdtree
@@ -375,9 +378,9 @@ inoremap <expr> <cr> ((pumvisible())?("\<C-y>"):("\<cr>"))
 let g:ycm_confirm_extra_conf = 0
 "
 " 语义补全
-let g:ycm_semantic_triggers =  {
-            \ 'c,cpp': ['re!\w{4}'],
-            \}
+" let g:ycm_semantic_triggers =  {
+"             \ 'c,cpp': ['re!\w{4}'],
+"             \}
 " 静态检查
 let g:ycm_show_diagnostics_ui = 1
 "let g:ycm_min_num_identifier_candidate_chars = 2
@@ -388,6 +391,11 @@ let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>', '<c-k>']
 " <leader>gd 跳转定义和声明
 nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:ycm_goto_buffer_command = 'vertical-split'
+" 只对c c++启用
+let g:ycm_filetype_whitelist = {'c': 1,'cpp':1}
+" 从tag里收集补全
+let g:ycm_collect_identifiers_from_tags_files = 1
+
 
 " nerd commenter注释
 " Add spaces after comment delimiters by default

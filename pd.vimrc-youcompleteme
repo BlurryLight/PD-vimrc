@@ -83,6 +83,21 @@ set backspace=indent,eol,start
 " Vim默认左右方向键不会切换到下一行，调一下，让<>,h,l,[,]都可以换行
 set whichwrap+=<,>,h,l,[,]
 
+" 以下来自
+" https://coderwall.com/p/if9mda/automatically-set-paste-mode-in-vim-when-pasting-in-insert-mode
+" 简化复制粘贴
+" 不需要这个了
+"let &t_SI .= "\<Esc>[?2004h"
+"let &t_EI .= "\<Esc>[?2004l"
+"
+"inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+"
+"function! XTermPasteBegin()
+"  set pastetoggle=<Esc>[201~
+"  set paste
+"  return ""
+"endfunction
+
 " 自动去除部分文件的行尾空格
 autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 
@@ -110,6 +125,13 @@ nnoremap <leader>w :w<CR>
 " Upper U to redo
 nnoremap U <C-r>
 
+" search improvement
+" 默认按/和<space>进入very magic mode
+" 我很喜欢这个功能，然而这个功能在fakeVIM上不能用
+" 所以只能禁用了
+"map <space> /
+"nnoremap / /\v
+"vnoremap / /\v
 " <leader>/关闭搜索高亮
 noremap <silent><leader>/ :nohls<CR>
 
@@ -127,6 +149,8 @@ nnoremap H ^
 nnoremap L $
 
 " command mode, ctrl-a to head， ctrl-e to tail
+"cnoremap <C-j> <t_kd>
+"cnoremap <C-k> <t_ku>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
@@ -178,8 +202,6 @@ endif
 
 " 插件
 call plug#begin('~/.vim/plugged')
-" auto complete
-Plug 'lifepillar/vim-mucomplete'
 " base16主题
 Plug 'chriskempson/base16-vim'
 " Airline
@@ -189,6 +211,8 @@ Plug 'scrooloose/nerdtree'
 " 模糊查找
 " 需要GNU global配合
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+" ALE 静态检查
+" Plug 'dense-analysis/ale'
 
 " C++ 增强高亮
 Plug 'octol/vim-cpp-enhanced-highlight'
@@ -197,10 +221,14 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'skywind3000/asyncrun.vim'
 
 " Cmake support
+" 下面这个插件感觉不太ok
+"Plug 'ilyachur/cmake4vim'
 Plug 'vhdirk/vim-cmake'
 "简单用法
 " :CMake编译，可以和asyncrun联动，可以传递参数
 " :CMakeclean 清理build文件夹
+
+
 
 " 代码异步格式化
 Plug 'sbdchd/neoformat'
@@ -208,10 +236,40 @@ Plug 'sbdchd/neoformat'
 " auto pair
 Plug 'jiangmiao/auto-pairs'
 
+" GLSL support
+Plug 'beyondmarc/glsl.vim'
+
+" MOST HORRIBLE PLUGIN(NOT ACTURALLY A PLUGIN BUT A MONSTER)
+Plug 'Valloric/YouCompleteMe',{'do':'./install.py --clang-completer', 'for': ['c', 'cpp']}
+" 参数补全
+" 不太好用
+"Plug 'tenfyzhong/CompleteParameter.vim'
+" ycm generator
+" CMake做了很多工作，不需要这个了
+" Plug 'rdnetto/YCM-Generator',{'branch': 'stable'}
+
 
 " NERD commenter
 " 快速注释
 Plug 'scrooloose/nerdcommenter'
+
+" markdown
+" markdown suit
+" 不好用
+" Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+" markdown preview
+" need pip install --user smdv
+" 不好用+1 渲染速度很快，但是mathjax是坏的，考虑了一下我的博客采用Katex
+" 另寻其他插件
+" Plug 'suan/vim-instant-markdown', {'for': 'markdown','branch':'dev'}
+"
+" Another one
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } ,'for': 'markdown'}
+
+" Clang C++ color
+" a little tricky
+" disabled
+" Plug 'jeaye/color_coded'
 
 " tagbar
 " leaderF的tag显示更全，但是这个的效果更好
@@ -236,6 +294,8 @@ let g:rainbow_active = 1
 Plug 'Shougo/echodoc.vim'
 call plug#end()
 
+
+
 " ===============================插件配置=====================================
 " 主题设置
 " 使用256位颜色
@@ -252,11 +312,6 @@ colorscheme base16-oceanicnext
 " tagbar
 nnoremap <F4> :TagbarToggle<CR>
 nnoremap <leader>t :TagbarToggle<CR>
-
-" mucomplete
-set completeopt+=menuone
- set completeopt+=noselect
- let g:mucomplete#enable_auto_at_startup = 1
 
 " nerdtree 配置
 " 下面两行：当打开一个文件夹时，自动打开nerdtree
@@ -286,6 +341,62 @@ noremap <leader>fb :<C-U><C-R>=printf("LeaderfBufTag")<CR><CR>
 " <leader>fp 显示本文件函数列表
 noremap <leader>fp :<C-U><C-R>=printf("LeaderfFunction!")<CR><CR>
 
+" ALE配置
+" 把错误信息输出到airline上
+" let g:ale_linters_explicit = 1
+" let g:ale_completion_delay = 500
+" let g:ale_echo_delay = 20
+" let g:ale_lint_delay = 500
+" let g:ale_echo_msg_format = '[%linter%] %code: %%s'
+" let g:ale_lint_on_text_changed = 'normal'
+" let g:ale_lint_on_insert_leave = 1
+" let g:airline#extensions#ale#enabled = 1
+"
+" let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
+" let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
+" let g:ale_c_cppcheck_options = ''
+" let g:ale_cpp_cppcheck_options = ''
+
+" neoformat设置
+" format on save
+augroup fmt
+    autocmd!
+    autocmd BufWritePre * undojoin | Neoformat
+augroup END
+
+" GLSL support
+let g:glsl_default_version = 'glsl330'
+let g:glsl_file_extensions = '*.glsl,*.vsh,*.fsh,*.vert,*.tesc,*.tese,*.geom,*.frag,*.comp'
+
+
+" Youcompleteme
+" 让按键更正常
+" 当有补全列表时，回车等于补全
+" 当没有补全列表时，回车等于插入新行
+inoremap <expr> <cr> ((pumvisible())?("\<C-y>"):("\<cr>"))
+" 关闭每次都要load conf的提示
+let g:ycm_confirm_extra_conf = 0
+"
+" 语义补全
+" let g:ycm_semantic_triggers =  {
+"             \ 'c,cpp': ['re!\w{4}'],
+"             \}
+" 静态检查
+let g:ycm_show_diagnostics_ui = 1
+"let g:ycm_min_num_identifier_candidate_chars = 2
+" 用ycm generator感觉会更好
+"let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+let g:ycm_key_list_select_completion = ['<c-j>', '<c-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>', '<c-k>']
+" <leader>gd 跳转定义和声明
+nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_goto_buffer_command = 'vertical-split'
+" 只对c c++启用
+let g:ycm_filetype_whitelist = {'c': 1,'cpp':1}
+" 从tag里收集补全
+let g:ycm_collect_identifiers_from_tags_files = 1
+
+
 " nerd commenter注释
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
@@ -296,6 +407,9 @@ let g:NERDCompactSexyComs = 1
 " Align line-wise comment delimiters flush left instead of following code indentation
 let g:NERDDefaultAlign = 'left'
 
+" Add your own custom formats or override the defaults
+"let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDCommentEmptyLines = 1
 
@@ -305,22 +419,101 @@ let g:NERDTrimTrailingWhitespace = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
 
+" 快速注释，为了和多数IDE保持一致，可以映射到<C-/>上
+" 不，我错了，<C-/>在vim里不能用
 " from https://github.com/scrooloose/nerdcommenter/issues/267#issuecomment-248839961
 " 可以用<leader>cc来切换和打开注释
-
 autocmd! VimEnter * call s:fcy_nerdcommenter_map()
 function! s:fcy_nerdcommenter_map()
     nmap <leader>cc <plug>NERDCommenterToggle
     vmap <leader>cc <plug>NERDCommenterToggle gv
 endfunction
 
-" neoformat设置
-" format on save
-augroup fmt
-    autocmd!
-    autocmd BufWritePre * undojoin | Neoformat
-augroup END"
+" markdown-preview.nvim
+" https://github.com/iamcco/markdown-preview.nvim
+" set to 1, nvim will open the preview window after entering the markdown buffer
+" default: 0
+let g:mkdp_auto_start = 0
+
+" set to 1, the nvim will auto close current preview window when change
+" from markdown buffer to another buffer
+" default: 1
+let g:mkdp_auto_close = 1
+
+" set to 1, the vim will refresh markdown when save the buffer or
+" leave from insert mode, default 0 is auto refresh markdown as you edit or
+" move the cursor
+" default: 0
+let g:mkdp_refresh_slow = 0
+
+" set to 1, the MarkdownPreview command can be use for all files,
+" by default it can be use in markdown file
+" default: 0
+let g:mkdp_command_for_global = 0
+
+" set to 1, preview server available to others in your network
+" by default, the server listens on localhost (127.0.0.1)
+" default: 0
+let g:mkdp_open_to_the_world = 0
+
+" use custom IP to open preview page
+" useful when you work in remote vim and preview on local browser
+" more detail see: https://github.com/iamcco/markdown-preview.nvim/pull/9
+" default empty
+let g:mkdp_open_ip = ''
+
+" specify browser to open preview page
+" default: ''
+let g:mkdp_browser = ''
+
+" set to 1, echo preview page url in command line when open preview page
+" default is 0
+let g:mkdp_echo_preview_url = 0
+
+" a custom vim function name to open preview page
+" this function will receive url as param
+" default is empty
+let g:mkdp_browserfunc = ''
+
+" options for markdown render
+" mkit: markdown-it options for render
+" katex: katex options for math
+" uml: markdown-it-plantuml options
+" maid: mermaid options
+" disable_sync_scroll: if disable sync scroll, default 0
+" sync_scroll_type: 'middle', 'top' or 'relative', default value is 'middle'
+"   middle: mean the cursor position alway show at the middle of the preview page
+"   top: mean the vim top viewport alway show at the top of the preview page
+"   relative: mean the cursor position alway show at the relative positon of the preview page
+" hide_yaml_meta: if hide yaml metadata, default is 1
+" sequence_diagrams: js-sequence-diagrams options
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1,
+    \ 'sequence_diagrams': {}
+    \ }
+
+" use a custom markdown style must be absolute path
+let g:mkdp_markdown_css = ''
+
+" use a custom highlight style must absolute path
+let g:mkdp_highlight_css = ''
+
+" use a custom port to start server or random for empty
+let g:mkdp_port = ''
+
+" preview page title
+" ${name} will be replace with the file name
+let g:mkdp_page_title = '「${name}」'
+
 " tag自动生成
+"let s:vim_tags = expand('~/.cache/tags')
+"let g:gutentags_cache_dir = s:vim_tags
 " 生成.tags
 let g:gutentags_ctags_tagfile = '.tags'
 
@@ -352,10 +545,18 @@ nnoremap <leader>sd :FSSplitRight<CR>
 "To use echodoc, you must increase 'cmdheight' value.
 set cmdheight=2
 let g:echodoc_enable_at_startup = 1
+" Or, you could use vim's popup window feature.
+" let g:echodoc#enable_at_startup = 1
+" let g:echodoc#type = 'popup'
+" " To use a custom highlight for the popup window,
+" " change Pmenu to your highlight group
+" highlight link EchoDocPopup Pmenu
 
 
-""===============================语言配置=====================================
+"===============================语言配置=====================================
 
+
+au bufnewfile *.sh 0r ~/.vim/template/shell.tpl
 au bufnewfile *.py 0r ~/.vim/template/python.tpl
 
 " only support c file

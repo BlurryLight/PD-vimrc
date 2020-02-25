@@ -355,6 +355,10 @@ nnoremap <leader>sd :FSSplitRight<CR>
 set cmdheight=2
 let g:echodoc_enable_at_startup = 1
 
+" ALE设置
+let g:ale_linters = {'python':['pylint'],}
+" disable warning,convention and refactoring
+let g:ale_python_pylint_options= '--disable=C,R' 
 
 ""===============================语言配置=====================================
 

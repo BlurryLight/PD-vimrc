@@ -83,21 +83,6 @@ set backspace=indent,eol,start
 " Vim默认左右方向键不会切换到下一行，调一下，让<>,h,l,[,]都可以换行
 set whichwrap+=<,>,h,l,[,]
 
-" 以下来自
-" https://coderwall.com/p/if9mda/automatically-set-paste-mode-in-vim-when-pasting-in-insert-mode
-" 简化复制粘贴
-" 不需要这个了
-"let &t_SI .= "\<Esc>[?2004h"
-"let &t_EI .= "\<Esc>[?2004l"
-"
-"inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-"
-"function! XTermPasteBegin()
-"  set pastetoggle=<Esc>[201~
-"  set paste
-"  return ""
-"endfunction
-
 " 自动去除部分文件的行尾空格
 autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 
@@ -125,13 +110,6 @@ nnoremap <leader>w :w<CR>
 " Upper U to redo
 nnoremap U <C-r>
 
-" search improvement
-" 默认按/和<space>进入very magic mode
-" 我很喜欢这个功能，然而这个功能在fakeVIM上不能用
-" 所以只能禁用了
-"map <space> /
-"nnoremap / /\v
-"vnoremap / /\v
 " <leader>/关闭搜索高亮
 noremap <silent><leader>/ :nohls<CR>
 
@@ -149,8 +127,6 @@ nnoremap H ^
 nnoremap L $
 
 " command mode, ctrl-a to head， ctrl-e to tail
-"cnoremap <C-j> <t_kd>
-"cnoremap <C-k> <t_ku>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 
@@ -214,7 +190,7 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 " ALE 静态检查
 Plug 'dense-analysis/ale',{'for':['python','sh']}
 " mucomplete
-Plug 'lifepillar/vim-mucomplete'
+Plug 'lifepillar/vim-mucomplete',{'for':['python','sh']}
 
 " C++ 增强高亮
 Plug 'octol/vim-cpp-enhanced-highlight'
@@ -223,8 +199,6 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'skywind3000/asyncrun.vim'
 
 " Cmake support
-" 下面这个插件感觉不太ok
-"Plug 'ilyachur/cmake4vim'
 Plug 'vhdirk/vim-cmake'
 "简单用法
 " :CMake编译，可以和asyncrun联动，可以传递参数
@@ -297,6 +271,11 @@ colorscheme base16-oceanicnext
 " tagbar
 nnoremap <F4> :TagbarToggle<CR>
 nnoremap <leader>t :TagbarToggle<CR>
+
+" mucomplete
+set completeopt+=menuone
+ set completeopt+=noselect
+ let g:mucomplete#enable_auto_at_startup = 1
 
 " nerdtree 配置
 " 下面两行：当打开一个文件夹时，自动打开nerdtree
@@ -375,9 +354,6 @@ let g:NERDCompactSexyComs = 1
 
 " Align line-wise comment delimiters flush left instead of following code indentation
 let g:NERDDefaultAlign = 'left'
-
-" Add your own custom formats or override the defaults
-"let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
 
 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDCommentEmptyLines = 1
@@ -481,8 +457,6 @@ let g:mkdp_port = ''
 let g:mkdp_page_title = '「${name}」'
 
 " tag自动生成
-"let s:vim_tags = expand('~/.cache/tags')
-"let g:gutentags_cache_dir = s:vim_tags
 " 生成.tags
 let g:gutentags_ctags_tagfile = '.tags'
 
@@ -514,6 +488,11 @@ nnoremap <leader>sd :FSSplitRight<CR>
 "To use echodoc, you must increase 'cmdheight' value.
 set cmdheight=2
 let g:echodoc_enable_at_startup = 1
+
+" ALE设置
+let g:ale_linters = {'python':['pylint'],}
+" disable warning,convention and refactoring
+let g:ale_python_pylint_options= '--disable=C,R' 
 
 
 "===============================语言配置=====================================

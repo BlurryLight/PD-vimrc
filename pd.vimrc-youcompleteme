@@ -212,7 +212,9 @@ Plug 'scrooloose/nerdtree'
 " 需要GNU global配合
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 " ALE 静态检查
-" Plug 'dense-analysis/ale'
+Plug 'dense-analysis/ale',{'for':['python','sh']}
+" mucomplete
+Plug 'lifepillar/vim-mucomplete'
 
 " C++ 增强高亮
 Plug 'octol/vim-cpp-enhanced-highlight'
@@ -241,35 +243,18 @@ Plug 'beyondmarc/glsl.vim'
 
 " MOST HORRIBLE PLUGIN(NOT ACTURALLY A PLUGIN BUT A MONSTER)
 Plug 'Valloric/YouCompleteMe',{'do':'./install.py --clang-completer', 'for': ['c', 'cpp']}
-" 参数补全
-" 不太好用
-"Plug 'tenfyzhong/CompleteParameter.vim'
-" ycm generator
-" CMake做了很多工作，不需要这个了
-" Plug 'rdnetto/YCM-Generator',{'branch': 'stable'}
 
+" YCMgenerator
+Plug 'rdnetto/YCM-Generator'
 
-" NERD commenter
+"NERD commenter
 " 快速注释
 Plug 'scrooloose/nerdcommenter'
 
-" markdown
-" markdown suit
-" 不好用
-" Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
-" markdown preview
-" need pip install --user smdv
-" 不好用+1 渲染速度很快，但是mathjax是坏的，考虑了一下我的博客采用Katex
-" 另寻其他插件
-" Plug 'suan/vim-instant-markdown', {'for': 'markdown','branch':'dev'}
 "
 " Another one
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } ,'for': 'markdown'}
 
-" Clang C++ color
-" a little tricky
-" disabled
-" Plug 'jeaye/color_coded'
 
 " tagbar
 " leaderF的tag显示更全，但是这个的效果更好
@@ -340,22 +325,6 @@ noremap <leader>fb :<C-U><C-R>=printf("LeaderfBufTag")<CR><CR>
 
 " <leader>fp 显示本文件函数列表
 noremap <leader>fp :<C-U><C-R>=printf("LeaderfFunction!")<CR><CR>
-
-" ALE配置
-" 把错误信息输出到airline上
-" let g:ale_linters_explicit = 1
-" let g:ale_completion_delay = 500
-" let g:ale_echo_delay = 20
-" let g:ale_lint_delay = 500
-" let g:ale_echo_msg_format = '[%linter%] %code: %%s'
-" let g:ale_lint_on_text_changed = 'normal'
-" let g:ale_lint_on_insert_leave = 1
-" let g:airline#extensions#ale#enabled = 1
-"
-" let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
-" let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
-" let g:ale_c_cppcheck_options = ''
-" let g:ale_cpp_cppcheck_options = ''
 
 " neoformat设置
 " format on save
@@ -545,12 +514,6 @@ nnoremap <leader>sd :FSSplitRight<CR>
 "To use echodoc, you must increase 'cmdheight' value.
 set cmdheight=2
 let g:echodoc_enable_at_startup = 1
-" Or, you could use vim's popup window feature.
-" let g:echodoc#enable_at_startup = 1
-" let g:echodoc#type = 'popup'
-" " To use a custom highlight for the popup window,
-" " change Pmenu to your highlight group
-" highlight link EchoDocPopup Pmenu
 
 
 "===============================语言配置=====================================

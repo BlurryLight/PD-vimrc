@@ -325,6 +325,13 @@ augroup END"
 " tag自动生成
 " 生成.tags
 let g:gutentags_ctags_tagfile = '.tags'
+" support gitignore
+let g:gutentags_file_list_command = 'rg --files'
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+
 
 
 " cpp语法高亮加强

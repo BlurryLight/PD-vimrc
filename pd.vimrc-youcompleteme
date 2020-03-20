@@ -45,8 +45,8 @@ filetype plugin on
 filetype indent on
 
 "设置leader
-let mapleader = ','
-let g:mapleader = ','
+"let mapleader = ','
+"let g:mapleader = ','
 
 "设置文件编码
 " 内部编码
@@ -219,7 +219,7 @@ Plug 'beyondmarc/glsl.vim'
 Plug 'Valloric/YouCompleteMe',{'do':'./install.py --clang-completer', 'for': ['c', 'cpp']}
 
 " YCMgenerator
-Plug 'rdnetto/YCM-Generator'
+Plug 'rdnetto/YCM-Generator',{'branch':'stable'}
 
 "NERD commenter
 " 快速注释
@@ -308,10 +308,10 @@ noremap <leader>fp :<C-U><C-R>=printf("LeaderfFunction!")<CR><CR>
 
 " neoformat设置
 " format on save
-augroup fmt
-    autocmd!
-    autocmd BufWritePre * undojoin | Neoformat
-augroup END
+"augroup fmt
+"    autocmd!
+"    autocmd BufWritePre * undojoin | Neoformat
+"augroup END
 
 " GLSL support
 let g:glsl_default_version = 'glsl330'
@@ -380,6 +380,9 @@ endfunction
 " set to 1, nvim will open the preview window after entering the markdown buffer
 " default: 0
 let g:mkdp_auto_start = 0
+
+"leader + m + k markdownpreview
+nnoremap <leader>mk <Plug>MarkdownPreview
 
 " set to 1, the nvim will auto close current preview window when change
 " from markdown buffer to another buffer

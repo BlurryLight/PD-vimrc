@@ -23,9 +23,6 @@ set tabstop=4
 set softtabstop=4                " insert mode tab and backspace use 4 spaces
 
 
-"设置leader
-let mapleader = ','
-let g:mapleader = ','
 " mappings
 nnoremap ; :
 inoremap kj <Esc>

@@ -45,8 +45,8 @@ filetype plugin on
 filetype indent on
 
 "设置leader
-let mapleader = ','
-let g:mapleader = ','
+"let mapleader = ','
+"let g:mapleader = ','
 
 "设置文件编码
 " 内部编码
@@ -318,10 +318,10 @@ endfunction
 
 " neoformat设置
 " format on save
-augroup fmt
-    autocmd!
-    autocmd BufWritePre * undojoin | Neoformat
-augroup END"
+"augroup fmt
+"    autocmd!
+"    autocmd BufWritePre * undojoin | Neoformat
+"augroup END"
 " tag自动生成
 " 生成.tags
 let g:gutentags_ctags_tagfile = '.tags'

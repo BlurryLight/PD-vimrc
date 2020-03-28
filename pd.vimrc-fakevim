@@ -24,7 +24,6 @@ set softtabstop=4                " insert mode tab and backspace use 4 spaces
 
 
 " mappings
-nnoremap ; :
 inoremap kj <Esc>
 inoremap <S-Insert> <ESC>"+p`]a 
 " <leader>q退出

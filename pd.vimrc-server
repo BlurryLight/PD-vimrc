@@ -95,7 +95,7 @@ set tags=./.tags;,.tags,tags
 " 用kj来替换ESC
 inoremap kj <Esc>
 " F3复制粘贴模式
-set pastetoggle=<F3>
+set pastetoggle=<C-p>
 " shift + insert || <leader>P 粘贴系统剪贴板的内容
 inoremap <S-Insert> <ESC>"+pa
 inoremap <leader>P <ESC>"+pa
@@ -113,9 +113,6 @@ nnoremap U <C-r>
 " <leader>/关闭搜索高亮
 noremap <silent><leader>/ :nohls<CR>
 
-" 一个我自己不太习惯的特性
-" 省略一个shift
- nnoremap ; :
 " 复制选中到系统剪贴板
 " 需要+clipboard特性支持
 " debian的包里目测只有vim-gtk带这个特性
@@ -181,7 +178,9 @@ call plug#begin('~/.vim/plugged')
 " auto complete
 Plug 'lifepillar/vim-mucomplete'
 " ALE
-Plug 'dense-analysis/ale'
+Plug 'dense-analysis/ale',{'for':'python'}
+" Jedi-vim
+Plug 'davidhalter/jedi-vim'
 " base16主题
 Plug 'chriskempson/base16-vim'
 " Airline
@@ -257,8 +256,8 @@ nnoremap <leader>t :TagbarToggle<CR>
 
 " mucomplete
 set completeopt+=menuone
- set completeopt+=noselect
- let g:mucomplete#enable_auto_at_startup = 1
+set completeopt+=noselect
+let g:mucomplete#enable_auto_at_startup = 1
 
 " nerdtree 配置
 " 下面两行：当打开一个文件夹时，自动打开nerdtree
@@ -364,8 +363,12 @@ let g:echodoc_enable_at_startup = 1
 
 " ALE设置
 let g:ale_linters = {'python':['pylint'],}
+let g:ale_completion_enabled = 0
 " disable warning,convention and refactoring
 let g:ale_python_pylint_options= '--disable=C,R' 
+
+"jedi
+let g:jedi#auto_vim_configuration = 0
 
 ""===============================语言配置=====================================
 

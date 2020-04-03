@@ -26,10 +26,6 @@ set softtabstop=4                " insert mode tab and backspace use 4 spaces
 " mappings
 inoremap kj <Esc>
 inoremap <S-Insert> <ESC>"+p`]a 
-" <leader>q退出
-nnoremap <leader>q :q<CR>
-" <leader>w保存
-nnoremap <leader>w :w<CR>
 " Upper U to redo
 nnoremap U <C-r>
 
@@ -42,8 +38,6 @@ nnoremap H ^
 nnoremap L $
 
 " command mode, ctrl-a to head， ctrl-e to tail
-cnoremap <C-j> <t_kd>
-cnoremap <C-k> <t_ku>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 

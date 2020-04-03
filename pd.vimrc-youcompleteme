@@ -92,8 +92,6 @@ set tags=./.tags;,.tags,tags
 
 "============================================= KEYS MAPPING ==================
 " 部分快捷键
-" 用kj来替换ESC
-inoremap kj <Esc>
 " Ctrl+p复制粘贴模式
 set pastetoggle=<C-p>
 " shift + insert || <leader>P 粘贴系统剪贴板的内容

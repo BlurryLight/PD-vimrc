@@ -116,7 +116,7 @@ noremap <silent><leader>/ :nohls<CR>
 " debian的包里目测只有vim-gtk带这个特性
 vnoremap <leader>y "+y
 "select all
-map <Leader>sa ggVG"
+map <Leader>a ggVG"
 " Shift+H goto head of the line, Shift+L goto end of the line
 nnoremap H ^
 nnoremap L $

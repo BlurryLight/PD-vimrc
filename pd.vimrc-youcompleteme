@@ -176,6 +176,8 @@ Plug 'chriskempson/base16-vim'
 Plug 'vim-airline/vim-airline'
 " 文件树
 Plug 'scrooloose/nerdtree'
+" CMake 字典补全
+Plug 'huleiak47/vim-cmake-complete',{'for':['cmake']}
 " 模糊查找
 " 需要GNU global配合
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
@@ -238,7 +240,13 @@ Plug  'derekwyatt/vim-fswitch'
 
 "rainbow parens
 Plug 'luochen1990/rainbow'
+let g:rainbow_conf = {
+\   'separately': {
+\       'cmake': 0,
+\   }
+\}
 let g:rainbow_active = 1
+
 
 " echodoc
 Plug 'Shougo/echodoc.vim'
@@ -488,8 +496,9 @@ let g:echodoc_enable_at_startup = 1
 
 " ALE设置
 let g:ale_linters = {'python':['pylint'],}
+let g:ale_completion_enabled = 0
 " disable warning,convention and refactoring
-let g:ale_python_pylint_options= '--disable=C,R' 
+let g:ale_python_pylint_options= '--extension-pkg-whitelist=cv2,numpy,torch	--disable=C,R' 
 
 
 "===============================语言配置=====================================
@@ -528,3 +537,7 @@ highlight clear SpellRare
 highlight SpellRare term=underline cterm=underline
 highlight clear SpellLocal
 highlight SpellLocal term=underline cterm=underline
+augroup disable_paste
+au!
+	au InsertLeave * set nopaste
+augroup END

@@ -92,7 +92,7 @@ set tags=./.tags;,.tags,tags
 
 "============================================= KEYS MAPPING ==================
 " 部分快捷键
-" Ctrl p复制粘贴模式
+" Ctrl+p复制粘贴模式
 set pastetoggle=<C-p>
 " shift + insert || <leader>P 粘贴系统剪贴板的内容
 inoremap <S-Insert> <ESC>"+pa
@@ -116,7 +116,7 @@ noremap <silent><leader>/ :nohls<CR>
 " debian的包里目测只有vim-gtk带这个特性
 vnoremap <leader>y "+y
 "select all
-map <Leader>sa ggVG"
+map <Leader>a ggVG"
 " Shift+H goto head of the line, Shift+L goto end of the line
 nnoremap H ^
 nnoremap L $
@@ -229,6 +229,11 @@ Plug  'derekwyatt/vim-fswitch'
 
 "rainbow parens
 Plug 'luochen1990/rainbow'
+let g:rainbow_conf = {
+\   'separately': {
+\       'cmake': 0,
+\   }
+\}
 let g:rainbow_active = 1
 
 " echodoc
@@ -271,13 +276,13 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " leadF配置
 " 自动更新索引
 let g:Lf_GtagsAutoGenerate = 1
-" <leader>fr搜索光标所在词语并允许跳转
+" <leader>fg搜索光标所在词语并允许跳转
 noremap <leader>fg :<C-U><C-R>=printf("Leaderf! gtags -g %s --auto-jump", expand("<cword>"))<CR><CR>
 
 " <leader>fr搜索光标所在词语的引用并允许跳转
 noremap <leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
 
-" <leader>fr搜索光标所在词语的定义并允许跳转
+" <leader>fd搜索光标所在词语的定义并允许跳转
 noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
 " <leader>fb 显示本文件tag
 noremap <leader>fb :<C-U><C-R>=printf("LeaderfBufTag")<CR><CR>
@@ -363,7 +368,7 @@ let g:echodoc_enable_at_startup = 1
 let g:ale_linters = {'python':['pylint'],}
 let g:ale_completion_enabled = 0
 " disable warning,convention and refactoring
-let g:ale_python_pylint_options= '--disable=C,R' 
+let g:ale_python_pylint_options= '--extension-pkg-whitelist=cv2,numpy,torch	--disable=C,R' 
 
 "jedi
 let g:jedi#auto_vim_configuration = 0
@@ -402,3 +407,8 @@ highlight clear SpellRare
 highlight SpellRare term=underline cterm=underline
 highlight clear SpellLocal
 highlight SpellLocal term=underline cterm=underline
+
+augroup disable_paste
+au!
+	au InsertLeave * set nopaste
+augroup END

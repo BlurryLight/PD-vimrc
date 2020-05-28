@@ -94,10 +94,14 @@ set tags=./.tags;,.tags,tags
 " 部分快捷键
 " Ctrl+p复制粘贴模式
 set pastetoggle=<C-p>
-" shift + insert || <leader>P 粘贴系统剪贴板的内容
-inoremap <S-Insert> <ESC>"+pa
-inoremap <leader>P <ESC>"+pa
-" <F2>关闭开启数字行号
+" 在没有X11的服务器上根本没有系统剪贴板
+" copy to buffer
+vnoremap <leader>y :w! ~/.vimbuffer<CR>
+nnoremap <leader>y :.w! ~/.vimbuffer<CR>
+" paste from buffer
+nnoremap <leader>p :r ~/.vimbuffer<CR>
+inoremap <leader>p <ESC>:r ~/.vimbuffer<CR>
+"<F2>关闭开启数字行号
 nnoremap <F2> :set nu! nu?<CR>
 " :W 表示sudo权限强制保存
 command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
@@ -111,10 +115,6 @@ nnoremap U <C-r>
 " <leader>/关闭搜索高亮
 noremap <silent><leader>/ :nohls<CR>
 
-" 复制选中到系统剪贴板
-" 需要+clipboard特性支持
-" debian的包里目测只有vim-gtk带这个特性
-vnoremap <leader>y "+y
 "select all
 map <Leader>a ggVG"
 " Shift+H goto head of the line, Shift+L goto end of the line
@@ -370,9 +370,8 @@ let g:ale_completion_enabled = 0
 " disable warning,convention and refactoring
 let g:ale_python_pylint_options= '--extension-pkg-whitelist=cv2,numpy,torch	--disable=C,R' 
 
-"jedi
-let g:jedi#auto_vim_configuration = 0
-
+" jedi
+let g:jedi#usages_command = "<leader>u"
 ""===============================语言配置=====================================
 
 au bufnewfile *.py 0r ~/.vim/template/python.tpl

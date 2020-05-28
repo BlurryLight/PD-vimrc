@@ -97,6 +97,8 @@ set pastetoggle=<C-p>
 " shift + insert || <leader>P 粘贴系统剪贴板的内容
 inoremap <S-Insert> <ESC>"+pa
 inoremap <leader>P <ESC>"+pa
+vnoremap <leader>y "+y
+nnoremap <leader>y "+y
 " <F2>关闭开启数字行号
 nnoremap <F2> :set nu! nu?<CR>
 " :W 表示sudo权限强制保存

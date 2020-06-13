@@ -169,12 +169,6 @@ endif
 " 在这一段需要的插件
 " 插件
 call plug#begin('~/.vim/plugged')
-" auto complete
-Plug 'lifepillar/vim-mucomplete'
-" clang-complete
-Plug 'xavierd/clang_complete'
-" Jedi-vim
-Plug 'davidhalter/jedi-vim'
 " base16主题
 Plug 'chriskempson/base16-vim'
 " Airline
@@ -187,6 +181,7 @@ Plug 'huleiak47/vim-cmake-complete',{'for':['cmake']}
 " 需要GNU global配合
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 " ALE 静态检查
+let g:ale_completion_enabled = 1
 Plug 'dense-analysis/ale'
 
 " C++ 增强高亮
@@ -306,16 +301,6 @@ noremap <leader>fp :<C-U><C-R>=printf("LeaderfFunction!")<CR><CR>
 " GLSL support
 let g:glsl_default_version = 'glsl330'
 let g:glsl_file_extensions = '*.glsl,*.vsh,*.fsh,*.vert,*.tesc,*.tese,*.geom,*.frag,*.comp'
-
-
-" mucomplete
-set noinfercase
-set completeopt+=menuone
-set completeopt+=noselect
-let g:clang_library_path = '/usr/lib/libclang.so'
-let g:clang_user_options = '-std=c++14'
-let g:clang_complete_auto = 1
-let g:mucomplete#enable_auto_at_startup = 1
 
 
 " nerd commenter注释
@@ -463,13 +448,11 @@ let g:echodoc_enable_at_startup = 1
 "
 nnoremap <leader>gd :ALEGoToDefinition<CR>
 nnoremap <leader>afr :ALEFindReferences<CR>
+let g:ale_hover_to_preview=1
 " let g:ale_linters = {'python':['pylint'],}
-let g:ale_completion_enabled = 0
 " disable warning,convention and refactoring
 let g:ale_python_pylint_options= '--extension-pkg-whitelist=cv2,numpy,torch	--disable=C,R' 
 
-" jedi
-let g:jedi#usages_command = "<leader>u"
 
 "===============================语言配置=====================================
 

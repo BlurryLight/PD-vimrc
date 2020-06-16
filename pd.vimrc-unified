@@ -418,8 +418,8 @@ let g:mkdp_port = ''
 let g:mkdp_page_title = '「${name}」'
 
 " cpp语法高亮加强
-let g:cpp_posix_standard = 1 "打开POSIX高亮"
-let g:cpp_experimental_template_highlight = 1 "template "
+let g:cpp_posix_standard = 1 "打开POSIX高亮
+let g:cpp_experimental_template_highlight = 1 "template
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_scope_highlight = 1
 let g:cpp_class_decl_highlight = 1
@@ -449,7 +449,10 @@ let g:echodoc_enable_at_startup = 1
 nnoremap <leader>gd :ALEGoToDefinition<CR>
 nnoremap <leader>afr :ALEFindReferences<CR>
 let g:ale_hover_to_preview=1
-" let g:ale_linters = {'python':['pylint'],}
+let g:ale_linters = {'python':['pylint'],
+\ 'c': ['clangd', 'clangtidy'],
+\ 'cpp': ['clangd', 'clangtidy']
+\ }
 " disable warning,convention and refactoring
 let g:ale_python_pylint_options= '--extension-pkg-whitelist=cv2,numpy,torch	--disable=C,R' 
 

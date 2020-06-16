@@ -6,7 +6,6 @@
 "  Everyone is permitted to copy and distribute verbatim or modified
 "  copies of this license document, and changing it is allowed as long
 "  as the name is changed.
-
 "             DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
 "    TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
 
@@ -175,6 +174,7 @@ endif
 call plug#begin('~/.vim/plugged')
 " auto complete
 Plug 'lifepillar/vim-mucomplete'
+"Plug 'vim-scripts/OmniCppComplete'
 " ALE
 Plug 'dense-analysis/ale',{'for':'python'}
 " Jedi-vim

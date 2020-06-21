@@ -165,6 +165,8 @@ endif
 " 在这一段需要的插件
 " 插件
 call plug#begin('~/.vim/plugged')
+" 缩进线
+Plug 'Yggdroot/indentLine'
 " base16主题
 Plug 'chriskempson/base16-vim'
 " Airline
@@ -238,9 +240,11 @@ let g:rainbow_conf = {
 \}
 let g:rainbow_active = 1
 
-
 " echodoc
 Plug 'Shougo/echodoc.vim'
+
+" My Private affairs
+Plug 'wakatime/vim-wakatime'
 call plug#end()
 
 

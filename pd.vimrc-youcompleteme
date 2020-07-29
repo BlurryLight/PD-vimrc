@@ -471,12 +471,14 @@ let g:ale_linters = {
             \}
 let g:ale_completion_enabled = 0
 " disable warning,convention and refactoring
-let g:ale_python_pylint_options= '--extension-pkg-whitelist=cv2,numpy,torch	--disable=C,R' 
+let g:ale_python_pylint_options= "--extension-pkg-whitelist=cv2,numpy,torch	--disable=C,R --init-hook='import sys; sys.path.append(\".\")'"
 " auto open quickfix at height of 8 lines
 let g:asyncrun_open = 8
 let g:asyncrun_bell = 1
 nnoremap q :call asyncrun#quickfix_toggle(8)<cr>
 
+" indentLine breaks json files
+let g:vim_json_conceal = 0
 "===============================语言配置=====================================
 
 
@@ -519,3 +521,4 @@ augroup disable_paste
 au!
 	au InsertLeave * set nopaste
 augroup END
+

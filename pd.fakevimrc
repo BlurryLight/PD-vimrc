@@ -1,0 +1,55 @@
+" highlight matched
+set hlsearch
+" case insensitive search
+set ignorecase
+set smartcase
+" search while typing
+set incsearch
+" wrap-around when searching
+set wrapscan
+" show pressed keys in lower right corner
+set showcmd
+" use ~ with movement
+set tildeop
+
+" tab替代
+set expandtab "tab to spaces
+set smarttab  "删除会自动删除等同于tab数量的空格
+set shiftround ">>和<<会处理没对齐的情况
+" indent
+set autoindent smartindent shiftround
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4                " insert mode tab and backspace use 4 spaces
+
+
+" mappings
+inoremap <S-Insert> <ESC>"+p`]a 
+" Upper U to redo
+nnoremap U <C-r>
+
+" <leader>/关闭搜索高亮
+noremap <silent><leader>/ :nohls<CR>
+
+map <Leader>sa ggVG"
+" Shift+H goto head of the line, Shift+L goto end of the line
+nnoremap H ^
+nnoremap L $
+
+" command mode, ctrl-a to head， ctrl-e to tail
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+
+" reselect visual block after indent
+vnoremap < <gv
+vnoremap > >gv
+" 简化在不同窗口中移动的操作
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+nnoremap <leader>gd :gd<CR>
+noremap <leader>cc :toggle<CR>
+
+

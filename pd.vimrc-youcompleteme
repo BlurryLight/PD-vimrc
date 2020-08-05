@@ -1,4 +1,4 @@
-"License: WTFPL
+" License: WTFPL
 
 
 "============================================= basic settings =========================================
@@ -6,7 +6,6 @@
 set noswapfile
 " I don't care the f**king vi
 set nocompatible
-
 " 强化正则表达式,没有magic，正则表达式近乎无法使用
 set magic
 
@@ -74,7 +73,10 @@ set whichwrap+=<,>,h,l,[,]
 " 自动去除部分文件的行尾空格
 autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 
-
+set timeout
+set ttimeout " 打开timeout和ttimeout
+set timeoutlen=3000 " 自定义的map 3秒视为超时
+set ttimeoutlen=100 " 内置的50ms
 "============================================= KEYS MAPPING ==================
 " 部分快捷键
 " Ctrl+p复制粘贴模式
@@ -153,6 +155,7 @@ endif
 " 在这一段需要的插件
 " 插件
 call plug#begin('~/.vim/plugged')
+Plug 'lilydjwg/fcitx.vim'
 " 缩进线
 Plug 'Yggdroot/indentLine'
 " base16主题

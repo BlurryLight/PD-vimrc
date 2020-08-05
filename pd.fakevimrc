@@ -52,4 +52,7 @@ map <C-l> <C-W>l
 nnoremap <leader>gd :gd<CR>
 noremap <leader>cc :toggle<CR>
 
+inoremap <ESC> <ESC>:!dbus-send --type=method_call --dest=org.fcitx.Fcitx /inputmethod org.fcitx.Fcitx.InputMethod.InactivateIM<CR>
+
+
 

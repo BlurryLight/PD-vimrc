@@ -130,7 +130,7 @@ map <C-l> <C-W>l
 
 " 移动后再次重新选中
 vnoremap < <gv
-vnoremap > >gv"
+vnoremap > >gv
 
 " tabpage
 " <leader>tb 创建tab
@@ -271,6 +271,11 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " leadF配置
 " 自动更新索引
+let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
+let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "Source Code Pro"  }
+let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
+let g:Lf_ShortcutF = "<leader>ff"
 let g:Lf_GtagsAutoGenerate = 1
 " <leader>fg搜索光标所在词语并允许跳转
 noremap <leader>fg :<C-U><C-R>=printf("Leaderf! gtags -g %s --auto-jump", expand("<cword>"))<CR><CR>
@@ -285,6 +290,12 @@ noremap <leader>fb :<C-U><C-R>=printf("LeaderfBufTag")<CR><CR>
 
 " <leader>fp 显示本文件函数列表
 noremap <leader>fp :<C-U><C-R>=printf("LeaderfFunction!")<CR><CR>
+
+" <leader>fs 显示所有symbols
+noremap <leader>fs :<C-U><C-R>=printf("Leaderf gtags %s","")<CR><CR>
+" <leader>fp 搜索某个pattern
+noremap <leader>fp :<C-U><C-R>=printf("Leaderf rg %s", "")<CR>
+
 
 " neoformat设置
 " format on save
@@ -525,3 +536,4 @@ au!
 	au InsertLeave * set nopaste
 augroup END
 
+" let g:NERDCustomDelimiters ={'c': { 'left': '/*****', 'right': '****/', 'leftAlt': '////'  }, 'cpp': { 'left': '/*****', 'right': '****/', 'leftAlt': '////'  } }

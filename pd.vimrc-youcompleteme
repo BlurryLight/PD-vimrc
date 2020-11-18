@@ -79,15 +79,12 @@ set timeoutlen=3000 " 自定义的map 3秒视为超时
 set ttimeoutlen=100 " 内置的50ms
 "============================================= KEYS MAPPING ==================
 " 部分快捷键
-" Ctrl+p复制粘贴模式
+" leader+p复制粘贴模式
 set pastetoggle=<leader>p
-" shift + insert || <leader>P 粘贴系统剪贴板的内容
-inoremap <S-Insert> <ESC>"+pa
-inoremap <leader>P <ESC>"+pa
-vnoremap <leader>y "+y
-nnoremap <leader>y "+y
+vnoremap <leader>Y :w! /tmp/vitmp<CR>                                                                   
+nnoremap <leader>P :r! cat /tmp/vitmp<CR>
 " <F2>关闭开启数字行号
-nnoremap <F2> :set nu! nu?<CR>
+nnoremap <leader>nu :set nu! nu?<CR>
 " :W 表示sudo权限强制保存
 command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 " Upper U to redo
@@ -96,10 +93,6 @@ nnoremap U <C-r>
 " <leader>/关闭搜索高亮
 noremap <silent><leader>/ :nohls<CR>
 
-" 复制选中到系统剪贴板
-" 需要+clipboard特性支持
-" debian的包里目测只有vim-gtk带这个特性
-vnoremap <leader>y "+y
 "select all
 map <Leader>a ggVG"
 " Shift+H goto head of the line, Shift+L goto end of the line
@@ -155,6 +148,10 @@ endif
 " 在这一段需要的插件
 " 插件
 call plug#begin('~/.vim/plugged')
+
+" git power
+Plug 'tpope/vim-fugitive'
+"
 Plug 'lilydjwg/fcitx.vim'
 " 缩进线
 Plug 'Yggdroot/indentLine'
@@ -536,4 +533,3 @@ au!
 	au InsertLeave * set nopaste
 augroup END
 
-" let g:NERDCustomDelimiters ={'c': { 'left': '/*****', 'right': '****/', 'leftAlt': '////'  }, 'cpp': { 'left': '/*****', 'right': '****/', 'leftAlt': '////'  } }

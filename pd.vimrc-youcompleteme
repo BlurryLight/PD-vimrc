@@ -83,7 +83,7 @@ set ttimeoutlen=100 " 内置的50ms
 set pastetoggle=<leader>p
 vnoremap <leader>Y :w! /tmp/vitmp<CR>                                                                   
 nnoremap <leader>P :r! cat /tmp/vitmp<CR>
-" <F2>关闭开启数字行号
+" <leader>nu关闭开启数字行号
 nnoremap <leader>nu :set nu! nu?<CR>
 " :W 表示sudo权限强制保存
 command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
@@ -132,6 +132,10 @@ nnoremap <leader>tb :tabnew<CR>
 inoremap <leader>tb <ESC>:tabnew<CR>
 nnoremap <leader>tc :tabclose<CR>
 
+" quickfix move
+nnoremap <leader>j  :cn<CR>
+nnoremap <leader>k  :cp<CR>
+
 
 
 "============================================= plugins ========================
@@ -149,6 +153,8 @@ endif
 " 插件
 call plug#begin('~/.vim/plugged')
 
+" vim-osc52
+Plug 'fcpg/vim-osc52'
 " git power
 Plug 'tpope/vim-fugitive'
 "
@@ -251,7 +257,6 @@ colorscheme base16-oceanicnext
 "colorscheme qdark
 
 " tagbar
-nnoremap <F4> :TagbarToggle<CR>
 nnoremap <leader>t :TagbarToggle<CR>
 
 
@@ -327,7 +332,9 @@ let g:ycm_key_list_select_completion = ['<c-j>', '<c-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>', '<c-k>']
 " <leader>gd 跳转定义和声明
 nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-let g:ycm_goto_buffer_command = 'vertical-split'
+nnoremap <C-]>  :YcmCompleter GoTo<CR>
+inoremap <C-]>  :YcmCompleter GoTo<CR>
+let g:ycm_goto_buffer_command = 'split-or-existing-window'
 set completeopt+=menuone
 set completeopt+=noselect
 
@@ -490,6 +497,11 @@ nnoremap q :call asyncrun#quickfix_toggle(8)<cr>
 
 " indentLine breaks json files
 let g:vim_json_conceal = 0
+
+"  vim-osc52
+"  <leader>terminal-copy 使用魔法osc-52复制到剪切板
+vnoremap <leader>ty y:Oscyank<CR>                                                                   
+
 "===============================语言配置=====================================
 
 
@@ -508,9 +520,6 @@ autocmd filetype c set makeprg=gcc\ -O2\ -lpthread\ -std=gnu99\ -g\ %\ -o\ %<
 autocmd filetype c nnoremap <leader>r :silent make\|redraw!\|cw<CR>
 autocmd filetype cpp nnoremap <leader>gr :AsyncRun g++ "%" -o "%<" -lpthread -Wall -Wpedantic<CR>
 autocmd filetype cpp nnoremap <leader>cr :AsyncRun clang++ "%" -o "%<" -lpthread -Wall -Wpedantic<CR>
-" quickfix move
-nnoremap <leader>j  :cn<CR>
-nnoremap <leader>k  :cp<CR>
 
 " 高亮所在行的行号
 " 必须放在主题的后面，覆盖主题设置

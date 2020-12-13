@@ -1,16 +1,109 @@
-" highlight matched
+" License: WTFPL
+
+
+"============================================= basic settings =========================================
+"禁止swap file
+set noswapfile
+" I don't care the f**king vi
+set nocompatible
+" 强化正则表达式,没有magic，正则表达式近乎无法使用
+set magic
+
+" 显示
+set number      "行号
+set ruler      "行号和列号
+
+" 加大移动距离
+set scrolloff=10
+
+" 增强标题显示
+set title
+
+" 离开窗口时自动保存，回到窗口时自动更新
+au FocusGained,BufEnter * :silent! !
+au FocusLost,WinLeave * :silent! w
+
+" 简写信息，并关闭乌干达可怜儿童
+set shortmess+=atI
+
+"打开自动探测文件类型和缩进
+filetype on
+filetype plugin on
+filetype indent on
+
+"设置leader
+"let mapleader = ','
+"let g:mapleader = ','
+
+"设置文件编码
+" 内部编码
+set encoding=utf-8
+" 读取文件时候顺序猜测编码
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+" 用于屏幕显示的编码
+set termencoding=utf-8
+
+
+" 自动缩进
+set autoindent
+
+" 高亮第80列
+set colorcolumn=80
+
+" 自动折行(这个是硬折行)
+"set linebreak
+
+" 高亮选中
 set hlsearch
-" case insensitive search
+
+" 自动换行
+set wrap
+
+" 设置默认进行大小写不敏感查找
 set ignorecase
+" " 如果有一个大写字母，则切换到大小写敏感查找
 set smartcase
-" search while typing
-set incsearch
-" wrap-around when searching
-set wrapscan
-" show pressed keys in lower right corner
-set showcmd
-" use ~ with movement
-set tildeop
+"
+
+" 让退格键能正常退格
+set backspace=indent,eol,start
+" Vim默认左右方向键不会切换到下一行，调一下，让<>,h,l,[,]都可以换行
+set whichwrap+=<,>,h,l,[,]
+
+" 自动去除部分文件的行尾空格
+autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
+
+set timeout
+set ttimeout " 打开timeout和ttimeout
+set timeoutlen=3000 " 自定义的map 3秒视为超时
+set ttimeoutlen=100 " 内置的50ms
+"============================================= KEYS MAPPING ==================
+" 部分快捷键
+" leader+p复制粘贴模式
+set pastetoggle=<leader>p
+vnoremap <leader>Y :w! /tmp/vitmp<CR>                                                                   
+nnoremap <leader>P :r! cat /tmp/vitmp<CR>
+" <leader>nu关闭开启数字行号
+nnoremap <leader>nu :set nu! nu?<CR>
+" :W 表示sudo权限强制保存
+command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
+" Upper U to redo
+nnoremap U <C-r>
+
+" <leader>/关闭搜索高亮
+noremap <silent><leader>/ :nohls<CR>
+
+"select all
+map <Leader>a ggVG"
+" Shift+H goto head of the line, Shift+L goto end of the line
+nnoremap H ^
+nnoremap L $
+
+" command mode, ctrl-a to head， ctrl-e to tail
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+
+
 
 " tab替代
 set expandtab "tab to spaces
@@ -22,32 +115,23 @@ set shiftwidth=4
 set tabstop=4
 set softtabstop=4                " insert mode tab and backspace use 4 spaces
 
-
-" mappings
-inoremap kj <Esc>
-inoremap <S-Insert> <ESC>"+p`]a 
-" Upper U to redo
-nnoremap U <C-r>
-
-" <leader>/关闭搜索高亮
-noremap <silent><leader>/ :nohls<CR>
-
-map <Leader>sa ggVG"
-" Shift+H goto head of the line, Shift+L goto end of the line
-nnoremap H ^
-nnoremap L $
-
-" command mode, ctrl-a to head， ctrl-e to tail
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
-
-" reselect visual block after indent
-vnoremap < <gv
-vnoremap > >gv
 " 简化在不同窗口中移动的操作
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+" 移动后再次重新选中
+vnoremap < <gv
+vnoremap > >gv
 
+" tabpage
+" <leader>tb 创建tab
+" <leader>tc 关闭tab
+nnoremap <leader>tb :tabnew<CR>
+inoremap <leader>tb <ESC>:tabnew<CR>
+nnoremap <leader>tc :tabclose<CR>
+
+" quickfix move
+nnoremap <leader>j  :cn<CR>
+nnoremap <leader>k  :cp<CR>

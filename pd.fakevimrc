@@ -23,8 +23,6 @@ set tabstop=4
 set softtabstop=4                " insert mode tab and backspace use 4 spaces
 
 
-" mappings
-inoremap <S-Insert> <ESC>"+p`]a 
 " Upper U to redo
 nnoremap U <C-r>
 
@@ -50,9 +48,14 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 nnoremap <leader>gd :gd<CR>
-noremap <leader>cc :toggle<CR>
+nnoremap <leader>cc :cc<CR>
+nnoremap <leader>ff :ff<CR>
+nnoremap <leader>fb :fb<CR>
+nnoremap <leader>r :run<CR>
+nnoremap <leader>fr :fr<CR>
+nnoremap <leader>fs :fs<CR>
 
-inoremap <ESC> <ESC>:!dbus-send --type=method_call --dest=org.fcitx.Fcitx /inputmethod org.fcitx.Fcitx.InputMethod.InactivateIM<CR>
-
+" inoremap <ESC> <ESC>:!dbus-send --type=method_call --dest=org.fcitx.Fcitx /inputmethod org.fcitx.Fcitx.InputMethod.InactivateIM<CR>
+"
 
 

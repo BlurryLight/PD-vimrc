@@ -1,6 +1,5 @@
 " License: WTFPL
 
-
 "============================================= basic settings =========================================
 "禁止swap file
 set noswapfile
@@ -163,6 +162,9 @@ Plug 'lilydjwg/fcitx.vim'
 Plug 'Yggdroot/indentLine'
 " base16主题
 Plug 'chriskempson/base16-vim'
+" Solarized8 
+Plug 'lifepillar/vim-solarized8'
+Plug 'vim-airline/vim-airline-themes'
 " Airline
 Plug 'vim-airline/vim-airline'
 " 文件树
@@ -259,6 +261,11 @@ endif
 set t_Co=256
 let base16colorspace=256
 colorscheme base16-oceanicnext
+" set background=light
+" colorscheme solarized8
+" let g:solarized_statusline="flat"
+" let g:solarized_termtrans=1
+" let g:airline_theme = 'solarized'
 "colorscheme qdark
 
 " tagbar
@@ -507,15 +514,22 @@ nnoremap <leader>sd :FSSplitRight<CR>
 set cmdheight=2
 let g:echodoc_enable_at_startup = 1
 
+" \'c':[],
+" \'cpp':[],
 " ALE设置
 let g:ale_linters = {
             \'python':['pylint'],
-            \'c':[],
-            \'cpp':[],
             \}
 let g:ale_completion_enabled = 0
 " disable warning,convention and refactoring
 let g:ale_python_pylint_options= "--extension-pkg-whitelist=cv2,numpy,torch	--disable=C,R --init-hook='import sys; sys.path.append(\".\")'"
+" Write this in your vimrc file
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 0
+" You can disable this option too
+" if you don't want linters to run on opening a file
+let g:ale_lint_on_enter = 0
+
 " auto open quickfix at height of 8 lines
 let g:asyncrun_open = 8
 let g:asyncrun_bell = 1

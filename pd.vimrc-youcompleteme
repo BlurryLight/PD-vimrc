@@ -277,8 +277,10 @@ nnoremap <leader>t :TagbarToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 
-" <leader><n>打开nerdtree
+" <leader>n打开nerdtree
 nnoremap <leader>n :NERDTreeToggle<CR>
+nnoremap <leader>nf :NERDTreeFocus<CR>
+let NERDTreeQuitOnOpen=1
 
 " 关闭vim当只剩下nerdtree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif

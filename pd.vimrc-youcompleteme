@@ -115,10 +115,10 @@ set tabstop=4
 set softtabstop=4                " insert mode tab and backspace use 4 spaces
 
 " 简化在不同窗口中移动的操作
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+" nnoremap <C-j> <C-W>j
+" nnoremap <C-k> <C-W>k
+" nnoremap <C-h> <C-W>h
+" nnoremap <C-l> <C-W>l
 
 " 移动后再次重新选中
 vnoremap < <gv
@@ -151,6 +151,16 @@ endif
 " 在这一段需要的插件
 " 插件
 call plug#begin('~/.vim/plugged')
+
+" chdir to working buffer
+Plug 'mattn/vim-findroot'
+
+" Track the engine.
+Plug 'SirVer/ultisnips'
+
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
+
 
 " vim-osc52
 Plug 'fcpg/vim-osc52'
@@ -271,6 +281,13 @@ colorscheme base16-oceanicnext
 " tagbar
 nnoremap <leader>t :TagbarToggle<CR>
 
+" ultisnip
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
 " nerdtree 配置
 " 下面两行：当打开一个文件夹时，自动打开nerdtree
@@ -315,10 +332,12 @@ nnoremap <leader>fp :<C-U><C-R>=printf("Leaderf rg %s", "")<CR>
 
 " neoformat设置
 " format on save
-"augroup fmt
-"    autocmd!
-"    autocmd BufWritePre * undojoin | Neoformat
-"augroup END
+if filereadable(".vimneoformat") || filereadable(".clang-format")
+    augroup fmt
+    autocmd!
+    autocmd BufWritePre * undojoin | Neoformat
+    augroup END
+endif
 
 " GLSL support
 let g:glsl_default_version = 'glsl330'
@@ -342,8 +361,8 @@ let g:ycm_show_diagnostics_ui = 1
 "let g:ycm_min_num_identifier_candidate_chars = 2
 " 用ycm generator感觉会更好
 "let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-let g:ycm_key_list_select_completion = ['<c-j>', '<c-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>', '<c-k>']
+let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
 " <leader>gd 跳转定义和声明
 nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <C-]>  :YcmCompleter GoTo<CR>

@@ -182,11 +182,16 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'skywind3000/asyncrun.vim'
 
 " Cmake support
-Plug 'vhdirk/vim-cmake'
+" Plug 'vhdirk/vim-cmake'
 "简单用法
-" :CMake编译，可以和asyncrun联动，可以传递参数
+" :CMake生成build目录，可以和asyncrun联动，可以传递参数
+" :make编译，不是异步
 " :CMakeclean 清理build文件夹
 
+
+"  Another CMake support
+
+Plug 'BlurryLight/vim-cmake'
 
 
 " 代码异步格式化
@@ -280,23 +285,23 @@ let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
 let g:Lf_ShortcutF = "<leader>ff"
 let g:Lf_GtagsAutoGenerate = 1
 " <leader>fg搜索光标所在词语并允许跳转
-noremap <leader>fg :<C-U><C-R>=printf("Leaderf! gtags -g %s --auto-jump", expand("<cword>"))<CR><CR>
+nnoremap <leader>fg :<C-U><C-R>=printf("Leaderf! gtags -g %s --auto-jump", expand("<cword>"))<CR><CR>
 
 " <leader>fr搜索光标所在词语的引用并允许跳转
-noremap <leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
+nnoremap <leader>fr :<C-U><C-R>=printf("Leanderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
 
 " <leader>fd搜索光标所在词语的定义并允许跳转
-noremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
+nnoremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
 " <leader>fb 显示本文件tag
-noremap <leader>fb :<C-U><C-R>=printf("LeaderfBufTag")<CR><CR>
+nnoremap <leader>fb :<C-U><C-R>=printf("LeaderfBufTag")<CR><CR>
 
 " <leader>fp 显示本文件函数列表
-noremap <leader>fp :<C-U><C-R>=printf("LeaderfFunction!")<CR><CR>
+nnoremap <leader>fp :<C-U><C-R>=printf("LeaderfFunction!")<CR><CR>
 
 " <leader>fs 显示所有symbols
-noremap <leader>fs :<C-U><C-R>=printf("Leaderf gtags %s","")<CR><CR>
+nnoremap <leader>fs :<C-U><C-R>=printf("Leaderf gtags %s","")<CR><CR>
 " <leader>fp 搜索某个pattern
-noremap <leader>fp :<C-U><C-R>=printf("Leaderf rg %s", "")<CR>
+nnoremap <leader>fp :<C-U><C-R>=printf("Leaderf rg %s", "")<CR>
 
 
 " neoformat设置
@@ -460,10 +465,31 @@ let g:cpp_member_variable_highlight = 1
 let g:cpp_class_scope_highlight = 1
 let g:cpp_class_decl_highlight = 1
 
-" CMake配置
-let g:cmake_project_generator="Ninja" "默认ninja 
-let g:cmake_export_compile_commands = 1
-let g:cmake_ycm_symlinks = 1 "自动生成ycm
+" vhdirk/vim-CMake配置
+" met g:cmake_project_generator="Ninja" "默认ninja
+" let g:cmake_export_compile_commands = 1
+" let g:cmake_ycm_symlinks = 1 "自动生成ycm
+
+" vim-Cmake配置
+let g:cmake_link_compile_commands = 1
+let g:jump_on_error = 0 " We do not want to focus the console
+
+augroup vim-cmake-group
+autocmd User CMakeBuildFailed :cfirst
+augroup END
+
+augroup vim-cmake-group
+autocmd! User CMakeBuildSucceeded CMakeClose
+augroup END
+
+" nnoremap <leader>zb :CMakeBuild --parallel <CR>
+" nnoremap <leader>zg :CMakeGenerate Debug<CR>
+nnoremap <leader>zg :<C-U><C-R>=printf("CMakeGenerate %s", "Debug")<CR>
+nnoremap <leader>zb :<C-U><C-R>=printf("CMakeBuild --parallel %s", "")<CR>
+nnoremap <leader>zs :<C-U><C-R>=printf("CMakeSwitch %s", "")<CR>
+" nnoremap <leader>zo :CMakeOpen<CR>
+nnoremap <leader>zc :CMakeClose<CR>
+
 
 " C/C++源代码跳转
 " gf去头文件
@@ -502,11 +528,14 @@ let g:vim_json_conceal = 0
 "  <leader>terminal-copy 使用魔法osc-52复制到剪切板
 vnoremap <leader>ty y:Oscyank<CR>                                                                   
 
+"Quickfix
+" close vim when quickfix is the last window
+aug QFClose
+  au!
+    au WinEnter * if winnr('$') == 1 && &buftype == "quickfix"|q|endif
+aug END
+
 "===============================语言配置=====================================
-
-
-au bufnewfile *.sh 0r ~/.vim/template/shell.tpl
-au bufnewfile *.py 0r ~/.vim/template/python.tpl
 
 " only support c file
 " I rarely use vim to write C++ code

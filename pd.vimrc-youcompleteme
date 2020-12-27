@@ -332,7 +332,11 @@ nnoremap <leader>fp :<C-U><C-R>=printf("Leaderf rg %s", "")<CR>
 
 " neoformat设置
 " format on save
-if filereadable(".vimneoformat") || filereadable(".clang-format")
+" o/pyc后缀是为了gitignore,常见的gitignore都忽略
+if filereadable(".vimneoformat") ||  
+            \ filereadable(".clang-format") ||
+            \ filereadable(".vimneoformat.o") || 
+            \ filereadable(".vimneoformat.pyc")
     augroup fmt
     autocmd!
     autocmd BufWritePre * undojoin | Neoformat
@@ -390,6 +394,8 @@ let g:NERDTrimTrailingWhitespace = 1
 
 " Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
+" 关闭所有默认映射
+let g:NERDCreateDefaultMappings = 0
 
 " 快速注释，为了和多数IDE保持一致，可以映射到<C-/>上
 " 不，我错了，<C-/>在vim里不能用

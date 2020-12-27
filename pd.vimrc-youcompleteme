@@ -180,9 +180,10 @@ Plug 'lilydjwg/fcitx.vim'
 " 缩进线
 Plug 'Yggdroot/indentLine'
 " base16主题
-Plug 'chriskempson/base16-vim'
-" Solarized8 
-Plug 'lifepillar/vim-solarized8'
+" 包含了很多主题
+" 可以用:colorscheme base-16-<Tab>查看
+" 也可以在http://chriskempson.com/projects/base16/上看
+Plug 'chriskempson/base16-vim' 
 Plug 'vim-airline/vim-airline-themes'
 " Airline
 Plug 'vim-airline/vim-airline'
@@ -279,13 +280,10 @@ if exists('+termguicolors')
 endif
 set t_Co=256
 let base16colorspace=256
-colorscheme base16-oceanicnext
-" set background=light
-" colorscheme solarized8
-" let g:solarized_statusline="flat"
-" let g:solarized_termtrans=1
-" let g:airline_theme = 'solarized'
-"colorscheme qdark
+colorscheme base16-solarized-light 
+let g:airline_theme = 'solarized'
+let g:airline_solarized_bg='light'
+
 
 " tagbar
 nnoremap <leader>t :TagbarToggle<CR>

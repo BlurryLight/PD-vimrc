@@ -450,7 +450,7 @@ endfunction
 let g:mkdp_auto_start = 0
 
 "leader + m + k markdownpreview
-nnoremap <leader>mk <Plug>MarkdownPreview
+nnoremap <leader>mk :MarkdownPreview<CR>
 
 " set to 1, the nvim will auto close current preview window when change
 " from markdown buffer to another buffer
@@ -471,7 +471,7 @@ let g:mkdp_command_for_global = 0
 " set to 1, preview server available to others in your network
 " by default, the server listens on localhost (127.0.0.1)
 " default: 0
-let g:mkdp_open_to_the_world = 0
+let g:mkdp_open_to_the_world = 1
 
 " use custom IP to open preview page
 " useful when you work in remote vim and preview on local browser
@@ -485,7 +485,7 @@ let g:mkdp_browser = ''
 
 " set to 1, echo preview page url in command line when open preview page
 " default is 0
-let g:mkdp_echo_preview_url = 0
+let g:mkdp_echo_preview_url = 1
 
 " a custom vim function name to open preview page
 " this function will receive url as param

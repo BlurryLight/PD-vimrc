@@ -75,7 +75,7 @@ autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 set timeout
 set ttimeout " 打开timeout和ttimeout
 set timeoutlen=3000 " 自定义的map 3秒视为超时
-set ttimeoutlen=100 " 内置的50ms
+set ttimeoutlen=50 " 内置的50ms
 "============================================= KEYS MAPPING ==================
 " 部分快捷键
 " leader+p复制粘贴模式
@@ -93,7 +93,7 @@ nnoremap U <C-r>
 noremap <silent><leader>/ :nohls<CR>
 
 "select all
-map <Leader>a ggVG"
+noremap <Leader>a ggVG"
 " Shift+H goto head of the line, Shift+L goto end of the line
 nnoremap H ^
 nnoremap L $
@@ -143,7 +143,28 @@ function! ToggleLocList()
     endif
 endfunction
 
-nnoremap <silent> l :call ToggleLocList()<cr>
+"from: https://github.com/lilydjwg/dotvim/blob/master/plugin/escalt.vim
+function Escalt_console()
+  " <M-P> are left out because it causes issues
+  " https://github.com/vim/vim/issues/7135
+  " reason: https://github.com/vim/vim/issues/2581#issuecomment-639746235
+  for i in range(48, 57) + range(65, 79) + range(81, 90) + range(97, 122)
+    exe "set <M-".nr2char(i).">=\<Esc>".nr2char(i)
+  endfor
+  set <M-,>=,
+  set <M-.>=.
+endfunction
+
+if !has('nvim')
+  call Escalt_console()
+endif
+
+nnoremap <silent> <M-e> :call ToggleLocList()<cr>
+
+
+
+
+
 
 
 "============================================= plugins ========================
@@ -280,9 +301,12 @@ if exists('+termguicolors')
 endif
 set t_Co=256
 let base16colorspace=256
-colorscheme base16-solarized-light 
-let g:airline_theme = 'solarized'
-let g:airline_solarized_bg='light'
+" colorscheme base16-onedark
+colorscheme base16-oceanicnext
+" colorscheme base16-solarized-light
+" let g:airline_theme = 'solarized'
+" let g:airline_solarized_bg='light'
+
 
 
 " tagbar
@@ -574,7 +598,7 @@ let g:ale_lint_on_enter = 0
 " auto open quickfix at height of 8 lines
 let g:asyncrun_open = 8
 let g:asyncrun_bell = 1
-nnoremap q :call asyncrun#quickfix_toggle(8)<cr>
+nnoremap <silent> <M-q> :call asyncrun#quickfix_toggle(8)<cr>
 
 
 " indentLine breaks json files

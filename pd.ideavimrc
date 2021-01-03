@@ -115,11 +115,6 @@ set shiftwidth=4
 set tabstop=4
 set softtabstop=4                " insert mode tab and backspace use 4 spaces
 
-" 简化在不同窗口中移动的操作
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
 
 " 移动后再次重新选中
 vnoremap < <gv

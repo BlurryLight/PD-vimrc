@@ -212,6 +212,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'scrooloose/nerdtree'
 " CMake 字典补全
 Plug 'huleiak47/vim-cmake-complete',{'for':['cmake']}
+" CMake syntax
+Plug 'pboettch/vim-cmake-syntax'
 " 模糊查找
 " 需要GNU global配合
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
@@ -388,9 +390,9 @@ inoremap <expr> <cr> ((pumvisible())?("\<C-y>"):("\<cr>"))
 let g:ycm_confirm_extra_conf = 0
 "
 " 语义补全
-" let g:ycm_semantic_triggers =  {
-"             \ 'c,cpp': ['re!\w{4}'],
-"             \}
+let g:ycm_semantic_triggers =  {
+            \ 'cmake': ['re!\w{2}'],
+            \}
 " 静态检查
 let g:ycm_show_diagnostics_ui = 1
 "let g:ycm_min_num_identifier_candidate_chars = 2

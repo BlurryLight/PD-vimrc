@@ -76,6 +76,8 @@ set timeout
 set ttimeout " 打开timeout和ttimeout
 set timeoutlen=3000 " 自定义的map 3秒视为超时
 set ttimeoutlen=50 " 内置的50ms
+
+set wildmenu
 "============================================= KEYS MAPPING ==================
 " 部分快捷键
 " leader+p复制粘贴模式
@@ -132,8 +134,19 @@ inoremap <leader>tb <ESC>:tabnew<CR>
 nnoremap <leader>tc :tabclose<CR>
 
 " quickfix move
-nnoremap <leader>j  :cn<CR>
-nnoremap <leader>k  :cp<CR>
+"nnoremap <leader>j  :cn<CR>
+"nnoremap <leader>k  :cp<CR>
+
+packadd cfilter
+nnoremap <leader>qs :<C-U><C-R>=printf("Cfilter %s", "")<CR>
+nnoremap <leader>qn :col<CR>
+nnoremap <leader>qp :cnew<CR>
+autocmd BufReadPost quickfix nnoremap <buffer> v <C-w><Enter><C-w>L
+autocmd BufReadPost quickfix nnoremap <buffer> s <C-w><Enter><C-w>K
+augroup vimrc_colors
+    au!
+    au ColorScheme * hi QuickFixLine ctermfg=NONE cterm=bold guifg=NONE gui=bold
+augroup END
 
 function! ToggleLocList()
     if empty(filter(getwininfo(), 'v:val.loclist'))
@@ -143,23 +156,23 @@ function! ToggleLocList()
     endif
 endfunction
 
-"from: https://github.com/lilydjwg/dotvim/blob/master/plugin/escalt.vim
-function Escalt_console()
-  " <M-P> are left out because it causes issues
-  " https://github.com/vim/vim/issues/7135
-  " reason: https://github.com/vim/vim/issues/2581#issuecomment-639746235
-  for i in range(48, 57) + range(65, 79) + range(81, 90) + range(97, 122)
-    exe "set <M-".nr2char(i).">=\<Esc>".nr2char(i)
-  endfor
-  set <M-,>=,
-  set <M-.>=.
-endfunction
+" "from: https://github.com/lilydjwg/dotvim/blob/master/plugin/escalt.vim
+" function Escalt_console()
+"   " <M-P> are left out because it causes issues
+"   " https://github.com/vim/vim/issues/7135
+"   " reason: https://github.com/vim/vim/issues/2581#issuecomment-639746235
+"   for i in range(48, 57) + range(65, 79) + range(81, 90) + range(97, 122)
+"     exe "set <M-".nr2char(i).">=\<Esc>".nr2char(i)
+"   endfor
+"   set <M-,>=,
+"   set <M-.>=.
+" endfunction
+"
+" if !has('nvim')
+"   call Escalt_console()
+" endif
 
-if !has('nvim')
-  call Escalt_console()
-endif
-
-nnoremap <silent> <M-e> :call ToggleLocList()<cr>
+nnoremap <silent> e :call ToggleLocList()<cr>
 
 
 
@@ -182,18 +195,24 @@ endif
 " 插件
 call plug#begin('~/.vim/plugged')
 
-" chdir to working buffer
-Plug 'mattn/vim-findroot'
+" " chdir to working buffer
+" Plug 'mattn/vim-findroot'
+
+" 中文vim帮助
+Plug 'yianwillis/vimcdoc'
 
 " Track the engine.
 Plug 'SirVer/ultisnips'
+
+" vim surround
+Plug 'tpope/vim-surround'
 
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
 
 
 " vim-osc52
-Plug 'fcpg/vim-osc52'
+Plug 'ojroques/vim-oscyank',{'branch': 'main'}
 " git power
 Plug 'tpope/vim-fugitive'
 "
@@ -272,7 +291,7 @@ Plug 'majutsushi/tagbar'
 Plug 'octol/vim-cpp-enhanced-highlight'
 
 " c/c++ header / source 跳转
-Plug  'derekwyatt/vim-fswitch'
+Plug  'BlurryLight/vim-fswitch'
 
 
 "rainbow parens
@@ -284,8 +303,8 @@ let g:rainbow_conf = {
 \}
 let g:rainbow_active = 1
 
-" " echodoc
-" Plug 'Shougo/echodoc.vim'
+" echodoc
+Plug 'Shougo/echodoc.vim'
 
 " My Private affairs
 Plug 'wakatime/vim-wakatime'
@@ -347,7 +366,7 @@ let g:Lf_GtagsAutoGenerate = 1
 nnoremap <leader>fg :<C-U><C-R>=printf("Leaderf! gtags -g %s --auto-jump", expand("<cword>"))<CR><CR>
 
 " <leader>fr搜索光标所在词语的引用并允许跳转
-nnoremap <leader>fr :<C-U><C-R>=printf("Leanderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
+nnoremap <leader>fr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
 
 " <leader>fd搜索光标所在词语的定义并允许跳转
 nnoremap <leader>fd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
@@ -362,14 +381,29 @@ nnoremap <leader>fs :<C-U><C-R>=printf("Leaderf gtags %s","")<CR><CR>
 " <leader>fp 搜索某个pattern
 nnoremap <leader>fp :<C-U><C-R>=printf("Leaderf rg %s", "")<CR>
 
+" https://github.com/hanxi/dotfiles/blob/master/etc/vimrc.vim#L118~L131
+"{{ 查找工程目录
+function! SearchRoot()
+  let l:scm_list = ['.root', '.svn', '.git']
+  for l:item in l:scm_list
+    let l:dirs = finddir(l:item, '.;', -1)
+    if !empty(l:dirs)
+      return fnamemodify(l:dirs[-1].'/../', ':p:h')
+    endif
+  endfor
+  return getcwd()
+endfunction
+let g:root_dir = SearchRoot()
+" autocmd BufEnter * exe ':cd '.g:root_dir
+"}}
 
 " neoformat设置
 " format on save
 " o/pyc后缀是为了gitignore,常见的gitignore都忽略
-if filereadable(".vimneoformat") ||  
-            \ filereadable(".clang-format") ||
-            \ filereadable(".vimneoformat.o") || 
-            \ filereadable(".vimneoformat.pyc")
+if filereadable(g:root_dir . "/.vimneoformat") ||  
+            \ filereadable(g:root_dir . "/.clang-format") ||
+            \ filereadable(g:root_dir . "/.vimneoformat.o") || 
+            \ filereadable(g:root_dir . "/.vimneoformat.pyc")
     augroup fmt
     autocmd!
     autocmd BufWritePre * undojoin | Neoformat
@@ -544,7 +578,8 @@ let g:cpp_class_decl_highlight = 1
 
 " vim-Cmake配置
 let g:cmake_link_compile_commands = 1
-let g:jump_on_error = 0 " We do not want to focus the console
+let g:cmake_jump_on_error = 0 " We do not want to focus the console
+let g:cmake_build_directory = 'build'
 
 augroup vim-cmake-group
 autocmd User CMakeBuildFailed :cfirst
@@ -578,14 +613,20 @@ nnoremap <leader>sd :FSSplitRight<CR>
 " YCM has done it
 "To use echodoc, you must increase 'cmdheight' value.
 set cmdheight=2
+let g:echodoc_enable_at_startup = 1
 " set noshowmode
-" let g:echodoc_enable_at_startup = 1
 
 " \'c':[],
 " \'cpp':[],
 " ALE设置
 let g:ale_linters = {
             \'python':['pylint'],
+            \'cpp':['clangd'],
+            \'c':['clangd'],
+            \}
+let g:ale_fixers ={
+            \'cpp':['clangtidy','clang-format'],
+            \'c':['clangtidy','clang-format'],
             \}
 let g:ale_completion_enabled = 0
 " disable warning,convention and refactoring
@@ -600,7 +641,7 @@ let g:ale_lint_on_enter = 0
 " auto open quickfix at height of 8 lines
 let g:asyncrun_open = 8
 let g:asyncrun_bell = 1
-nnoremap <silent> <M-q> :call asyncrun#quickfix_toggle(8)<cr>
+nnoremap <silent> q :call asyncrun#quickfix_toggle(8)<cr>
 
 
 " indentLine breaks json files
@@ -608,7 +649,13 @@ let g:vim_json_conceal = 0
 
 "  vim-osc52
 "  <leader>terminal-copy 使用魔法osc-52复制到剪切板
-vnoremap <leader>ty y:Oscyank<CR>                                                                   
+vnoremap <leader>ty :OSCYank<CR>
+" " 自动复制+ reg
+" augroup OSCYank
+"   autocmd!
+"   autocmd TextYankPost *
+"     \ if v:event.operator is 'y' && v:event.regname is '+' | call YankOSC52(getreg('+')) | endif
+" augroup END
 
 "Quickfix
 " close vim when quickfix is the last window
@@ -631,6 +678,8 @@ autocmd filetype c set makeprg=gcc\ -O2\ -lpthread\ -std=gnu99\ -g\ %\ -o\ %<
 autocmd filetype c nnoremap <leader>r :silent make\|redraw!\|cw<CR>
 autocmd filetype cpp nnoremap <leader>gr :AsyncRun g++ "%" -o "%<" -lpthread -Wall -Wpedantic<CR>
 autocmd filetype cpp nnoremap <leader>cr :AsyncRun clang++ "%" -o "%<" -lpthread -Wall -Wpedantic<CR>
+autocmd FileType c,cpp setlocal equalprg=clang-format
+
 
 " 高亮所在行的行号
 " 必须放在主题的后面，覆盖主题设置

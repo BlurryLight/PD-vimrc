@@ -425,7 +425,7 @@ let g:glsl_file_extensions = '*.glsl,*.vsh,*.fsh,*.vert,*.tesc,*.tese,*.geom,*.f
 augroup lazy_load_ycm
   autocmd!
   autocmd InsertEnter * call plug#load('YouCompleteMe')
-                     \| call youcompleteme#Enable() | autocmd! lazy_load_ycm
+                     \| autocmd! lazy_load_ycm
 augroup END
 
 inoremap <expr> <cr> ((pumvisible())?("\<C-y>"):("\<cr>"))

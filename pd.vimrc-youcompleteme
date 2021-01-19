@@ -198,6 +198,8 @@ call plug#begin('~/.vim/plugged')
 " " chdir to working buffer
 " Plug 'mattn/vim-findroot'
 
+" profiler
+Plug 'tweekmonster/startuptime.vim'
 " 中文vim帮助
 Plug 'yianwillis/vimcdoc'
 
@@ -228,7 +230,7 @@ Plug 'vim-airline/vim-airline-themes'
 " Airline
 Plug 'vim-airline/vim-airline'
 " 文件树
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree',{'on':  'NERDTreeToggle'}
 " CMake 字典补全
 Plug 'huleiak47/vim-cmake-complete',{'for':['cmake']}
 " CMake syntax
@@ -265,13 +267,13 @@ Plug 'sbdchd/neoformat'
 Plug 'jiangmiao/auto-pairs'
 
 " GLSL support
-Plug 'tikhomirov/vim-glsl'
+Plug 'tikhomirov/vim-glsl',{'for':'glsl'}
 
 " MOST HORRIBLE PLUGIN(NOT ACTURALLY A PLUGIN BUT A MONSTER)
-Plug 'Valloric/YouCompleteMe',{'do':'./install.py --clangd-completer'}
+Plug 'Valloric/YouCompleteMe',{'do':'./install.py --clangd-completer','on': []}
 
 " YCMgenerator
-Plug 'rdnetto/YCM-Generator',{'branch':'stable'}
+" Plug 'rdnetto/YCM-Generator',{'branch':'stable'}
 
 "NERD commenter
 " 快速注释
@@ -419,10 +421,16 @@ let g:glsl_file_extensions = '*.glsl,*.vsh,*.fsh,*.vert,*.tesc,*.tese,*.geom,*.f
 " 让按键更正常
 " 当有补全列表时，回车等于补全
 " 当没有补全列表时，回车等于插入新行
+
+augroup lazy_load_ycm
+  autocmd!
+  autocmd InsertEnter * call plug#load('YouCompleteMe')
+                     \| call youcompleteme#Enable() | autocmd! lazy_load_ycm
+augroup END
+
 inoremap <expr> <cr> ((pumvisible())?("\<C-y>"):("\<cr>"))
 " 关闭每次都要load conf的提示
 let g:ycm_confirm_extra_conf = 0
-"
 " 语义补全
 let g:ycm_semantic_triggers =  {
             \ 'cmake': ['re!\w{2}'],

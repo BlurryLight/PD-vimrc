@@ -94,7 +94,7 @@ nnoremap U <C-r>
 noremap <silent><leader>/ :nohls<CR>
 
 "select all
-map <Leader>a ggVG"
+map <Leader>sa ggVG"
 " Shift+H goto head of the line, Shift+L goto end of the line
 nnoremap H ^
 nnoremap L $

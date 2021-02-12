@@ -41,11 +41,6 @@ cnoremap <C-e> <End>
 " reselect visual block after indent
 vnoremap < <gv
 vnoremap > >gv
-" 简化在不同窗口中移动的操作
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
 
 nnoremap <leader>gd :gd<CR>
 nnoremap <leader>cc :cc<CR>

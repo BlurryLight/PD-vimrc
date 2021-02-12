@@ -1,137 +1,14 @@
-" License: WTFPL
-
-"============================================= basic settings =========================================
-"禁止swap file
-set noswapfile
-" I don't care the f**king vi
-set nocompatible
-" 强化正则表达式,没有magic，正则表达式近乎无法使用
-set magic
-
-" 显示
-set number      "行号
-set ruler      "行号和列号
-
-" 加大移动距离
-set scrolloff=10
-
-" 增强标题显示
-set title
-
-" 离开窗口时自动保存，回到窗口时自动更新
-au FocusGained,BufEnter * :silent! !
-au FocusLost,WinLeave * :silent! w
-
-" 简写信息，并关闭乌干达可怜儿童
-set shortmess+=atI
-
-"打开自动探测文件类型和缩进
-filetype on
-filetype plugin on
-filetype indent on
-
-"设置leader
-"let mapleader = ','
-"let g:mapleader = ','
-
-"设置文件编码
-" 内部编码
-set encoding=utf-8
-" 读取文件时候顺序猜测编码
-set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-" 用于屏幕显示的编码
-set termencoding=utf-8
-
-
-" 自动缩进
-set autoindent
-
-" 高亮第80列
-set colorcolumn=80
-
-" 自动折行(这个是硬折行)
-"set linebreak
-
-" 高亮选中
-set hlsearch
-
-" 自动换行
-set wrap
-
-" 设置默认进行大小写不敏感查找
-set ignorecase
-" " 如果有一个大写字母，则切换到大小写敏感查找
-set smartcase
-"
-
-" 让退格键能正常退格
-set backspace=indent,eol,start
-" Vim默认左右方向键不会切换到下一行，调一下，让<>,h,l,[,]都可以换行
-set whichwrap+=<,>,h,l,[,]
-
-" 自动去除部分文件的行尾空格
-autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
-
-set timeout
-set ttimeout " 打开timeout和ttimeout
-set timeoutlen=3000 " 自定义的map 3秒视为超时
-set ttimeoutlen=50 " 内置的50ms
+source ./pd.vimrc-base
 
 set wildmenu
-"============================================= KEYS MAPPING ==================
-" 部分快捷键
-" leader+p复制粘贴模式
-set pastetoggle=<leader>p
-vnoremap <leader>Y :w! /tmp/vitmp<CR>                                                                   
-nnoremap <leader>P :r! cat /tmp/vitmp<CR>
-" <leader>nu关闭开启数字行号
-nnoremap <leader>nu :set nu! nu?<CR>
-" :W 表示sudo权限强制保存
-command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
-" Upper U to redo
-nnoremap U <C-r>
 
-" <leader>/关闭搜索高亮
-noremap <silent><leader>/ :nohls<CR>
 
-"select all
-noremap <Leader>a ggVG"
-" Shift+H goto head of the line, Shift+L goto end of the line
-nnoremap H ^
-nnoremap L $
-
-" command mode, ctrl-a to head， ctrl-e to tail
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
+" <leader>cd 切换工作目录到[.root,.git]之类的所在的目录(见函数SearchRoot)
+" nnoremap <silent><leader>cw exe 'cd' g:root_dir<CR>
 
 
 
-" tab替代
-set expandtab "tab to spaces
-set smarttab  "删除会自动删除等同于tab数量的空格
-set shiftround ">>和<<会处理没对齐的情况
-" indent
-set autoindent smartindent shiftround
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4                " insert mode tab and backspace use 4 spaces
 
-" 简化在不同窗口中移动的操作
-" nnoremap <C-j> <C-W>j
-" nnoremap <C-k> <C-W>k
-" nnoremap <C-h> <C-W>h
-" nnoremap <C-l> <C-W>l
-
-" 移动后再次重新选中
-vnoremap < <gv
-vnoremap > >gv
-
-" tabpage
-" <leader>tb 创建tab
-" <leader>tc 关闭tab
-nnoremap <leader>tb :tabnew<CR>
-inoremap <leader>tb <ESC>:tabnew<CR>
-nnoremap <leader>tc :tabclose<CR>
 
 " quickfix move
 "nnoremap <leader>j  :cn<CR>
@@ -139,6 +16,8 @@ nnoremap <leader>tc :tabclose<CR>
 
 packadd cfilter
 nnoremap <leader>qs :<C-U><C-R>=printf("Cfilter %s", "")<CR>
+nnoremap <leader>qw :Cfilter warning<CR>
+nnoremap <leader>qe :Cfilter error<CR>
 nnoremap <leader>qn :col<CR>
 nnoremap <leader>qp :cnew<CR>
 autocmd BufReadPost quickfix nnoremap <buffer> v <C-w><Enter><C-w>L
@@ -241,11 +120,10 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 " ALE 静态检查
 Plug 'dense-analysis/ale'
 
-" C++ 增强高亮
-Plug 'octol/vim-cpp-enhanced-highlight'
-
 " Skywind的异步执行
 Plug 'skywind3000/asyncrun.vim'
+" GLSL support
+Plug 'tikhomirov/vim-glsl',{'for':'glsl'}
 
 " Cmake support
 " Plug 'vhdirk/vim-cmake'
@@ -254,6 +132,8 @@ Plug 'skywind3000/asyncrun.vim'
 " :make编译，不是异步
 " :CMakeclean 清理build文件夹
 
+" cpp语法高亮加强
+Plug 'octol/vim-cpp-enhanced-highlight'
 
 "  Another CMake support
 
@@ -266,11 +146,8 @@ Plug 'sbdchd/neoformat'
 " auto pair
 Plug 'jiangmiao/auto-pairs'
 
-" GLSL support
-Plug 'tikhomirov/vim-glsl',{'for':'glsl'}
-
 " MOST HORRIBLE PLUGIN(NOT ACTURALLY A PLUGIN BUT A MONSTER)
-Plug 'Valloric/YouCompleteMe',{'do':'./install.py --clangd-completer','on': []}
+Plug 'Valloric/YouCompleteMe',{'do':'./install.py --clangd-completer','on': ['YcmCompleter']}
 
 " YCMgenerator
 " Plug 'rdnetto/YCM-Generator',{'branch':'stable'}
@@ -279,7 +156,6 @@ Plug 'Valloric/YouCompleteMe',{'do':'./install.py --clangd-completer','on': []}
 " 快速注释
 Plug 'scrooloose/nerdcommenter'
 
-"
 " Another one
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } ,'for': 'markdown'}
 
@@ -288,12 +164,13 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } ,'for': 
 " leaderF的tag显示更全，但是这个的效果更好
 Plug 'majutsushi/tagbar'
 
-
-" cpp语法高亮加强
-Plug 'octol/vim-cpp-enhanced-highlight'
-
 " c/c++ header / source 跳转
 Plug  'BlurryLight/vim-fswitch'
+
+" language highlight pack
+" disabled. 里面有太多东西了
+" Plug 'sheerun/vim-polyglot'
+
 
 
 "rainbow parens
@@ -454,6 +331,7 @@ let g:ycm_goto_buffer_command = 'split-or-existing-window'
 set completeopt+=menuone
 set completeopt+=noselect
 let g:ycm_warning_symbol='⚠'
+let g:ycm_always_populate_location_list = 1
 
 
 " nerd commenter注释
@@ -590,19 +468,19 @@ let g:cmake_jump_on_error = 0 " We do not want to focus the console
 let g:cmake_build_directory = 'build'
 
 augroup vim-cmake-group
-autocmd User CMakeBuildFailed :cfirst
+    au!
+autocmd User CMakeBuildFailed CMakeClose
+autocmd User CMakeBuildFailed copen
+autocmd User CMakeBuildFailed Cfilter error
 augroup END
 
 augroup vim-cmake-group
 autocmd! User CMakeBuildSucceeded CMakeClose
 augroup END
 
-" nnoremap <leader>zb :CMakeBuild --parallel <CR>
-" nnoremap <leader>zg :CMakeGenerate Debug<CR>
 nnoremap <leader>zg :<C-U><C-R>=printf("CMakeGenerate %s", "Debug")<CR>
 nnoremap <leader>zb :<C-U><C-R>=printf("CMakeBuild --parallel %s", "")<CR>
 nnoremap <leader>zs :<C-U><C-R>=printf("CMakeSwitch %s", "")<CR>
-" nnoremap <leader>zo :CMakeOpen<CR>
 nnoremap <leader>zc :CMakeClose<CR>
 
 

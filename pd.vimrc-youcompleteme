@@ -1,4 +1,4 @@
-source ./pd.vimrc-base
+source $HOME/pd.vimrc-base
 
 set wildmenu
 

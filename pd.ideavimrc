@@ -143,6 +143,15 @@ nnoremap <leader>fs :action GotoSymbol<CR>
 
 " 查找使用
 nnoremap <leader>fr :action FindUsages<CR>
+" search in all files
+nnoremap <leader>fp :action FindInPath<CR>
+" comment
+nnoremap <leader>cc :action CommentByLineComment<CR>
+nnoremap <leader>cb :action CommentByBlockComment<CR>
 " " 显示使用
 " nnoremap <Space>su :action ShowUsages<CR>
 set keep-english-in-normal-and-restore-in-insert
+" 
+set NERDTree
+"
+nnoremap <leader>n :NERDTreeToggle<CR>

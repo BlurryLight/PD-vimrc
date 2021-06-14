@@ -42,13 +42,13 @@ cnoremap <C-e> <End>
 vnoremap < <gv
 vnoremap > >gv
 
-nnoremap <leader>gd :gd<CR>
-nnoremap <leader>cc :cc<CR>
-nnoremap <leader>ff :ff<CR>
+nnoremap <leader>gd :gd<CR> "FollowSymbolUnderCursorInNextSplit
+nnoremap <leader>cc :cc<CR>  " Toggle Comment Selection
+nnoremap <leader>ff :ff<CR> " Files in current project
 nnoremap <leader>fb :fb<CR>
-nnoremap <leader>r :run<CR>
-nnoremap <leader>fr :fr<CR>
-nnoremap <leader>fs :fs<CR>
+nnoremap <leader>r :run<CR> "Rebuild
+nnoremap <leader>fr :fr<CR> "Find Usage
+nnoremap <leader>fs :fs<CR> "workspace Symbols
 
 " inoremap <ESC> <ESC>:!dbus-send --type=method_call --dest=org.fcitx.Fcitx /inputmethod org.fcitx.Fcitx.InputMethod.InactivateIM<CR>
 "

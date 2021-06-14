@@ -147,7 +147,7 @@ Plug 'sbdchd/neoformat'
 Plug 'jiangmiao/auto-pairs'
 
 " MOST HORRIBLE PLUGIN(NOT ACTURALLY A PLUGIN BUT A MONSTER)
-Plug 'Valloric/YouCompleteMe',{'do':'./install.py --clangd-completer','on': ['YcmCompleter']}
+Plug 'Valloric/YouCompleteMe',{'commit':'4df6f35f0c9f9aec21a3f567397496b5dee6acc7','do':'./install.py --clangd-completer','on': ['YcmCompleter']}
 
 " YCMgenerator
 " Plug 'rdnetto/YCM-Generator',{'branch':'stable'}
@@ -332,6 +332,27 @@ set completeopt+=menuone
 set completeopt+=noselect
 let g:ycm_warning_symbol='⚠'
 let g:ycm_always_populate_location_list = 1
+let g:ycm_key_detailed_diagnostics = '<leader>yd'
+let g:ycm_key_invoke_completion = '<leader>yc'
+
+" this is the default setting from ycm
+" the markdown and text is commented by me
+
+         " 'markdown': 1,
+         "'text': 1,
+let g:ycm_filetype_blacklist = { 
+        \ 'tagbar': 1,
+        \ 'notes': 1,
+        \ 'netrw': 1,
+        \ 'unite': 1,
+        \ 'vimwiki': 1,
+        \ 'pandoc': 1,
+        \ 'infolog': 1,
+        \ 'leaderf': 1,
+        \ 'mail': 1
+        \ }
+
+
 
 
 " nerd commenter注释
@@ -519,7 +540,7 @@ let g:ale_completion_enabled = 0
 let g:ale_python_pylint_options= "--extension-pkg-whitelist=cv2,numpy,torch	--disable=C,R --init-hook='import sys; sys.path.append(\".\")'"
 " Write this in your vimrc file
 let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_insert_leave = 0
+let g:ale_lint_on_insert_leave = 1
 " You can disable this option too
 " if you don't want linters to run on opening a file
 let g:ale_lint_on_enter = 0

@@ -137,7 +137,8 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 
 "  Another CMake support
 
-Plug 'BlurryLight/vim-cmake'
+" Plug 'BlurryLight/vim-cmake'
+Plug 'cdelledonne/vim-cmake'
 
 
 " 代码异步格式化
@@ -486,7 +487,8 @@ let g:cpp_class_decl_highlight = 1
 " vim-Cmake配置
 let g:cmake_link_compile_commands = 1
 let g:cmake_jump_on_error = 0 " We do not want to focus the console
-let g:cmake_build_directory = 'build'
+let g:cmake_build_dir_location= './build'
+" let g:cmake_generate_options=['-GNinja']
 
 augroup vim-cmake-group
     au!
@@ -498,6 +500,10 @@ augroup END
 augroup vim-cmake-group
 autocmd! User CMakeBuildSucceeded CMakeClose
 augroup END
+
+aug vim-cmake-group
+    au WinEnter * if winnr('$') == 1 && &filetype == "vimcmake"|q!|endif
+aug END
 
 nnoremap <leader>zg :<C-U><C-R>=printf("CMakeGenerate %s", "Debug")<CR>
 nnoremap <leader>zb :<C-U><C-R>=printf("CMakeBuild --parallel %s", "")<CR>

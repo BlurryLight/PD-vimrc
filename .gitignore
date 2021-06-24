@@ -2,3 +2,4 @@ plugged
 autoload
 .tags
 PD-vimrc
+.netrwhist

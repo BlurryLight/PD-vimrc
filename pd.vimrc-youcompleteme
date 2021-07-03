@@ -77,6 +77,8 @@ call plug#begin('~/.vim/plugged')
 " " chdir to working buffer
 " Plug 'mattn/vim-findroot'
 
+Plug 'beyondmarc/hlsl.vim',{'for':'hlsl'}
+
 " profiler
 Plug 'tweekmonster/startuptime.vim'
 " 中文vim帮助
@@ -600,3 +602,5 @@ au!
 	au InsertLeave * set nopaste
 augroup END
 
+" shaderlab, unreal shader set to hlsl
+au BufNewFile,BufRead *.usf,*.shader,*.shaderlab,*.cginc setfiletype hlsl

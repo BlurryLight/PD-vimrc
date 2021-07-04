@@ -74,6 +74,8 @@ endif
 " 插件
 call plug#begin('~/.vim/plugged')
 
+Plug 'junegunn/vim-easy-align'
+
 " " chdir to working buffer
 " Plug 'mattn/vim-findroot'
 
@@ -563,6 +565,12 @@ aug QFClose
   au!
     au WinEnter * if winnr('$') == 1 && &buftype == "quickfix"|q|endif
 aug END
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 "===============================语言配置=====================================
 

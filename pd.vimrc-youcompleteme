@@ -317,6 +317,8 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
 nnoremap <C-]>  :YcmCompleter GoTo<CR>
 inoremap <C-]>  :YcmCompleter GoTo<CR>
+nnoremap <leader>gr :<C-U><C-R>=printf("YcmCompleter GoToReferences %s", expand("<cword>"))<CR>
+nnoremap <leader>gs :<C-U><C-R>=printf("YcmCompleter GoToSymbol %s", expand("<cword>"))<CR>
 let g:ycm_goto_buffer_command = 'split-or-existing-window'
 set completeopt+=menuone
 set completeopt+=noselect
@@ -344,7 +346,7 @@ let g:ycm_filetype_blacklist = {
 
 
 
-
+ 
 " nerd commenter注释
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1

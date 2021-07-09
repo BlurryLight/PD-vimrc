@@ -128,10 +128,10 @@ nnoremap <leader>gi :action GotoImplementation<CR>
 " 跳转到指定的文件
 nnoremap <leader>ff :action GotoFile<CR>
 " 跳转到变量的声明
-nnoremap <leader>fs :action GotoSymbol<CR>
+nnoremap <leader>gs :action GotoSymbol<CR>
 
 " 查找使用
-nnoremap <leader>fr :action FindUsages<CR>
+nnoremap <leader>gr :action FindUsages<CR>
 " " 显示使用
 " nnoremap <Space>su :action ShowUsages<CR>
 set keep-english-in-normal-and-restore-in-insert

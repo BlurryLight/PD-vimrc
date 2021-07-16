@@ -130,6 +130,10 @@ nnoremap <leader>tc :tabclose<CR>
 nnoremap <leader>j  :cn<CR>
 nnoremap <leader>k  :cp<CR>
 
+"
+nnoremap ; :
+
+
 function! ToggleWindowHorizontalVerticalSplit()
   if !exists('t:splitType')
     let t:splitType = 'vertical'

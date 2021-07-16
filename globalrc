@@ -35,7 +35,7 @@
 # Please refer to gtags.conf(5) for details.
 #
 default:\
-	:tc=native:
+	:tc=native-pygments:
 native:\
 	:tc=gtags:tc=htags:
 user:\
@@ -419,7 +419,7 @@ pygments-parser|Pygments plug-in parser:\
 	:langmap=Felix\:.flx.flxh:\
 	:langmap=Fortran\:.f.f90.F.F90:\
 	:langmap=GAS\:.s.S:\
-	:langmap=GLSL\:.vert.frag.geo:\
+	:langmap=GLSL\:.vert.frag.geo.vs.fs:\
 	:langmap=Genshi\:.kid:\
 	:langmap=Gherkin\:.feature:\
 	:langmap=Gnuplot\:.plot.plt:\
@@ -523,6 +523,9 @@ pygments-parser|Pygments plug-in parser:\
 	:langmap=XQuery\:.xqy.xquery.xq.xql.xqm:\
 	:langmap=XSLT\:.xsl.xslt.xpl:\
 	:langmap=Xtend\:.xtend:\
+    :langmap=HLSL\:.hlsl.shader.cginc:\
+	# :gtags_parser=Shader\:$pygmentslib:\
+	:gtags_parser=HLSL\:$pygmentslib:\
 	:gtags_parser=ABAP\:$pygmentslib:\
 	:gtags_parser=ANTLR\:$pygmentslib:\
 	:gtags_parser=ActionScript3\:$pygmentslib:\

@@ -228,6 +228,31 @@ let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
 let g:Lf_ShortcutF = "<leader>ff"
 let g:Lf_GtagsAutoGenerate = 1
 
+" https://github.com/hanxi/dotfiles/blob/master/etc/vimrc.vim#L118~L131
+"{{ 查找工程目录
+function! SearchRoot()
+  let l:scm_list = ['.root', '.svn', '.git']
+  for l:item in l:scm_list
+    let l:dirs = finddir(l:item, '.;', -1)
+    if !empty(l:dirs)
+      return fnamemodify(l:dirs[-1].'/../', ':p:h')
+    endif
+  endfor
+  return getcwd()
+endfunction
+let g:root_dir = SearchRoot()
+
+
+function! SearchGlobalrc()
+    if filereadable(g:root_dir . "/.globalrc") 
+        return (g:root_dir . "/.globalrc")
+    elseif filereadable(".globalrc")
+        return (getcwd() . "/.globalrc")
+    endif
+    return $HOME."/.globalrc"
+endfunction
+
+let g:Lf_Gtagsconf = SearchGlobalrc()
 "<leader>f-<command>-<name>
 " 搜索光标所在词语并允许跳转
 nnoremap <leader>fgg :<C-U><C-R>=printf("Leaderf! gtags -g %s --auto-jump", expand("<cword>"))<CR><CR>
@@ -250,19 +275,6 @@ nnoremap <leader>fre :<C-U><C-R>=printf("Leaderf rg -e %s", expand("<cword>"))<C
 " 搜索某个pattern current-buffer
 nnoremap <leader>frc :<C-U><C-R>=printf("Leaderf rg --current-buffer -e %s", expand("<cword>"))<CR>
 
-" https://github.com/hanxi/dotfiles/blob/master/etc/vimrc.vim#L118~L131
-"{{ 查找工程目录
-function! SearchRoot()
-  let l:scm_list = ['.root', '.svn', '.git']
-  for l:item in l:scm_list
-    let l:dirs = finddir(l:item, '.;', -1)
-    if !empty(l:dirs)
-      return fnamemodify(l:dirs[-1].'/../', ':p:h')
-    endif
-  endfor
-  return getcwd()
-endfunction
-let g:root_dir = SearchRoot()
 " autocmd BufEnter * exe ':cd '.g:root_dir
 "}}
 
@@ -278,6 +290,7 @@ if filereadable(g:root_dir . "/.vimneoformat") ||
     autocmd BufWritePre * undojoin | Neoformat
     augroup END
 endif
+
 
 " GLSL support
 let g:glsl_default_version = 'glsl330'

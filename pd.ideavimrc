@@ -31,6 +31,10 @@ filetype on
 filetype plugin on
 filetype indent on
 
+"设置leader
+"let mapleader = ','
+"let g:mapleader = ','
+
 "设置文件编码
 " 内部编码
 set encoding=utf-8
@@ -77,6 +81,8 @@ set ttimeoutlen=100 " 内置的50ms
 " 部分快捷键
 " leader+p复制粘贴模式
 set pastetoggle=<leader>p
+vnoremap <leader>Y :w! /tmp/vitmp<CR>                                                                   
+nnoremap <leader>P :r! cat /tmp/vitmp<CR>
 " <leader>nu关闭开启数字行号
 nnoremap <leader>nu :set nu! nu?<CR>
 " Upper U to redo
@@ -107,6 +113,12 @@ set shiftwidth=4
 set tabstop=4
 set softtabstop=4                " insert mode tab and backspace use 4 spaces
 
+" 简化在不同窗口中移动的操作
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
 " 移动后再次重新选中
 vnoremap < <gv
 vnoremap > >gv
@@ -118,6 +130,10 @@ nnoremap <leader>tb :tabnew<CR>
 inoremap <leader>tb <ESC>:tabnew<CR>
 nnoremap <leader>tc :tabclose<CR>
 
+" quickfix move
+nnoremap <leader>j  :cn<CR>
+nnoremap <leader>k  :cp<CR>
+
 " nnoremap <leader>gc :action GotoClass<CR>
 " " 弹出输入框，跳转到指定操作
 " nnoremap <leader>ga :action GotoAction<CR>
@@ -128,10 +144,13 @@ nnoremap <leader>gi :action GotoImplementation<CR>
 " 跳转到指定的文件
 nnoremap <leader>ff :action GotoFile<CR>
 " 跳转到变量的声明
-nnoremap <leader>gs :action GotoSymbol<CR>
+nnoremap <leader>fs :action GotoSymbol<CR>
 
 " 查找使用
-nnoremap <leader>gr :action FindUsages<CR>
+nnoremap <leader>fr :action FindUsages<CR>
 " " 显示使用
 " nnoremap <Space>su :action ShowUsages<CR>
 set keep-english-in-normal-and-restore-in-insert
+
+vnoremap = :action ReformatCode<CR>
+nnoremap = :action ReformatCode<CR>

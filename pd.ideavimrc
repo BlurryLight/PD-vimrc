@@ -31,10 +31,6 @@ filetype on
 filetype plugin on
 filetype indent on
 
-"设置leader
-"let mapleader = ','
-"let g:mapleader = ','
-
 "设置文件编码
 " 内部编码
 set encoding=utf-8
@@ -81,8 +77,6 @@ set ttimeoutlen=100 " 内置的50ms
 " 部分快捷键
 " leader+p复制粘贴模式
 set pastetoggle=<leader>p
-vnoremap <leader>Y :w! /tmp/vitmp<CR>                                                                   
-nnoremap <leader>P :r! cat /tmp/vitmp<CR>
 " <leader>nu关闭开启数字行号
 nnoremap <leader>nu :set nu! nu?<CR>
 " Upper U to redo
@@ -112,12 +106,6 @@ set autoindent smartindent shiftround
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4                " insert mode tab and backspace use 4 spaces
-
-" 简化在不同窗口中移动的操作
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
 
 " 移动后再次重新选中
 vnoremap < <gv

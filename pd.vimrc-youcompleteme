@@ -7,9 +7,6 @@ set wildmenu
 " nnoremap <silent><leader>cw exe 'cd' g:root_dir<CR>
 
 
-
-
-
 " quickfix move
 "nnoremap <leader>j  :cn<CR>
 "nnoremap <leader>k  :cp<CR>
@@ -63,10 +60,18 @@ nnoremap <silent> e :call ToggleLocList()<cr>
 
 " 安装plug.vim插件管理器，依赖curl
 " 这一段必须在 plug#begin()之前
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+
+if has('unix')
+    if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    endif
+elseif has('win32')
+    if empty(glob('$HOME/vimfiles/autoload/plug.vim'))
+    silent !iwr -useb https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim | ni $HOME/vimfiles/autoload/plug.vim -Force
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    endif
 endif
 
 
@@ -100,15 +105,18 @@ Plug 'honza/vim-snippets'
 Plug 'ojroques/vim-oscyank',{'branch': 'main'}
 " git power
 Plug 'tpope/vim-fugitive'
-"
-Plug 'lilydjwg/fcitx.vim'
+
+" disable when in wsl
+if $WSL_FLAG != 1
+    Plug 'lilydjwg/fcitx.vim'
+endif
 " 缩进线
 Plug 'Yggdroot/indentLine'
 " base16主题
 " 包含了很多主题
 " 可以用:colorscheme base-16-<Tab>查看
 " 也可以在http://chriskempson.com/projects/base16/上看
-Plug 'chriskempson/base16-vim' 
+Plug 'chriskempson/base16-vim'
 Plug 'vim-airline/vim-airline-themes'
 " Airline
 Plug 'vim-airline/vim-airline'
@@ -281,9 +289,9 @@ nnoremap <leader>frc :<C-U><C-R>=printf("Leaderf rg --current-buffer -e %s", exp
 " neoformat设置
 " format on save
 " o/pyc后缀是为了gitignore,常见的gitignore都忽略
-if filereadable(g:root_dir . "/.vimneoformat") ||  
+if filereadable(g:root_dir . "/.vimneoformat") ||
             \ filereadable(g:root_dir . "/.clang-format") ||
-            \ filereadable(g:root_dir . "/.vimneoformat.o") || 
+            \ filereadable(g:root_dir . "/.vimneoformat.o") ||
             \ filereadable(g:root_dir . "/.vimneoformat.pyc")
     augroup fmt
     autocmd!
@@ -345,7 +353,7 @@ let g:ycm_key_invoke_completion = '<leader>yc'
 
          " 'markdown': 1,
          "'text': 1,
-let g:ycm_filetype_blacklist = { 
+let g:ycm_filetype_blacklist = {
         \ 'tagbar': 1,
         \ 'notes': 1,
         \ 'netrw': 1,
@@ -597,7 +605,7 @@ nmap ga <Plug>(EasyAlign)
 " command Make will call make and then cwindow which
 " opens a 3 line error window if any errors are found.
 " " If no errors, it closes any open cwindow.
-autocmd filetype c set makeprg=gcc\ -O2\ -lpthread\ -std=gnu99\ -g\ %\ -o\ %<  
+autocmd filetype c set makeprg=gcc\ -O2\ -lpthread\ -std=gnu99\ -g\ %\ -o\ %<
 autocmd filetype c nnoremap <leader>r :silent make\|redraw!\|cw<CR>
 autocmd filetype cpp nnoremap <leader>gr :AsyncRun g++ "%" -o "%<" -lpthread -Wall -Wpedantic<CR>
 autocmd filetype cpp nnoremap <leader>cr :AsyncRun clang++ "%" -o "%<" -lpthread -Wall -Wpedantic<CR>
@@ -622,7 +630,7 @@ highlight clear SpellLocal
 highlight SpellLocal term=underline cterm=underline
 augroup disable_paste
 au!
-	au InsertLeave * set nopaste
+    au InsertLeave * set nopaste
 augroup END
 
 " shaderlab, unreal shader set to hlsl

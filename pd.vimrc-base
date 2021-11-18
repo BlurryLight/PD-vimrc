@@ -20,9 +20,13 @@ set scrolloff=10
 set title
 
 " 离开窗口时自动保存，回到窗口时自动更新
-au FocusGained,BufEnter * :silent! !
-au FocusLost,WinLeave * :silent! w
-
+if has('unix')
+    au FocusGained,BufEnter * :silent! !
+    au FocusLost,WinLeave * :silent! w
+else
+    au CursorHold,CursorHoldI * checktime
+    au FocusGained,BufEnter * :checktime
+endif
 " 简写信息，并关闭乌干达可怜儿童
 set shortmess+=atI
 
@@ -153,3 +157,7 @@ endfunction
 nnoremap <silent> <leader>ws :call ToggleWindowHorizontalVerticalSplit()<cr>
 " move current window to new tab
 nnoremap <silent> <leader>wt <C-w>T<CR>
+if has('gui_win32')
+    set guifont=JetBrains\ Mono:h14
+endif
+

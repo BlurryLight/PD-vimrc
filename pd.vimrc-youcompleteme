@@ -153,7 +153,12 @@ Plug 'sbdchd/neoformat'
 Plug 'jiangmiao/auto-pairs'
 
 " MOST HORRIBLE PLUGIN(NOT ACTURALLY A PLUGIN BUT A MONSTER)
-Plug 'Valloric/YouCompleteMe',{'commit':'4df6f35f0c9f9aec21a3f567397496b5dee6acc7','do':'./install.py --clangd-completer','on': ['YcmCompleter']}
+" The latest youcompleme need cpp17
+if $HAS_CPP_17 == 1
+    Plug 'Valloric/YouCompleteMe',{'do':'./install.py --clangd-completer','on': ['YcmCompleter']}
+else
+    Plug 'Valloric/YouCompleteMe',{'commit':'4df6f35f0c9f9aec21a3f567397496b5dee6acc7','do':'./install.py --clangd-completer','on': ['YcmCompleter']}
+fi
 
 
 "NERD commenter

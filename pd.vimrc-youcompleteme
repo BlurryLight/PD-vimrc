@@ -158,7 +158,7 @@ if $HAS_CPP_17 == 1
     Plug 'Valloric/YouCompleteMe',{'do':'./install.py --clangd-completer','on': ['YcmCompleter']}
 else
     Plug 'Valloric/YouCompleteMe',{'commit':'4df6f35f0c9f9aec21a3f567397496b5dee6acc7','do':'./install.py --clangd-completer','on': ['YcmCompleter']}
-fi
+endif
 
 
 "NERD commenter

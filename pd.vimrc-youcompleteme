@@ -612,8 +612,8 @@ nmap ga <Plug>(EasyAlign)
 " " If no errors, it closes any open cwindow.
 autocmd filetype c set makeprg=gcc\ -O2\ -lpthread\ -std=gnu99\ -g\ %\ -o\ %<
 autocmd filetype c nnoremap <leader>r :silent make\|redraw!\|cw<CR>
-autocmd filetype cpp nnoremap <leader>gr :AsyncRun g++ "%" -o "%<" -lpthread -Wall -Wpedantic<CR>
-autocmd filetype cpp nnoremap <leader>cr :AsyncRun clang++ "%" -o "%<" -lpthread -Wall -Wpedantic<CR>
+autocmd filetype cpp nnoremap <leader>agr :AsyncRun g++ "%" -o "%<" -lpthread -Wall -Wpedantic<CR>
+autocmd filetype cpp nnoremap <leader>acr :AsyncRun clang++ "%" -o "%<" -lpthread -Wall -Wpedantic<CR>
 autocmd FileType c,cpp setlocal equalprg=clang-format
 
 

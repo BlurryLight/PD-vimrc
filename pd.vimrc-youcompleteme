@@ -155,7 +155,7 @@ Plug 'jiangmiao/auto-pairs'
 " MOST HORRIBLE PLUGIN(NOT ACTURALLY A PLUGIN BUT A MONSTER)
 " The latest youcompleteme need cpp17
 if $VIM_YCM_11 == 1
-    Plug 'Valloric/YouCompleteMe',{'branch': 'legacy-c++11','do':'./install.py --clangd-completer','on': ['YcmCompleter']}
+    Plug 'BlurryLight/YouCompleteMe',{'branch': 'legacy-c++11','do':'./install.py --clangd-completer','on': ['YcmCompleter']}
 else
     Plug 'Valloric/YouCompleteMe',{'do':'./install.py --clangd-completer','on': ['YcmCompleter']}
 endif

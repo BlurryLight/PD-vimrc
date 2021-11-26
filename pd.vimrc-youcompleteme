@@ -266,9 +266,24 @@ function! SearchGlobalrc()
 endfunction
 
 let g:Lf_Gtagsconf = SearchGlobalrc()
+let g:Lf_Gtagslabel = 'native-pygments'
+let g:Lf_WildIgnore = {
+        \ 'dir': ['.svn','.git','.hg'],
+        \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+        \}
+let g:Lf_RgConfig = [
+        \ "--max-columns=150",
+        \ "--glob=!git/*",
+        \ "--hidden"
+    \ ]
+        
 "<leader>f-<command>-<name>
 " 搜索光标所在词语并允许跳转
 nnoremap <leader>fgg :<C-U><C-R>=printf("Leaderf! gtags -g %s --auto-jump", expand("<cword>"))<CR><CR>
+
+" 自动跳转引用或定义
+" by-context
+nnoremap <leader>fgb :<C-U><C-R>=printf("Leaderf! gtags --by-context  %s --auto-jump", expand("<cword>"))<CR><CR>
 
 " 搜索光标所在词语的引用并允许跳转
 nnoremap <leader>fgr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>

@@ -86,6 +86,8 @@ Plug 'junegunn/vim-easy-align'
 
 Plug 'beyondmarc/hlsl.vim',{'for':'hlsl'}
 
+Plug 'pprovost/vim-ps1',{'for':'powershell'}
+
 " profiler
 Plug 'tweekmonster/startuptime.vim'
 " 中文vim帮助

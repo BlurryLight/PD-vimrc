@@ -5,6 +5,15 @@ if [ -e ~/.vimrc ]
  echo "Original .vimrc has been renamed to .vimrcpdbak"
 fi
 
+if [ -e ~/.ctags.d ]
+    then cp ~/.ctags.d. ~/.ctagsbak
+    echo "Original .ctags conf has been renamed to ~/.ctagsbak"
+else
+    mkdir -p ~/.ctags.d
+fi
+
+ln -sf `pwd`/global.ctags ~/.ctags.d/global.ctags
+
 ln -sf `pwd`/pd.vimrc-youcompleteme ~/.vimrc
 ln -sf `pwd`/pd.vimrc-base ~/pd.vimrc-base
 ln -sf `pwd`/globalrc ~/.globalrc

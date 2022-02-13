@@ -239,7 +239,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
 let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "Source Code Pro"  }
-let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
+let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 ,'Rg': 1}
 let g:Lf_ShortcutF = "<leader>ff"
 let g:Lf_GtagsAutoGenerate = 1
 
@@ -278,32 +278,38 @@ let g:Lf_RgConfig = [
         \ "--glob=!git/*",
         \ "--hidden"
     \ ]
+" 避免ESC退出,使用q退出
+let g:Lf_CommandMap = {'<tab>':[ '<ESC>' ]}
         
 "<leader>f-<command>-<name>
 " 搜索光标所在词语并允许跳转
-nnoremap <leader>fgg :<C-U><C-R>=printf("Leaderf! gtags -g %s --auto-jump", expand("<cword>"))<CR><CR>
+nnoremap <leader>fgg :<C-U><C-R>=printf("Leaderf! gtags -g %s --auto-jump v", expand("<cword>"))<CR><CR>
 
-" 自动跳转引用或定义
+" 自动跳转光标所在位置词语的引用或定义
 " by-context
-nnoremap <leader>fgb :<C-U><C-R>=printf("Leaderf! gtags --by-context  %s --auto-jump", expand("<cword>"))<CR><CR>
+nnoremap <leader>fgb :<C-U><C-R>=printf("Leaderf! gtags --by-context --auto-jump v")<CR><CR>
 
 " 搜索光标所在词语的引用并允许跳转
-nnoremap <leader>fgr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump", expand("<cword>"))<CR><CR>
+nnoremap <leader>fgr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump v", expand("<cword>"))<CR><CR>
 
 " 搜索光标所在词语的定义并允许跳转
-nnoremap <leader>fgd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump", expand("<cword>"))<CR><CR>
+nnoremap <leader>fgd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump v", expand("<cword>"))<CR><CR>
 "  显示本文件tag
-nnoremap <leader>fbt :<C-U><C-R>=printf("LeaderfBufTag")<CR><CR>
+nnoremap <leader>fbt :<C-U><C-R>=printf("LeaderfBufTag!")<CR><CR>
 
 "  显示本文件函数列表
 nnoremap <leader>fbf :<C-U><C-R>=printf("LeaderfFunction!")<CR><CR>
 
 "  显示所有symbols
-nnoremap <leader>fgs :<C-U><C-R>=printf("Leaderf gtags %s","")<CR><CR>
+nnoremap <leader>fgs :<C-U><C-R>=printf("Leaderf! gtags %s","")<CR><CR>
+" Leaderf gtags --recall 重复上一次搜索
+nnoremap <leader>fgc :<C-U><C-R>=printf("Leaderf! gtags --recall")<CR><CR>
 "  搜索某个pattern
-nnoremap <leader>fre :<C-U><C-R>=printf("Leaderf rg -e %s", expand("<cword>"))<CR>
+nnoremap <leader>fre :<C-U><C-R>=printf("Leaderf! rg -e %s", expand("<cword>"))<CR>
+" Leaderf fc --recall 重复上一次搜索
+nnoremap <leader>frc :<C-U><C-R>=printf("Leaderf! rg --recall")<CR><CR>
 " 搜索某个pattern current-buffer
-nnoremap <leader>frc :<C-U><C-R>=printf("Leaderf rg --current-buffer -e %s", expand("<cword>"))<CR>
+nnoremap <leader>frb :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s", expand("<cword>"))<CR>
 
 " autocmd BufEnter * exe ':cd '.g:root_dir
 "}}
@@ -338,6 +344,7 @@ augroup lazy_load_ycm
                      \| autocmd! lazy_load_ycm
 augroup END
 
+
 inoremap <expr> <cr> ((pumvisible())?("\<C-y>"):("\<cr>"))
 " 关闭每次都要load conf的提示
 let g:ycm_confirm_extra_conf = 0
@@ -353,15 +360,15 @@ let g:ycm_show_diagnostics_ui = 1
 let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
 " <leader>gd 跳转定义和声明
-nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" <leader>gc goto doC 开一个prev窗口显示文档
-nnoremap <leader>gc  :YcmCompleter GetDoc<CR>
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
-nnoremap <C-]>  :YcmCompleter GoTo<CR>
-inoremap <C-]>  :YcmCompleter GoTo<CR>
-nnoremap <leader>gr :<C-U><C-R>=printf("YcmCompleter GoToReferences %s", expand("<cword>"))<CR>
-nnoremap <leader>gs :<C-U><C-R>=printf("YcmCompleter GoToSymbol %s", expand("<cword>"))<CR>
+autocmd filetype c,cpp,python,csharp nnoremap <buffer> <C-]> :YcmCompleter GoTo<CR>
+" <leader>gc goto doC 开一个prev窗口显示文档
+autocmd filetype c,cpp,python,csharp nnoremap <buffer> <leader>gc  :YcmCompleter GetDoc<CR>
+autocmd filetype c,cpp,python,csharp inoremap <buffer> <C-]> :YcmCompleter GoTo<CR>
+autocmd filetype c,cpp,python,csharp nnoremap <buffer> <leader>gd  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+autocmd filetype c,cpp,python,csharp nnoremap <buffer> <leader>gr :<C-U><C-R>=printf("YcmCompleter GoToReferences %s", expand("<cword>"))<CR>
+autocmd filetype c,cpp,python,csharp nnoremap <buffer> <leader>gs :<C-U><C-R>=printf("YcmCompleter GoToSymbol %s", expand("<cword>"))<CR>
 let g:ycm_goto_buffer_command = 'split-or-existing-window'
 set completeopt+=menuone
 set completeopt+=noselect
@@ -628,9 +635,9 @@ nmap ga <Plug>(EasyAlign)
 " opens a 3 line error window if any errors are found.
 " " If no errors, it closes any open cwindow.
 autocmd filetype c set makeprg=gcc\ -O2\ -lpthread\ -std=gnu99\ -g\ %\ -o\ %<
-autocmd filetype c nnoremap <leader>r :silent make\|redraw!\|cw<CR>
-autocmd filetype cpp nnoremap <leader>agr :AsyncRun g++ "%" -o "%<" -lpthread -Wall -Wpedantic<CR>
-autocmd filetype cpp nnoremap <leader>acr :AsyncRun clang++ "%" -o "%<" -lpthread -Wall -Wpedantic<CR>
+" autocmd filetype c nnoremap <buffer><leader>r :silent make\|redraw!\|cw<CR>
+autocmd filetype cpp nnoremap <buffer><leader>agr :AsyncRun g++ "%" -o "%<" -lpthread -Wall -Wpedantic<CR>
+autocmd filetype cpp nnoremap <buffer><leader>acr :AsyncRun clang++ "%" -o "%<" -lpthread -Wall -Wpedantic<CR>
 autocmd FileType c,cpp setlocal equalprg=clang-format
 
 

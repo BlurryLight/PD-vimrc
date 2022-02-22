@@ -161,3 +161,4 @@ if has('gui_win32')
     set guifont=JetBrains\ Mono:h14
 endif
 
+autocmd BufNewFile,BufRead *.sh :set filetype=bash

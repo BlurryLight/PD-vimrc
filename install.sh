@@ -1,4 +1,7 @@
 #!/usr/bin/env bash 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+echo $SCRIPT_DIR
+
 d=`date +%H_%I_%m-%Y%m%d`
 if [ -e ~/.vimrc ]
     then cp ~/.vimrc ~/.vimrcpdbak${d}
@@ -12,16 +15,36 @@ else
     mkdir -p ~/.ctags.d
 fi
 
-ln -sfn `pwd`/global.ctags ~/.ctags.d/global.ctags
+ln -sfn ${SCRIPT_DIR}/global.ctags ~/.ctags.d/global.ctags
 
-ln -sfn `pwd`/pd.vimrc-youcompleteme ~/.vimrc
-ln -sfn `pwd`/pd.vimrc-base ~/pd.vimrc-base
-ln -sfn `pwd`/globalrc ~/.globalrc
-ln -sfn `pwd`/.ideavimrc ~/.ideavimrc
-ln -sfn `pwd` ~/.vim
-ln -sfn `pwd`/tmux.conf ~/.tmux.conf
+ln -sfn ${SCRIPT_DIR}/pd.vimrc-youcompleteme ~/.vimrc
+ln -sfn ${SCRIPT_DIR}/pd.vimrc-base ~/pd.vimrc-base
+ln -sfn ${SCRIPT_DIR}/globalrc ~/.globalrc
+ln -sfn ${SCRIPT_DIR}/.ideavimrc ~/.ideavimrc
+ln -sfn ${SCRIPT_DIR} ~/.vim
+ln -sfn ${SCRIPT_DIR}/tmux.conf ~/.tmux.conf
 
 echo "Run vim +PlugInstall"
-# sudo apt install build-essential cmake python3-dev
-# sudo apt install silversearcher-ag ripgrep fzf
-# sudo apt install universal-ctags global
+if [[ `lsb_release -si` == "Ubuntu" ]] && ! [ -x "$(command -v shellcheck)" ];
+    then
+    sudo apt update -y
+    sudo apt install -y build-essential cmake python3-dev
+    sudo apt install -y ripgrep fzf
+    sudo apt install -y universal-ctags global # tags
+    sudo apt install -y shellcheck
+    sudo apt install -y clang-tools clang-11
+fi
+
+# wsl
+if grep -q Microsoft /proc/version; then
+    win_home_path=`wslpath "$(wslvar USERPROFILE)"`
+    echo ${win_home_path}
+    src_path=${win_home_path}/.ideavimrc 
+    dest_path="${src_path}bak${d}"
+    if [ -e  "${src_path}" ]
+        then cp "${src_path}" "${dest_path}"
+        echo "Original ${src_path} conf has been renamed to ${dest_path}"
+    fi
+fi
+
+ln -sfn "${SCRIPT_DIR}/.ideavimrc" "$src_path"

@@ -578,7 +578,7 @@ let g:ale_linters = {
             \'cpp':['clangd'],
             \'c':['clangd'],
             \}
-let g:ale_fixers ={
+let g:ale_fixers = {
             \'cpp':['clangtidy','clang-format'],
             \'c':['clangtidy','clang-format'],
             \}
@@ -591,6 +591,7 @@ let g:ale_lint_on_insert_leave = 1
 " You can disable this option too
 " if you don't want linters to run on opening a file
 let g:ale_lint_on_enter = 0
+let g:ale_linter_aliases = {'bash': ['sh']}
 
 " auto open quickfix at height of 8 lines
 let g:asyncrun_open = 8

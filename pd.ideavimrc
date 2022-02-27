@@ -66,8 +66,6 @@ set backspace=indent,eol,start
 " Vim默认左右方向键不会切换到下一行，调一下，让<>,h,l,[,]都可以换行
 set whichwrap+=<,>,h,l,[,]
 
-" 自动去除部分文件的行尾空格
-autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 
 set timeout
 set ttimeout " 打开timeout和ttimeout
@@ -80,13 +78,13 @@ set pastetoggle=<leader>p
 " <leader>nu关闭开启数字行号
 nnoremap <leader>nu :set nu! nu?<CR>
 " Upper U to redo
-nnoremap U <C-r>
+" nnoremap U <C-r>
 
 " <leader>/关闭搜索高亮
 noremap <silent><leader>/ :nohls<CR>
 
 "select all
-map <Leader>a ggVG"
+nnoremap <Leader>a ggVG"
 " Shift+H goto head of the line, Shift+L goto end of the line
 nnoremap H ^
 nnoremap L $
@@ -132,10 +130,10 @@ nnoremap <leader>gi :action GotoImplementation<CR>
 " 跳转到指定的文件
 nnoremap <leader>ff :action GotoFile<CR>
 " 跳转到变量的声明
-nnoremap <leader>fs :action GotoSymbol<CR>
+nnoremap <leader>gs :action GotoSymbol<CR>
 
 " 查找使用
-nnoremap <leader>fr :action FindUsages<CR>
+nnoremap <leader>gr :action FindUsages<CR>
 " " 显示使用
 " nnoremap <Space>su :action ShowUsages<CR>
 set keep-english-in-normal-and-restore-in-insert

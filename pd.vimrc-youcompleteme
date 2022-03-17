@@ -78,6 +78,7 @@ endif
 " 在这一段需要的插件
 " 插件
 call plug#begin('~/.vim/plugged')
+Plug 'liuchengxu/vim-which-key'
 
 Plug 'junegunn/vim-easy-align'
 
@@ -211,8 +212,11 @@ colorscheme base16-oceanicnext
 " let g:airline_solarized_bg='light'
 
 
-
-
+" whichkey
+let g:which_key_map =  {}
+nnoremap <silent> <leader> : <c-u>WhichKey '\'<CR>
+vnoremap <silent> <leader> :<c-u>WhichKeyVisual '\'<CR>
+"
 " ultisnip
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
@@ -228,7 +232,6 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 
 " <leader>n打开nerdtree
 nnoremap <leader>n :NERDTreeToggle<CR>
-nnoremap <leader>nf :NERDTreeFocus<CR>
 let NERDTreeQuitOnOpen=1
 
 " 关闭vim当只剩下nerdtree
@@ -283,33 +286,44 @@ let g:Lf_CommandMap = {'<tab>':[ '<ESC>' ]}
         
 "<leader>f-<command>-<name>
 " 搜索光标所在词语并允许跳转
+let g:which_key_map.f = { 'name' : '+Leaderf' }
 nnoremap <leader>fgg :<C-U><C-R>=printf("Leaderf! gtags -g %s --auto-jump v", expand("<cword>"))<CR><CR>
+let g:which_key_map.f.gg = 'gtags grep'
 
 " 自动跳转光标所在位置词语的引用或定义
 " by-context
 nnoremap <leader>fgb :<C-U><C-R>=printf("Leaderf! gtags --by-context --auto-jump v")<CR><CR>
+let g:which_key_map.f.gb = 'gtags context' 
 
 " 搜索光标所在词语的引用并允许跳转
 nnoremap <leader>fgr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump v", expand("<cword>"))<CR><CR>
+let g:which_key_map.f.gr = 'gtags ref' 
 
 " 搜索光标所在词语的定义并允许跳转
 nnoremap <leader>fgd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump v", expand("<cword>"))<CR><CR>
+let g:which_key_map.f.gd = 'gtags def' 
 "  显示本文件tag
 nnoremap <leader>fbt :<C-U><C-R>=printf("LeaderfBufTag!")<CR><CR>
+let g:which_key_map.f.bt = 'gtags bufTag' 
 
 "  显示本文件函数列表
 nnoremap <leader>fbf :<C-U><C-R>=printf("LeaderfFunction!")<CR><CR>
+let g:which_key_map.f.bf =  'gtags bufFunc' 
 
 "  显示所有symbols
 nnoremap <leader>fgs :<C-U><C-R>=printf("Leaderf! gtags %s","")<CR><CR>
+let g:which_key_map.f.gs =  'gtags symbols' 
 " Leaderf gtags --recall 重复上一次搜索
 nnoremap <leader>fgc :<C-U><C-R>=printf("Leaderf! gtags --recall")<CR><CR>
+let g:which_key_map.f.gc = 'gtags recall' 
 "  搜索某个pattern
 nnoremap <leader>fre :<C-U><C-R>=printf("Leaderf! rg -e %s", expand("<cword>"))<CR>
 " Leaderf fc --recall 重复上一次搜索
 nnoremap <leader>frc :<C-U><C-R>=printf("Leaderf! rg --recall")<CR><CR>
+let g:which_key_map.f.rc =  'rg recall' 
 " 搜索某个pattern current-buffer
 nnoremap <leader>frb :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s", expand("<cword>"))<CR>
+let g:which_key_map.f.rb = 'rg cur_buf' 
 
 " autocmd BufEnter * exe ':cd '.g:root_dir
 "}}
@@ -353,6 +367,8 @@ let g:ycm_semantic_triggers =  {
             \ 'cmake': ['re!\w{2}'],
             \}
 " 静态检查
+let g:which_key_map.g = { 'name' : '+YCM' }
+
 let g:ycm_show_diagnostics_ui = 1
 "let g:ycm_min_num_identifier_candidate_chars = 2
 " 用ycm generator感觉会更好
@@ -365,10 +381,14 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 autocmd filetype c,cpp,python,csharp nnoremap <buffer> <C-]> :YcmCompleter GoTo<CR>
 " <leader>gc goto doC 开一个prev窗口显示文档
 autocmd filetype c,cpp,python,csharp nnoremap <buffer> <leader>gc  :YcmCompleter GetDoc<CR>
+let g:which_key_map.g.c = "GetDoc"
 autocmd filetype c,cpp,python,csharp inoremap <buffer> <C-]> :YcmCompleter GoTo<CR>
 autocmd filetype c,cpp,python,csharp nnoremap <buffer> <leader>gd  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:which_key_map.g.d = "GoToDefOrDeclare"
 autocmd filetype c,cpp,python,csharp nnoremap <buffer> <leader>gr :<C-U><C-R>=printf("YcmCompleter GoToReferences %s", expand("<cword>"))<CR>
+let g:which_key_map.g.r = "GoToRef"
 autocmd filetype c,cpp,python,csharp nnoremap <buffer> <leader>gs :<C-U><C-R>=printf("YcmCompleter GoToSymbol %s", expand("<cword>"))<CR>
+let g:which_key_map.g.s = "GoToSymbol"
 let g:ycm_goto_buffer_command = 'split-or-existing-window'
 set completeopt+=menuone
 set completeopt+=noselect
@@ -376,6 +396,10 @@ let g:ycm_warning_symbol='⚠'
 let g:ycm_always_populate_location_list = 1
 let g:ycm_key_detailed_diagnostics = '<leader>yd'
 let g:ycm_key_invoke_completion = '<leader>yc'
+
+let g:which_key_map.y = { 'name' : '+YCM' }
+let g:which_key_map.y.d="key diag"
+let g:which_key_map.y.c="invoke comp"
 
 " this is the default setting from ycm
 " the markdown and text is commented by me
@@ -428,91 +452,6 @@ function! s:fcy_nerdcommenter_map()
     vmap <leader>cc <plug>NERDCommenterToggle gv
 endfunction
 
-" markdown-preview.nvim
-" https://github.com/iamcco/markdown-preview.nvim
-" set to 1, nvim will open the preview window after entering the markdown buffer
-" default: 0
-" let g:mkdp_auto_start = 0
-
-"leader + m + k markdownpreview
-" nnoremap <leader>mk :MarkdownPreview<CR>
-
-" set to 1, the nvim will auto close current preview window when change
-" from markdown buffer to another buffer
-" default: 1
-" let g:mkdp_auto_close = 1
-
-" set to 1, the vim will refresh markdown when save the buffer or
-" leave from insert mode, default 0 is auto refresh markdown as you edit or
-" move the cursor
-" default: 0
-" let g:mkdp_refresh_slow = 0
-
-" set to 1, the MarkdownPreview command can be use for all files,
-" by default it can be use in markdown file
-" default: 0
-" let g:mkdp_command_for_global = 0
-
-" set to 1, preview server available to others in your network
-" by default, the server listens on localhost (127.0.0.1)
-" default: 0
-" let g:mkdp_open_to_the_world = 1
-
-" use custom IP to open preview page
-" useful when you work in remote vim and preview on local browser
-" more detail see: https://github.com/iamcco/markdown-preview.nvim/pull/9
-" default empty
-" let g:mkdp_open_ip = ''
-
-" specify browser to open preview page
-" default: ''
-" let g:mkdp_browser = ''
-
-" set to 1, echo preview page url in command line when open preview page
-" default is 0
-" let g:mkdp_echo_preview_url = 1
-
-" a custom vim function name to open preview page
-" this function will receive url as param
-" default is empty
-" let g:mkdp_browserfunc = ''
-
-" options for markdown render
-" mkit: markdown-it options for render
-" katex: katex options for math
-" uml: markdown-it-plantuml options
-" maid: mermaid options
-" disable_sync_scroll: if disable sync scroll, default 0
-" sync_scroll_type: 'middle', 'top' or 'relative', default value is 'middle'
-"   middle: mean the cursor position alway show at the middle of the preview page
-"   top: mean the vim top viewport alway show at the top of the preview page
-"   relative: mean the cursor position alway show at the relative positon of the preview page
-" hide_yaml_meta: if hide yaml metadata, default is 1
-" sequence_diagrams: js-sequence-diagrams options
-" let g:mkdp_preview_options = {
-"     \ 'mkit': {},
-"     \ 'katex': {},
-"     \ 'uml': {},
-"     \ 'maid': {},
-"     \ 'disable_sync_scroll': 0,
-"     \ 'sync_scroll_type': 'middle',
-"     \ 'hide_yaml_meta': 1,
-"     \ 'sequence_diagrams': {}
-"     \ }
-
-" use a custom markdown style must be absolute path
-" let g:mkdp_markdown_css = ''
-
-" use a custom highlight style must absolute path
-" let g:mkdp_highlight_css = ''
-
-" use a custom port to start server or random for empty
-" let g:mkdp_port = ''
-
-" preview page title
-" ${name} will be replace with the file name
-" let g:mkdp_page_title = '「${name}」'
-
 " cpp语法高亮加强
 let g:cpp_posix_standard = 1 "打开POSIX高亮"
 let g:cpp_experimental_template_highlight = 1 "template "
@@ -546,10 +485,15 @@ aug vim-cmake-group
     au WinEnter * if winnr('$') == 1 && &filetype == "vimcmake"|q!|endif
 aug END
 
+let g:which_key_map.z = { 'name' : '+CMake' }
 nnoremap <leader>zg :<C-U><C-R>=printf("CMakeGenerate %s", "Debug")<CR>
+let g:which_key_map.z.g = "Generate"
 nnoremap <leader>zb :<C-U><C-R>=printf("CMakeBuild --parallel %s", "")<CR>
+let g:which_key_map.z.b = "Build"
 nnoremap <leader>zs :<C-U><C-R>=printf("CMakeSwitch %s", "")<CR>
+let g:which_key_map.z.s = "Switch Profile"
 nnoremap <leader>zc :CMakeClose<CR>
+let g:which_key_map.z.c = "Close"
 
 
 " C/C++源代码跳转
@@ -557,6 +501,9 @@ nnoremap <leader>zc :CMakeClose<CR>
 " <C+w>gf 在新窗口打开
 " C+] 利用tag跳转, C+i C+o跳转buffer
 " 还有接下来的定义
+" vim-fswitch
+
+let g:which_key_map.s = { 'name' : '+split' }
 
 nnoremap <leader>sw :FSSplitAbove<CR>
 nnoremap <leader>ss :FSSplitBelow<CR>
@@ -605,6 +552,8 @@ let g:vim_json_conceal = 0
 "  vim-osc52
 "  <leader>terminal-copy 使用魔法osc-52复制到剪切板
 vnoremap <leader>ty :OSCYank<CR>
+let g:which_key_map.t = { 'name' : '+tab/ternimal' }
+let g:which_key_map.t.s = 'OSC52-Copy'
 " " 自动复制+ reg
 " augroup OSCYank
 "   autocmd!
@@ -665,3 +614,5 @@ augroup END
 
 " shaderlab, unreal shader set to hlsl
 au BufNewFile,BufRead *.usf,*.shader,*.shaderlab,*.cginc setfiletype hlsl
+
+call which_key#register('\', "g:which_key_map")

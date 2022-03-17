@@ -79,7 +79,7 @@ autocmd FileType c,cpp,java,php autocmd BufWritePre <buffer> %s/\s\+$//e
 
 set timeout
 set ttimeout " 打开timeout和ttimeout
-set timeoutlen=3000 " 自定义的map 3秒视为超时
+set timeoutlen=800 " 自定义的map 800m秒视为超时
 set ttimeoutlen=100 " 内置的50ms
 "============================================= KEYS MAPPING ==================
 " 部分快捷键

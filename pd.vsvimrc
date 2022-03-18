@@ -40,7 +40,7 @@ set backspace=indent,eol,start
 
 set timeout
 set ttimeout " 打开timeout和ttimeout
-set timeoutlen=3000 " 自定义的map 3秒视为超时
+set timeoutlen=800 " 自定义的map 3秒视为超时
 set ttimeoutlen=100 " 内置的50ms
 "============================================= KEYS MAPPING ==================
 " <leader>nu关闭开启数字行号
@@ -51,15 +51,10 @@ nnoremap U <C-r>
 " <leader>/关闭搜索高亮
 noremap <leader>/ :nohls<CR>
 
-"select all
-map <Leader>a ggVG"
 " Shift+H goto head of the line, Shift+L goto end of the line
 nnoremap H ^
 nnoremap L $
 
-" command mode, ctrl-a to head， ctrl-e to tail
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
 
 
 
@@ -83,21 +78,17 @@ nnoremap <leader>tb :tabnew<CR>
 inoremap <leader>tb <ESC>:tabnew<CR>
 nnoremap <leader>tc :tabclose<CR>
 
-" quickfix move
-nnoremap <leader>j  :cn<CR>
-nnoremap <leader>k  :cp<CR>
+nnoremap ; :
 
-nnoremap <C-O> :vsc View.NavigateBackward<CR>
-nnoremap <C-I> :vsc View.NavigateForward<CR>
+nnoremap <c-o> :vsc View.NavigateBackward<CR>
+nnoremap <c-i> :vsc View.NavigateForward<CR>
 nnoremap <C-]> :vsc Edit.GoToDefinition<CR>
 nnoremap <Leader>cc  :vsc Edit.ToggleBlockComment<CR>
-nnoremap <Leader>j       :vsc View.NextError<CR>
-nnoremap <Leader>k       :vsc View.PreviousError<CR>
-nnoremap <Leader>fr     :vsc Edit.FindAllReferences<CR>
+nnoremap <Leader>fgr     :vsc Edit.FindAllReferences<CR>
 nnoremap <leader>zb :vsc Build.BuildSolution<cr>
 nnoremap <leader>gd :vsc Edit.GoToDefinition<cr>
 nnoremap <leader>gi :vsc Edit.GoToImplementation<cr>
 nnoremap <leader>ff :vsc Edit.GoToFile<cr>
 " find mru
 nnoremap <leader>fm :vsc Edit.GoToRecentFile<cr>
-nnoremap <leader>fs :vsc Edit.GoToSymbol<cr>
+nnoremap <leader>fgs :vsc Edit.GoToSymbol<cr>

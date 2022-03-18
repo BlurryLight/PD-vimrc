@@ -47,5 +47,6 @@ if grep -q Microsoft /proc/version; then
     fi
 fi
 
-echo "You should mannually run mklink as Administrator for .ideavimrc"
-# ln -sfn "${SCRIPT_DIR}/.ideavimrc" "$src_path"
+# echo "You should mannually run mklink as Administrator for .ideavimrc"
+cp "${SCRIPT_DIR}/pd.ideavimrc" "${win_home_path}/.ideavimrc"
+cp "${SCRIPT_DIR}/pd.vsvimrc" "${win_home_path}/.vsvimrc"

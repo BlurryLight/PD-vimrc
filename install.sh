@@ -5,7 +5,7 @@ echo $SCRIPT_DIR
 d=`date +%H_%I_%m-%Y%m%d`
 if [ -e ~/.vimrc ]
     then cp ~/.vimrc ~/.vimrcpdbak${d}
- echo "Original .vimrc has been renamed to .vimrcpdbak${d}"
+    echo "Original .vimrc has been renamed to .vimrcpdbak${d}"
 fi
 
 if [ -d ~/.ctags.d ]
@@ -48,5 +48,16 @@ if grep -q Microsoft /proc/version; then
 fi
 
 # echo "You should mannually run mklink as Administrator for .ideavimrc"
+if [ -e "${win_home_path}/.ideavimrc" ]
+    then cp "${win_home_path}/.ideavimrc"  "${win_home_path}/.ideavimrcbak_${d}" 
+    echo "Original .ideavimrc has been renamed to .ideavimrcbak_${d}"
+fi
 cp "${SCRIPT_DIR}/pd.ideavimrc" "${win_home_path}/.ideavimrc"
+
+if [ -e "${win_home_path}/.vsvimrc" ]
+    then cp "${win_home_path}/.vsvimrc"  "${win_home_path}/.vsvimrcbak_${d}" 
+    echo "Original .vsvimrc has been renamed to .vsvimrcbak_${d}"
+fi
 cp "${SCRIPT_DIR}/pd.vsvimrc" "${win_home_path}/.vsvimrc"
+
+# cp "${SCRIPT_DIR}/pd.vsvimrc" "${win_home_path}/.vsvimrc"

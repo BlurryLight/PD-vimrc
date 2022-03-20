@@ -207,9 +207,17 @@ set t_Co=256
 let base16colorspace=256
 " colorscheme base16-onedark
 colorscheme base16-oceanicnext
+" colorscheme base16-flat
+" colorscheme base16-github
+" colorscheme base16-monokai
+" colorscheme base16-material
+" colorscheme base16-one-light
+" colorscheme base16-tomorrow
+" base16-tomorrow-night-eighties 还不错
 " colorscheme base16-solarized-light
 " let g:airline_theme = 'solarized'
 " let g:airline_solarized_bg='light'
+"
 
 
 " whichkey
@@ -616,3 +624,25 @@ augroup END
 au BufNewFile,BufRead *.usf,*.shader,*.shaderlab,*.cginc setfiletype hlsl
 
 call which_key#register('\', "g:which_key_map")
+
+nnoremap <silent> <leader>ts :call CycleColor()<CR>
+let g:which_key_map.t.s = "SwitchTheme"
+
+
+fun! CycleColor()
+    let themes = ['base16-monokai','base16-flat', 'base16-onedark','base16-tomorrow','base16-tomorrow-night-eighties','base16-one-light','base16-material','base16-oceanicnext']
+
+    " default is -1
+    let i = get(b:, 't_index', -1) 
+    let i = (i+1)%len(themes)
+    let theme = themes[i]
+    " store current index to b:t_index
+    let b:t_index = i
+    execute printf('colorscheme %s', theme)
+    let b:cur_theme = theme
+    " vim will postpone redraw until user input
+    " when redraw, the echo message will be lost
+    " so we must manually call redraw before echo
+    " see :h echo
+    redraw | echo b:cur_theme
+endfun

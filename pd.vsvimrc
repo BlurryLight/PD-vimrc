@@ -83,8 +83,8 @@ nnoremap ; :
 nnoremap <c-o> :vsc View.NavigateBackward<CR>
 nnoremap <c-i> :vsc View.NavigateForward<CR>
 nnoremap <C-]> :vsc Edit.GoToDefinition<CR>
-nnoremap <Leader>cc  :vsc Edit.ToggleBlockComment<CR>
-nnoremap <Leader>fgr     :vsc Edit.FindAllReferences<CR>
+nnoremap <leader>cc  :vsc Edit.ToggleLineComment<CR>
+nnoremap <leader>fgr     :vsc Edit.FindAllReferences<CR>
 nnoremap <leader>zb :vsc Build.BuildSolution<cr>
 nnoremap <leader>gd :vsc Edit.GoToDefinition<cr>
 nnoremap <leader>gi :vsc Edit.GoToImplementation<cr>

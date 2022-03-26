@@ -628,6 +628,12 @@ call which_key#register('\', "g:which_key_map")
 nnoremap <silent> <leader>ts :call CycleColor()<CR>
 let g:which_key_map.t.s = "SwitchTheme"
 
+let g:which_key_map.W = { 'name' : 'vitmp_w' }
+let g:which_key_map.P = { 'name' : 'vitmp_r' }
+
+let g:which_key_map.w = { 'name' : '+win' }
+let g:which_key_map.w.s = "WinSplitMode"
+
 
 fun! CycleColor()
     let themes = ['base16-monokai','base16-flat', 'base16-onedark','base16-tomorrow','base16-tomorrow-night-eighties','base16-one-light','base16-material','base16-oceanicnext']

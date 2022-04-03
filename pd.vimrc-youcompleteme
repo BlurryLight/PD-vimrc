@@ -193,7 +193,7 @@ Plug 'Shougo/echodoc.vim'
 Plug 'wakatime/vim-wakatime'
 
 " tagbar has a nice tui for overview a big file
-Plug 'preservim/tagbar'
+Plug 'preservim/tagbar',{'on':  'TagbarToggle'}
 call plug#end()
 
 

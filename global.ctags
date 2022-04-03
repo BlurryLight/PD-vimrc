@@ -34,8 +34,10 @@
 --exclude=CMakeFiles/
 --exclude=*CMakeFiles*
 --exclude=*third_party*
+--exclude=Library/[!P]*/*
+--exclude=Library/PackageCache/com.unity.[!r]*/*
 
 --sort=no
 
 #support unity
---langmap=c:+.cginc,c:+.shader
+--langmap=c:+.cginc,c:+.shader,c:+.hlsl

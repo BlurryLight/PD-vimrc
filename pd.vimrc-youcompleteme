@@ -191,6 +191,9 @@ Plug 'Shougo/echodoc.vim'
 
 " My Private affairs
 Plug 'wakatime/vim-wakatime'
+
+" tagbar has a nice tui for overview a big file
+Plug 'preservim/tagbar'
 call plug#end()
 
 
@@ -562,6 +565,26 @@ let g:vim_json_conceal = 0
 vnoremap <leader>ty :OSCYank<CR>
 let g:which_key_map.t = { 'name' : '+tab/ternimal' }
 let g:which_key_map.t.s = 'OSC52-Copy'
+
+" vim tagbar
+" tagbar toggle
+let g:which_key_map.t.t = 'TagbarToggle'
+nnoremap <leader>tt :TagbarToggle<CR>
+let g:tagbar_type_hlsl = {
+    \ 'ctagstype' : 'c',
+    \ 'kinds'     : [
+        \ 's:structs', 'f:functions', 'm:members','d:macros','v:variables' ]
+\ }
+let g:tagbar_type_glsl = {
+    \ 'ctagstype' : 'c',
+    \ 'kinds'     : [
+        \ 's:structs', 'f:functions', 'm:members','d:macros','v:variables' ]
+\ }
+let g:tagbar_type_cg= {
+    \ 'ctagstype' : 'c',
+    \ 'kinds'     : [
+        \ 's:structs', 'f:functions', 'm:members','d:macros','v:variables' ]
+\ }
 " " 自动复制+ reg
 " augroup OSCYank
 "   autocmd!

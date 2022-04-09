@@ -1,4 +1,18 @@
 source $HOME/pd.vimrc-base
+" https://github.com/hanxi/dotfiles/blob/master/etc/vimrc.vim#L118~L131
+"{{ 查找工程目录
+function! SearchRoot()
+  let l:scm_list = ['.root', '.svn', '.git','.hg']
+  for l:item in l:scm_list
+    let l:dirs = finddir(l:item, '.;', -1)
+    if !empty(l:dirs)
+      return fnamemodify(l:dirs[-1].'/../', ':p:h')
+    endif
+  endfor
+  return getcwd()
+endfunction
+let g:root_dir = SearchRoot()
+
 
 set wildmenu
 
@@ -257,19 +271,6 @@ let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 ,'Rg': 1}
 let g:Lf_ShortcutF = "<leader>ff"
 let g:Lf_GtagsAutoGenerate = 1
 
-" https://github.com/hanxi/dotfiles/blob/master/etc/vimrc.vim#L118~L131
-"{{ 查找工程目录
-function! SearchRoot()
-  let l:scm_list = ['.root', '.svn', '.git']
-  for l:item in l:scm_list
-    let l:dirs = finddir(l:item, '.;', -1)
-    if !empty(l:dirs)
-      return fnamemodify(l:dirs[-1].'/../', ':p:h')
-    endif
-  endfor
-  return getcwd()
-endfunction
-let g:root_dir = SearchRoot()
 
 
 function! SearchGlobalrc()
@@ -280,8 +281,9 @@ function! SearchGlobalrc()
     endif
     return $HOME."/.globalrc"
 endfunction
+let g:globalrc_path = SearchGlobalrc()
 
-let g:Lf_Gtagsconf = SearchGlobalrc()
+let g:Lf_Gtagsconf = g:globalrc_path
 let g:Lf_Gtagslabel = 'native-pygments'
 let g:Lf_WildIgnore = {
         \ 'dir': ['.svn','.git','.hg'],
@@ -407,6 +409,7 @@ let g:ycm_warning_symbol='⚠'
 let g:ycm_always_populate_location_list = 1
 let g:ycm_key_detailed_diagnostics = '<leader>yd'
 let g:ycm_key_invoke_completion = '<leader>yc'
+set tags=./.ctags;,.ctags " from current dir and upper dir search for .ctags file
 
 let g:which_key_map.y = { 'name' : '+YCM' }
 let g:which_key_map.y.d="key diag"
@@ -675,3 +678,56 @@ fun! CycleColor()
     " see :h echo
     redraw | echo b:cur_theme
 endfun
+
+let g:ycm_ale_on = 1
+
+function Disable_ycm_ale()
+    " let g:ycm_auto_trigger = 0
+    let g:ycm_show_diagnostics_ui = 0
+    if exists("g:ale_enabled") && (g:ale_enabled == 1)
+        :ALEDisable
+    endif
+    if exists(":YcmRestartServer")
+        :YcmRestartServer
+    endif
+    :e
+    :echo "YCM ALE off"
+    let g:ycm_ale_on = 0
+endfunction
+"Toggle YouCompleteMe and ALE
+function Toggle_ycm_ale()
+    if g:ycm_ale_on == 0
+        " let g:ycm_auto_trigger = 1
+        let g:ycm_show_diagnostics_ui = 1
+        if exists("g:ale_enabled") && (g:ale_enabled == 1)
+            :ALEEnable
+        endif
+        if exists(":YcmRestartServer")
+        endif
+        :e
+        :echo "YCM ALE on"
+        let g:ycm_ale_on = 1
+    elseif g:ycm_ale_on == 1
+        :call Disable_ycm_ale()<CR>
+    endif
+endfunction
+nnoremap <silent> <leader>ty :call Toggle_ycm_ale() <CR>
+let g:which_key_map.t.y = "Toggle_YCM_ALE"
+
+function! LoadLocalVimrc()
+    if filereadable(g:root_dir . "/.lvimrc") 
+        " echom "Loaded " .g:root_dir . "/.lvimrc"
+        execute printf(':source %s/.lvimrc',g:root_dir)
+    endif
+    if filereadable("./.lvimrc")
+        " echo "Loaded " . "./.lvimrc"
+        execute printf(':source .lvimrc')
+    endif
+endfunction
+" .lvimrc will be loaded before any plug loaded
+execute printf(':call LoadLocalVimrc()') 
+if g:ycm_ale_on == 0 " if defined in .lvimrc
+    let g:ale_enabled = 0
+    let g:ycm_show_diagnostics_ui = 0 " we only disbale ycm diagnostics, allow ycm for basic compeletion
+    let g:ycm_collect_identifiers_from_tags_files = 1 " allow ycm collect tags
+endif

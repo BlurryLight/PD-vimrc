@@ -269,6 +269,8 @@ let g:Lf_PreviewInPopup = 1
 let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "Source Code Pro"  }
 let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 ,'Rg': 1}
 let g:Lf_ShortcutF = "<leader>ff"
+" buffer search
+let g:Lf_ShortcutB = "<leader>fbb" 
 let g:Lf_GtagsAutoGenerate = 1
 
 
@@ -295,47 +297,53 @@ let g:Lf_RgConfig = [
         \ "--hidden"
     \ ]
 " 避免ESC退出,使用q退出
-let g:Lf_CommandMap = {'<tab>':[ '<ESC>' ]}
+" let g:Lf_CommandMap = {'<tab>':[ '<ESC>' ]}
+" let g:Lf_NormalMap = {
+"             \ "_":  [
+"             \["<ESC>", '<Nop>'],
+"             \["<tab>", '<Nop>'],
+"             \]
+"             \}
         
 "<leader>f-<command>-<name>
 " 搜索光标所在词语并允许跳转
 let g:which_key_map.f = { 'name' : '+Leaderf' }
-nnoremap <leader>fgg :<C-U><C-R>=printf("Leaderf! gtags -g %s --auto-jump v", expand("<cword>"))<CR><CR>
+nnoremap <leader>fgg :<C-U><C-R>=printf("Leaderf gtags -g %s --auto-jump v", expand("<cword>"))<CR><CR>
 let g:which_key_map.f.gg = 'gtags grep'
 
 " 自动跳转光标所在位置词语的引用或定义
 " by-context
-nnoremap <leader>fgb :<C-U><C-R>=printf("Leaderf! gtags --by-context --auto-jump v")<CR><CR>
+nnoremap <leader>fgb :<C-U><C-R>=printf("Leaderf gtags --by-context --auto-jump v")<CR><CR>
 let g:which_key_map.f.gb = 'gtags context' 
 
 " 搜索光标所在词语的引用并允许跳转
-nnoremap <leader>fgr :<C-U><C-R>=printf("Leaderf! gtags -r %s --auto-jump v", expand("<cword>"))<CR><CR>
+nnoremap <leader>fgr :<C-U><C-R>=printf("Leaderf gtags -r %s --auto-jump v", expand("<cword>"))<CR><CR>
 let g:which_key_map.f.gr = 'gtags ref' 
 
 " 搜索光标所在词语的定义并允许跳转
-nnoremap <leader>fgd :<C-U><C-R>=printf("Leaderf! gtags -d %s --auto-jump v", expand("<cword>"))<CR><CR>
+nnoremap <leader>fgd :<C-U><C-R>=printf("Leaderf gtags -d %s --auto-jump v", expand("<cword>"))<CR><CR>
 let g:which_key_map.f.gd = 'gtags def' 
 "  显示本文件tag
-nnoremap <leader>fbt :<C-U><C-R>=printf("LeaderfBufTag!")<CR><CR>
+nnoremap <leader>fbt :<C-U><C-R>=printf("LeaderfBufTag")<CR><CR>
 let g:which_key_map.f.bt = 'gtags bufTag' 
 
 "  显示本文件函数列表
-nnoremap <leader>fbf :<C-U><C-R>=printf("LeaderfFunction!")<CR><CR>
+nnoremap <leader>fbf :<C-U><C-R>=printf("LeaderfFunction")<CR><CR>
 let g:which_key_map.f.bf =  'gtags bufFunc' 
 
 "  显示所有symbols
-nnoremap <leader>fgs :<C-U><C-R>=printf("Leaderf! gtags %s","")<CR><CR>
+nnoremap <leader>fgs :<C-U><C-R>=printf("Leaderf gtags %s","")<CR><CR>
 let g:which_key_map.f.gs =  'gtags symbols' 
 " Leaderf gtags --recall 重复上一次搜索
-nnoremap <leader>fgc :<C-U><C-R>=printf("Leaderf! gtags --recall")<CR><CR>
+nnoremap <leader>fgc :<C-U><C-R>=printf("Leaderf gtags --recall")<CR><CR>
 let g:which_key_map.f.gc = 'gtags recall' 
 "  搜索某个pattern
-nnoremap <leader>fre :<C-U><C-R>=printf("Leaderf! rg -e %s", expand("<cword>"))<CR>
+nnoremap <leader>fre :<C-U><C-R>=printf("Leaderf rg -e %s", expand("<cword>"))<CR>
 " Leaderf fc --recall 重复上一次搜索
-nnoremap <leader>frc :<C-U><C-R>=printf("Leaderf! rg --recall")<CR><CR>
+nnoremap <leader>frc :<C-U><C-R>=printf("Leaderf rg --recall")<CR><CR>
 let g:which_key_map.f.rc =  'rg recall' 
 " 搜索某个pattern current-buffer
-nnoremap <leader>frb :<C-U><C-R>=printf("Leaderf! rg --current-buffer -e %s", expand("<cword>"))<CR>
+nnoremap <leader>frb :<C-U><C-R>=printf("Leaderf rg --current-buffer -e %s", expand("<cword>"))<CR>
 let g:which_key_map.f.rb = 'rg cur_buf' 
 
 " autocmd BufEnter * exe ':cd '.g:root_dir

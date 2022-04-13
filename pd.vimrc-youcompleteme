@@ -399,16 +399,16 @@ let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
 " <leader>gd 跳转定义和声明
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_autoclose_preview_window_after_completion = 1
-autocmd filetype c,cpp,python,csharp nnoremap <buffer> <C-]> :YcmCompleter GoTo<CR>
+autocmd filetype c,cpp,python,csharp,lua nnoremap <buffer> <C-]> :YcmCompleter GoTo<CR>
 " <leader>gc goto doC 开一个prev窗口显示文档
-autocmd filetype c,cpp,python,csharp nnoremap <buffer> <leader>gc  :YcmCompleter GetDoc<CR>
+autocmd filetype c,cpp,python,csharp,lua nnoremap <buffer> <leader>gc  :YcmCompleter GetDoc<CR>
 let g:which_key_map.g.c = "GetDoc"
-autocmd filetype c,cpp,python,csharp inoremap <buffer> <C-]> :YcmCompleter GoTo<CR>
-autocmd filetype c,cpp,python,csharp nnoremap <buffer> <leader>gd  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+autocmd filetype c,cpp,python,csharp,lua inoremap <buffer> <C-]> :YcmCompleter GoTo<CR>
+autocmd filetype c,cpp,python,csharp,lua nnoremap <buffer> <leader>gd  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:which_key_map.g.d = "GoToDefOrDeclare"
-autocmd filetype c,cpp,python,csharp nnoremap <buffer> <leader>gr :<C-U><C-R>=printf("YcmCompleter GoToReferences %s", expand("<cword>"))<CR>
+autocmd filetype c,cpp,python,csharp,lua nnoremap <buffer> <leader>gr :<C-U><C-R>=printf("YcmCompleter GoToReferences %s", expand("<cword>"))<CR>
 let g:which_key_map.g.r = "GoToRef"
-autocmd filetype c,cpp,python,csharp nnoremap <buffer> <leader>gs :<C-U><C-R>=printf("YcmCompleter GoToSymbol %s", expand("<cword>"))<CR>
+autocmd filetype c,cpp,python,csharp,lua nnoremap <buffer> <leader>gs :<C-U><C-R>=printf("YcmCompleter GoToSymbol %s", expand("<cword>"))<CR>
 let g:which_key_map.g.s = "GoToSymbol"
 let g:ycm_goto_buffer_command = 'split-or-existing-window'
 set completeopt+=menuone
@@ -739,3 +739,13 @@ if g:ycm_ale_on == 0 " if defined in .lvimrc
     let g:ycm_show_diagnostics_ui = 0 " we only disbale ycm diagnostics, allow ycm for basic compeletion
     let g:ycm_collect_identifiers_from_tags_files = 1 " allow ycm collect tags
 endif
+
+" to update the lsp:
+" wget https://github.com/Tencent/LuaHelper/raw/master/luahelper-vscode/server/linuxlualsp -O $HOME/.vim/bin/TencentLuaHelperlsp
+let g:ycm_language_server = [
+  \   { 'name': 'lua',
+  \     'filetypes': [ 'lua' ],
+  \     'cmdline': [ expand($HOME . '/.vim/bin/TencentLuaHelperlsp'),
+  \                  '-mode','1']
+  \   },
+  \ ]

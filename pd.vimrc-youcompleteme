@@ -570,6 +570,8 @@ nnoremap <silent> q :call asyncrun#quickfix_toggle(8)<cr>
 
 " indentLine breaks json files
 let g:vim_json_conceal = 0
+" indentLine breaks tex files
+let g:tex_conceal = 0
 
 "  vim-osc52
 "  <leader>terminal-copy 使用魔法osc-52复制到剪切板

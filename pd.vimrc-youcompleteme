@@ -1,3 +1,4 @@
+let $BASH_ENV = "$HOME/.pd-common/common.rc"
 source $HOME/pd.vimrc-base
 " https://github.com/hanxi/dotfiles/blob/master/etc/vimrc.vim#L118~L131
 "{{ 查找工程目录
@@ -633,6 +634,14 @@ autocmd filetype c set makeprg=gcc\ -O2\ -lpthread\ -std=gnu99\ -g\ %\ -o\ %<
 autocmd filetype cpp nnoremap <buffer><leader>agr :AsyncRun g++ "%" -o "%<" -lpthread -Wall -Wpedantic<CR>
 autocmd filetype cpp nnoremap <buffer><leader>acr :AsyncRun clang++ "%" -o "%<" -lpthread -Wall -Wpedantic<CR>
 autocmd FileType c,cpp setlocal equalprg=clang-format
+
+" The ctagshere is a utils function that defines in bashrc to generate ctags
+" in current dir
+nnoremap <leader>at :AsyncRun ctagshere <CR>
+let g:which_key_map.a = { 'name' : '+AsyncRun' }
+let g:which_key_map.a.gr = 'g++'
+let g:which_key_map.a.cr = 'clang++'
+let g:which_key_map.a.t = 'ctags'
 
 
 " 高亮所在行的行号

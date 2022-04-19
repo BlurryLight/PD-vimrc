@@ -134,6 +134,10 @@ nnoremap <leader>tc :tabclose<CR>
 nnoremap <leader>j  :cn<CR>
 nnoremap <leader>k  :cp<CR>
 
+" don't bother me with command history
+nnoremap q: :q
+nnoremap Q <nop>
+
 "
 nnoremap ; :
 

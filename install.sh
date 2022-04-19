@@ -61,3 +61,5 @@ fi
 cp "${SCRIPT_DIR}/pd.vsvimrc" "${win_home_path}/.vsvimrc"
 
 # cp "${SCRIPT_DIR}/pd.vsvimrc" "${win_home_path}/.vsvimrc"
+printf '(check_files_eq "$WINHOME/.ideavimrc" "$HOME/.vim/pd.ideavimrc" &)\n' >> ~/.bashrc_local
+printf '(check_files_eq "$WINHOME/.vsvimrc" "$HOME/.vim/pd.vsvimrc" &)\n' >> ~/.bashrc_local

@@ -116,9 +116,10 @@ nnoremap <leader>tb :tabnew<CR>
 inoremap <leader>tb <ESC>:tabnew<CR>
 nnoremap <leader>tc :tabclose<CR>
 
-" quickfix move
-nnoremap <leader>j  :cn<CR>
-nnoremap <leader>k  :cp<CR>
+" don't bother me with command history
+nnoremap q: :q
+nnoremap Q <nop>
+nnoremap ; :
 
 " nnoremap <leader>gc :action GotoClass<CR>
 " " 弹出输入框，跳转到指定操作
@@ -130,10 +131,10 @@ nnoremap <leader>gi :action GotoImplementation<CR>
 " 跳转到指定的文件
 nnoremap <leader>ff :action GotoFile<CR>
 " 跳转到变量的声明
-nnoremap <leader>gs :action GotoSymbol<CR>
+nnoremap <leader>fgs :action GotoSymbol<CR>
 
 " 查找使用
-nnoremap <leader>gr :action FindUsages<CR>
+nnoremap <leader>fgr :action FindUsages<CR>
 " " 显示使用
 " nnoremap <Space>su :action ShowUsages<CR>
 set keep-english-in-normal-and-restore-in-insert

@@ -141,7 +141,9 @@ Plug 'vim-airline/vim-airline'
 " 文件树
 Plug 'scrooloose/nerdtree',{'on':  'NERDTreeToggle'}
 " CMake 字典补全
-Plug 'huleiak47/vim-cmake-complete',{'for':['cmake']}
+" use my own fork
+Plug 'BlurryLight/vim-cmake-complete',{'for':['cmake']}
+
 " CMake syntax
 Plug 'pboettch/vim-cmake-syntax'
 " 模糊查找
@@ -538,7 +540,9 @@ nnoremap <leader>sd :FSSplitRight<CR>
 "To use echodoc, you must increase 'cmdheight' value.
 set cmdheight=2
 let g:echodoc_enable_at_startup = 1
-" set noshowmode
+" disable echodoc when cmake
+" autocmd FileType cmake :set cmdheight=1
+" autocmd FileType cmake let g:echodoc_enable_at_startup = 0
 
 " \'c':[],
 " \'cpp':[],

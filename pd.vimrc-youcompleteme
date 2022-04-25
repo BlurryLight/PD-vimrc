@@ -1,3 +1,4 @@
+" allow vim to use bash alias in th file
 let $BASH_ENV = "$HOME/.pd-common/common.rc"
 source $HOME/pd.vimrc-base
 " https://github.com/hanxi/dotfiles/blob/master/etc/vimrc.vim#L118~L131
@@ -505,8 +506,20 @@ autocmd User CMakeBuildFailed copen
 autocmd User CMakeBuildFailed Cfilter error
 augroup END
 
+function! VimCMakeBuildSucceededCallback()
+    CMakeClose
+    " disbale async bell
+    let g:asyncrun_bell = 0
+    AsyncRun -silent -strip notify "CMake Build Succeeded"
+    " restore the bell
+    let g:asyncrun_bell = 1
+endfunction
+
 augroup vim-cmake-group
-autocmd! User CMakeBuildSucceeded CMakeClose
+" at build succeeded, call bash function `notify` to send a notification.
+" notify is a alias for program http://vaskovsky.net/notify-send/
+" If the command doesn't exists it failed silently
+autocmd! User CMakeBuildSucceeded :call VimCMakeBuildSucceededCallback()
 augroup END
 
 aug vim-cmake-group
@@ -572,6 +585,7 @@ let g:ale_linter_aliases = {'bash': ['sh']}
 
 " auto open quickfix at height of 8 lines
 let g:asyncrun_open = 8
+" async默认会响铃
 let g:asyncrun_bell = 1
 nnoremap <silent> q :call asyncrun#quickfix_toggle(8)<cr>
 

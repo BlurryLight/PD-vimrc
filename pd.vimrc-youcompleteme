@@ -35,7 +35,7 @@ nnoremap <leader>qp :cnew<CR>
 autocmd BufReadPost quickfix nnoremap <buffer> v <C-w><Enter><C-w>L
 autocmd BufReadPost quickfix nnoremap <buffer> s <C-w><Enter><C-w>K
 augroup vimrc_colors
-    au!
+au!
     au ColorScheme * hi QuickFixLine ctermfg=NONE cterm=bold guifg=NONE gui=bold
 augroup END
 
@@ -211,6 +211,9 @@ Plug 'wakatime/vim-wakatime'
 
 " tagbar has a nice tui for overview a big file
 Plug 'preservim/tagbar',{'on':  'TagbarToggle'}
+"
+Plug 'babaybus/DoxygenToolkit.vim',{'for':['cpp','c','python']}
+
 call plug#end()
 
 
@@ -747,13 +750,6 @@ function! LoadLocalVimrc()
         execute printf(':source .lvimrc')
     endif
 endfunction
-" .lvimrc will be loaded before any plug loaded
-execute printf(':call LoadLocalVimrc()') 
-if g:ycm_ale_on == 0 " if defined in .lvimrc
-    let g:ale_enabled = 0
-    let g:ycm_show_diagnostics_ui = 0 " we only disbale ycm diagnostics, allow ycm for basic compeletion
-    let g:ycm_collect_identifiers_from_tags_files = 1 " allow ycm collect tags
-endif
 
 " to update the lsp:
 " wget https://github.com/Tencent/LuaHelper/raw/master/luahelper-vscode/server/linuxlualsp -O $HOME/.vim/bin/TencentLuaHelperlsp
@@ -764,3 +760,15 @@ let g:ycm_language_server = [
   \                  '-mode','1']
   \   },
   \ ]
+
+" doxygen 
+let g:DoxygenToolkit_authorName="Blurry Light"
+
+" always be the bottom of the file
+" .lvimrc will be loaded before any plug loaded
+execute printf(':call LoadLocalVimrc()') 
+if g:ycm_ale_on == 0 " if defined in .lvimrc
+    let g:ale_enabled = 0
+    let g:ycm_show_diagnostics_ui = 0 " we only disbale ycm diagnostics, allow ycm for basic compeletion
+    let g:ycm_collect_identifiers_from_tags_files = 1 " allow ycm collect tags
+endif

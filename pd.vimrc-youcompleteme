@@ -781,8 +781,12 @@ let g:DoxygenToolkit_authorName="Blurry Light"
 " always be the bottom of the file
 " .lvimrc will be loaded before any plug loaded
 execute printf(':call LoadLocalVimrc()') 
+" 对于无法在Linux下编译的项目，需要在项目根目录新建.lvimrc并定义ycm_ale_on = 0
+" 关闭代码的诊断提示,但是ycm保持开启，提供最基础的omni补全，并且允许ycm从ctags里搜集补全
 if g:ycm_ale_on == 0 " if defined in .lvimrc
     let g:ale_enabled = 0
     let g:ycm_show_diagnostics_ui = 0 " we only disbale ycm diagnostics, allow ycm for basic compeletion
     let g:ycm_collect_identifiers_from_tags_files = 1 " allow ycm collect tags
+    autocmd filetype c,cpp,python,csharp,lua   unmap <buffer> <C-]>
+    autocmd filetype c,cpp,python,csharp,lua  iunmap <buffer> <C-]>
 endif

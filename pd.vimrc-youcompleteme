@@ -592,6 +592,8 @@ nnoremap <silent> q :call asyncrun#quickfix_toggle(8)<cr>
 
 " indentLine breaks json files
 let g:vim_json_conceal = 0
+" indentLine breaks markdown files
+au FileType markdown let g:indentLine_setConceal= 0
 " indentLine breaks tex files
 let g:tex_conceal = 0
 

@@ -133,6 +133,7 @@ nnoremap <leader>ff :action GotoFile<CR>
 " 跳转到变量的声明
 nnoremap <leader>fgs :action GotoSymbol<CR>
 
+nnoremap <leader>fre :action FindInPath<CR>
 " 查找使用
 nnoremap <leader>fgr :action FindUsages<CR>
 " " 显示使用

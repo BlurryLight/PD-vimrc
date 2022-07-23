@@ -39,5 +39,5 @@
 
 --sort=no
 
-#support unity
---langmap=c:+.cginc,c:+.shader,c:+.hlsl
+#support unity & UE
+--langmap=c:+.cginc,c:+.shader,c:+.hlsl,c:.usf,c:.ush

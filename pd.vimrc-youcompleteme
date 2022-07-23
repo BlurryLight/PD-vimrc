@@ -279,6 +279,9 @@ let g:Lf_ShortcutF = "<leader>ff"
 " buffer search
 let g:Lf_ShortcutB = "<leader>fbb" 
 let g:Lf_GtagsAutoGenerate = 1
+let g:Lf_GtagsSource = 1
+
+
 
 
 
@@ -313,6 +316,7 @@ let g:Lf_RgConfig = [
 "             \}
         
 "<leader>f-<command>-<name>
+let g:Lf_RootMarkers = ['.root','.project','.git', '.svn', '.hg']
 " 搜索光标所在词语并允许跳转
 let g:which_key_map.f = { 'name' : '+Leaderf' }
 nnoremap <leader>fgg :<C-U><C-R>=printf("Leaderf gtags -g %s --auto-jump v", expand("<cword>"))<CR><CR>

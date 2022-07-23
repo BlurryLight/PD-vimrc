@@ -62,7 +62,7 @@ native-pygments:\
 # See gtags(1).
 #---------------------------------------------------------------------
 common:\
-	:skip=/ThirdParty/,/build/,BUILD/,HTML/,HTML.pub/,tags,TAGS,ID,y.tab.c,y.tab.h,gtags.files,cscope.files,cscope.out,cscope.po.out,cscope.in.out,SCCS/,RCS/,CVS/,CVSROOT/,{arch}/,autom4te.cache/,*.orig,*.rej,*.bak,*~,#*#,*.swp,*.tmp,*_flymake.*,*_flymake,*.o,*.a,*.so,*.lo,*.zip,*.gz,*.bz2,*.xz,*.lzh,*.Z,*.tgz,*.min.js,*min.css,third_party/,*third_party*,*build*,.cache/,build/,*.incoming,*ThirdParty*,*.meta,CMakeFiles/,Library/[!P]*/,Library/PackageCache/com.unity.[!r]*/:
+	:skip=Build/,/Engine/Binaries/,/Engine/Extras/,ThirdParty/,build/,BUILD/,HTML/,HTML.pub/,tags,TAGS,ID,y.tab.c,y.tab.h,gtags.files,cscope.files,cscope.out,cscope.po.out,cscope.in.out,SCCS/,RCS/,CVS/,CVSROOT/,{arch}/,autom4te.cache/,*.orig,*.rej,*.bak,*~,#*#,*.swp,*.tmp,*_flymake.*,*_flymake,*.o,*.a,*.so,*.lo,*.zip,*.gz,*.bz2,*.xz,*.lzh,*.Z,*.tgz,*.min.js,*min.css,third_party/,*third_party*,*build*,.cache/,build/,*.incoming,*ThirdParty*,*.meta,CMakeFiles/,Library/[!P]*/,Library/PackageCache/com.unity.[!r]*/,/Engine/Plugins/2D/,/Engine/Documentation/,/Engine/DerivedDataCache/,/Engine/Saved/,/Engine/Intermediate/:
 #
 # Built-in parsers.
 #
@@ -524,6 +524,7 @@ pygments-parser|Pygments plug-in parser:\
 	:langmap=XSLT\:.xsl.xslt.xpl:\
 	:langmap=Xtend\:.xtend:\
     :langmap=c\:.shader.cginc.hlsl:\
+    :langmap=c\:.usf.ush:\
 	# :gtags_parser=Shader\:$pygmentslib:\
 	:gtags_parser=HLSL\:$pygmentslib:\
 	:gtags_parser=Shader\:$pygmentslib:\

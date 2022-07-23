@@ -24,6 +24,13 @@ ln -sfn ${SCRIPT_DIR}/.ideavimrc ~/.ideavimrc
 ln -sfn ${SCRIPT_DIR} ~/.vim
 ln -sfn ${SCRIPT_DIR}/tmux.conf ~/.tmux.conf
 
+# MSYS part
+
+if [ -z "${MSYSTEM+x}" ]; then
+    echo "MSYS Platform"
+fi
+
+# ubuntu part
 echo "Run vim +PlugInstall"
 if [[ `lsb_release -si` == "Ubuntu" ]] && ! [ -x "$(command -v shellcheck)" ];
     then
@@ -35,7 +42,7 @@ if [[ `lsb_release -si` == "Ubuntu" ]] && ! [ -x "$(command -v shellcheck)" ];
     sudo apt install -y clang-tools clang-11
 fi
 
-# wsl
+# wsl part
 if grep -q Microsoft /proc/version; then
     win_home_path=`wslpath "$(wslvar USERPROFILE)"`
     echo ${win_home_path}
@@ -45,21 +52,21 @@ if grep -q Microsoft /proc/version; then
         then cp "${src_path}" "${dest_path}"
         echo "Original ${src_path} conf has been renamed to ${dest_path}"
     fi
-fi
 
-# echo "You should mannually run mklink as Administrator for .ideavimrc"
-if [ -e "${win_home_path}/.ideavimrc" ]
-    then cp "${win_home_path}/.ideavimrc"  "${win_home_path}/.ideavimrcbak_${d}" 
-    echo "Original .ideavimrc has been renamed to .ideavimrcbak_${d}"
-fi
-cp "${SCRIPT_DIR}/pd.ideavimrc" "${win_home_path}/.ideavimrc"
+    # echo "You should mannually run mklink as Administrator for .ideavimrc"
+    if [ -e "${win_home_path}/.ideavimrc" ]
+        then cp "${win_home_path}/.ideavimrc"  "${win_home_path}/.ideavimrcbak_${d}" 
+        echo "Original .ideavimrc has been renamed to .ideavimrcbak_${d}"
+    fi
+    cp "${SCRIPT_DIR}/pd.ideavimrc" "${win_home_path}/.ideavimrc"
 
-if [ -e "${win_home_path}/.vsvimrc" ]
-    then cp "${win_home_path}/.vsvimrc"  "${win_home_path}/.vsvimrcbak_${d}" 
-    echo "Original .vsvimrc has been renamed to .vsvimrcbak_${d}"
-fi
-cp "${SCRIPT_DIR}/pd.vsvimrc" "${win_home_path}/.vsvimrc"
+    if [ -e "${win_home_path}/.vsvimrc" ]
+        then cp "${win_home_path}/.vsvimrc"  "${win_home_path}/.vsvimrcbak_${d}" 
+        echo "Original .vsvimrc has been renamed to .vsvimrcbak_${d}"
+    fi
+    cp "${SCRIPT_DIR}/pd.vsvimrc" "${win_home_path}/.vsvimrc"
 
-# cp "${SCRIPT_DIR}/pd.vsvimrc" "${win_home_path}/.vsvimrc"
-printf '(check_files_eq "$WINHOME/.ideavimrc" "$HOME/.vim/pd.ideavimrc" &)\n' >> ~/.bashrc_local
-printf '(check_files_eq "$WINHOME/.vsvimrc" "$HOME/.vim/pd.vsvimrc" &)\n' >> ~/.bashrc_local
+    # cp "${SCRIPT_DIR}/pd.vsvimrc" "${win_home_path}/.vsvimrc"
+    printf '(check_files_eq "$WINHOME/.ideavimrc" "$HOME/.vim/pd.ideavimrc" &)\n' >> ~/.bashrc_local
+    printf '(check_files_eq "$WINHOME/.vsvimrc" "$HOME/.vim/pd.vsvimrc" &)\n' >> ~/.bashrc_local
+fi

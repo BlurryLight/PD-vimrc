@@ -40,4 +40,4 @@
 --sort=no
 
 #support unity & UE
---langmap=c:+.cginc,c:+.shader,c:+.hlsl,c:.usf,c:.ush
+--langmap=c:+.cginc,c:+.shader,c:+.hlsl,c:+.usf,c:+.ush

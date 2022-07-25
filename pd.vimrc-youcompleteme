@@ -209,7 +209,7 @@ let g:rainbow_active = 1
 Plug 'Shougo/echodoc.vim'
 
 " My Private affairs
-Plug 'wakatime/vim-wakatime'
+" Plug 'wakatime/vim-wakatime'
 
 " tagbar has a nice tui for overview a big file
 Plug 'preservim/tagbar',{'on':  'TagbarToggle'}
@@ -231,7 +231,7 @@ endif
 set t_Co=256
 let base16colorspace=256
 " colorscheme base16-onedark
-colorscheme base16-oceanicnext
+" colorscheme base16-oceanicnext
 " colorscheme base16-flat
 " colorscheme base16-github
 " colorscheme base16-monokai
@@ -239,11 +239,13 @@ colorscheme base16-oceanicnext
 " colorscheme base16-one-light
 " colorscheme base16-tomorrow
 " base16-tomorrow-night-eighties 还不错
-" colorscheme base16-solarized-light
 " let g:airline_theme = 'solarized'
 " let g:airline_solarized_bg='light'
 "
 
+"  这3个一组
+colorscheme base16-solarized-light
+let g:light_theme = 1
 
 " whichkey
 let g:which_key_map =  {}
@@ -357,6 +359,7 @@ let g:which_key_map.f.rc =  'rg recall'
 " 搜索某个pattern current-buffer
 nnoremap <leader>frb :<C-U><C-R>=printf("Leaderf rg --current-buffer -e %s", expand("<cword>"))<CR>
 let g:which_key_map.f.rb = 'rg cur_buf' 
+
 
 " autocmd BufEnter * exe ':cd '.g:root_dir
 "}}
@@ -806,13 +809,20 @@ function! HLSLFoldPreprocessor()
     set foldmethod=syntax
     syn keyword         hlslType                UNROLL BRANCH
     syntax region CoreReview matchgroup=cComment start=/\/\/CR/ end=/\/\/RC/ contains=hlslType,hlslFunc,cCommentL,cComment
-    highlight CoreReview ctermbg=241 guibg=#35212C
 endfunction
 
 " 根据选中，\lh高亮所有行，\lc清理所有行,\ld清理当前行
-highlight LineHighlight ctermbg=100 guibg=#374090
+if g:light_theme == 1
+    highlight LineHighlight ctermbg=100 guibg=#D2B48C
+    highlight CoreReview ctermbg=241 guibg=#35212C
+    let g:Lf_PopupColorscheme = 'gruvbox_material'
+elseif
+    highlight LineHighlight ctermbg=100 guibg=#374090
+    highlight CoreReview ctermbg=241 guibg=#35212C
+endif
 nnoremap <silent> <leader>ll :call matchadd('LineHighlight', '\%'.line('.').'l')<CR>
 vnoremap <leader>ll :<c-u>call HiglightVisualLines()<CR>
+vnoremap <leader>ld :<c-u>call DeleteVisualLines()<CR>
 let g:which_key_map.l = { 'name' : '+LineHighlight' }
 let g:which_key_map.l.l = { 'name' : 'Highlight' }
 nnoremap <leader>lc :<C-U>call clearmatches()<CR>
@@ -826,7 +836,16 @@ function! HiglightVisualLines()
     endfor
 endfunction
 
+function! DeleteVisualLines()
+    for j in range(line('v'),line("'>"))
+        for m in filter(getmatches(), { i, v -> has_key(l:v, 'pattern') && l:v.pattern is? '\%'.j.'l'} )
+            call matchdelete(m.id)
+        endfor
+    endfor
+endfunction
+
 nnoremap <silent> <leader>ld :
   \for m in filter(getmatches(), { i, v -> has_key(l:v, 'pattern') && l:v.pattern is? '\%'.line('.').'l'} )
   \<BAR>           :call matchdelete(m.id)
   \<BAR> :endfor<CR>
+

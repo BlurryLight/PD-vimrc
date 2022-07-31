@@ -4,7 +4,7 @@ source $HOME/pd.vimrc-base
 " https://github.com/hanxi/dotfiles/blob/master/etc/vimrc.vim#L118~L131
 "{{ 查找工程目录
 function! SearchRoot()
-  let l:scm_list = ['.root', '.svn', '.git','.hg']
+  let l:scm_list = ['.root','.project','.svn', '.git','.hg']
   for l:item in l:scm_list
     let l:dirs = finddir(l:item, '.;', -1)
     if !empty(l:dirs)
@@ -20,7 +20,8 @@ set wildmenu
 
 
 " <leader>cd 切换工作目录到[.root,.git]之类的所在的目录(见函数SearchRoot)
-" nnoremap <silent><leader>cw exe 'cd' g:root_dir<CR>
+" //leader dir root:
+nnoremap <silent><leader>dr :<C-U>cd `=g:root_dir`<CR>
 
 
 " quickfix move
@@ -660,18 +661,20 @@ nmap ga <Plug>(EasyAlign)
 " command Make will call make and then cwindow which
 " opens a 3 line error window if any errors are found.
 " " If no errors, it closes any open cwindow.
-autocmd filetype c set makeprg=gcc\ -O2\ -lpthread\ -std=gnu99\ -g\ %\ -o\ %<
+" autocmd filetype c set makeprg=gcc\ -O2\ -lpthread\ -std=gnu99\ -g\ %\ -o\ %<
 " autocmd filetype c nnoremap <buffer><leader>r :silent make\|redraw!\|cw<CR>
-autocmd filetype cpp nnoremap <buffer><leader>agr :AsyncRun g++ "%" -o "%<" -lpthread -Wall -Wpedantic<CR>
-autocmd filetype cpp nnoremap <buffer><leader>acr :AsyncRun clang++ "%" -o "%<" -lpthread -Wall -Wpedantic<CR>
+autocmd filetype cpp nnoremap <buffer><leader>agr :AsyncRun gcc "%" -o "%<" -lpthread -Wall -pedantic -Wextra -std=gnu99<CR>
+autocmd filetype cpp nnoremap <buffer><leader>agr :AsyncRun g++ "%" -o "%<" -lpthread -Wall -pedantic -Wextra -std=cxx17<CR>
+autocmd filetype cpp nnoremap <buffer><leader>acr :AsyncRun clang++ "%" -o "%<" -lpthread -Wall -pedantic -Wextra -std=cxx17<CR>
 autocmd FileType c,cpp setlocal equalprg=clang-format
 
 " The ctagshere is a utils function that defines in bashrc to generate ctags
 " in current dir
 nnoremap <leader>at :AsyncRun ctagshere <CR>
 let g:which_key_map.a = { 'name' : '+AsyncRun' }
-let g:which_key_map.a.gr = 'g++'
-let g:which_key_map.a.cr = 'clang++'
+autocmd filetype cpp let g:which_key_map.a.gr = 'g++'
+autocmd filetype c let g:which_key_map.a.gr = 'gcc'
+autocmd filetype cpp let g:which_key_map.a.cr = 'clang++'
 let g:which_key_map.a.t = 'ctags'
 
 
@@ -732,7 +735,6 @@ endfun
 let g:ycm_ale_on = 1
 
 function Disable_ycm_ale()
-    " let g:ycm_auto_trigger = 0
     let g:ycm_show_diagnostics_ui = 0
     if exists("g:ale_enabled") && (g:ale_enabled == 1)
         :ALEDisable
@@ -740,28 +742,30 @@ function Disable_ycm_ale()
     if exists(":YcmRestartServer")
         :YcmRestartServer
     endif
-    :e
-    :echo "YCM ALE off"
     let g:ycm_ale_on = 0
+    :w
+    :e!
+    :echom "YCM ALE off"
 endfunction
 "Toggle YouCompleteMe and ALE
 function Toggle_ycm_ale()
     if g:ycm_ale_on == 0
-        " let g:ycm_auto_trigger = 1
         let g:ycm_show_diagnostics_ui = 1
-        if exists("g:ale_enabled") && (g:ale_enabled == 1)
+        if exists("g:ale_enabled") && (g:ale_enabled == 0)
             :ALEEnable
         endif
         if exists(":YcmRestartServer")
+            :YcmRestartServer
         endif
-        :e
-        :echo "YCM ALE on"
         let g:ycm_ale_on = 1
+        :w
+        :e!
+        :echom "YCM ALE on"
     elseif g:ycm_ale_on == 1
-        :call Disable_ycm_ale()<CR>
+        :call Disable_ycm_ale()
     endif
 endfunction
-nnoremap <silent> <leader>ty :call Toggle_ycm_ale() <CR>
+nnoremap <silent> <leader>ty :call Toggle_ycm_ale()<CR>
 let g:which_key_map.t.y = "Toggle_YCM_ALE"
 
 function! LoadLocalVimrc()
@@ -797,8 +801,8 @@ if g:ycm_ale_on == 0 " if defined in .lvimrc
     let g:ale_enabled = 0
     let g:ycm_show_diagnostics_ui = 0 " we only disbale ycm diagnostics, allow ycm for basic compeletion
     let g:ycm_collect_identifiers_from_tags_files = 1 " allow ycm collect tags
-    autocmd filetype c,cpp,python,csharp,lua   unmap <buffer> <C-]>
-    autocmd filetype c,cpp,python,csharp,lua  iunmap <buffer> <C-]>
+    autocmd filetype c,cpp,python,csharp,lua,hlsl   unmap <buffer> <C-]>
+    autocmd filetype c,cpp,python,csharp,lua,hlsl  iunmap <buffer> <C-]>
 endif
 
 " hlsl高亮设置
@@ -848,4 +852,18 @@ nnoremap <silent> <leader>ld :
   \for m in filter(getmatches(), { i, v -> has_key(l:v, 'pattern') && l:v.pattern is? '\%'.line('.').'l'} )
   \<BAR>           :call matchdelete(m.id)
   \<BAR> :endfor<CR>
+
+if $WSL_FLAG == 1
+    function! OpenInRider()
+        " expand(%.p) fullpath
+        " :echo line(".") expand("%:p")
+        "
+        "// system返回的字符串只会有\n，不会有\r\n
+        let g:rider_win_file_path = ' "'.system('wslpath -w ' . expand("%:p"))[:-2] . '"'
+        let cmdstring = '!nohup Rider64.exe ' . "--line " . line(".") . g:rider_win_file_path . " >> ~/rider.log 2>&1 &"
+        silent! execute cmdstring
+        redraw!
+    endfunction
+    nnoremap <leader>rd :<c-u>call OpenInRider()<CR>
+endif
 

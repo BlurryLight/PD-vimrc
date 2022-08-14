@@ -609,6 +609,9 @@ let g:tex_conceal = 0
 "  vim-osc52
 "  <leader>terminal-copy 使用魔法osc-52复制到剪切板
 vnoremap <leader>ty :OSCYank<CR>
+" Leader o Yank操作符，后可以接各种text object 
+" Leader-o-_ yank this line
+nmap <leader>o <Plug>OSCYank
 let g:which_key_map.t = { 'name' : '+tab/ternimal' }
 let g:which_key_map.t.s = 'OSC52-Copy'
 
@@ -765,8 +768,8 @@ function Toggle_ycm_ale()
         :call Disable_ycm_ale()
     endif
 endfunction
-nnoremap <silent> <leader>ty :call Toggle_ycm_ale()<CR>
-let g:which_key_map.t.y = "Toggle_YCM_ALE"
+nnoremap <silent> <leader>ta :call Toggle_ycm_ale()<CR>
+let g:which_key_map.t.a = "Toggle_YCM_ALE"
 
 function! LoadLocalVimrc()
     if filereadable(g:root_dir . "/.lvimrc") 
@@ -801,8 +804,8 @@ if g:ycm_ale_on == 0 " if defined in .lvimrc
     let g:ale_enabled = 0
     let g:ycm_show_diagnostics_ui = 0 " we only disbale ycm diagnostics, allow ycm for basic compeletion
     let g:ycm_collect_identifiers_from_tags_files = 1 " allow ycm collect tags
-    autocmd filetype c,cpp,python,csharp,lua,hlsl   unmap <buffer> <C-]>
-    autocmd filetype c,cpp,python,csharp,lua,hlsl  iunmap <buffer> <C-]>
+    autocmd filetype c,cpp,python,csharp,lua unmap <buffer> <C-]>
+    autocmd filetype c,cpp,python,csharp,lua iunmap <buffer> <C-]>
 endif
 
 " hlsl高亮设置

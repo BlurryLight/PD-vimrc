@@ -98,7 +98,7 @@ nnoremap U <C-r>
 noremap <silent><leader>/ :nohls<CR>
 
 "select all
-map <Leader>sa ggVG"
+nmap <Leader>sa ggVG"
 " Shift+H goto head of the line, Shift+L goto end of the line
 nnoremap H ^
 nnoremap L $
@@ -166,10 +166,19 @@ if has('gui_win32')
 endif
 
 autocmd BufNewFile,BufRead *.sh :set filetype=bash
+" https://www.jianshu.com/p/65c29ea0a0aa
 let &t_ti.="\e[1 q"
 let &t_SI.="\e[5 q"
-let &t_EI.="\e[1 q"
+let &t_EI.="\e[1 q" . "\<Esc>]12;green\x7" 
+" 颜色也可以用HEX制RGB，白色是 <Esc>]12;rgb:FF/FF/FF\x7
 let &t_te.="\e[0 q"
+
+" 1 -> blinking block  闪烁的方块
+" 2 -> solid block  不闪烁的方块
+" 3 -> blinking underscore  闪烁的下划线
+" 4 -> solid underscore  不闪烁的下划线
+" 5 -> blinking vertical bar  闪烁的竖线
+" 6 -> solid vertical bar  不闪烁的竖线
 
 if (&term =~ '^xterm' && &t_Co == 256)
    set t_ut= | set ttyscroll=1

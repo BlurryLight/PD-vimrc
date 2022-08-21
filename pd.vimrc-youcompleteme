@@ -236,7 +236,7 @@ let base16colorspace=256
 " colorscheme base16-flat
 " colorscheme base16-github
 " colorscheme base16-monokai
-" colorscheme base16-material
+colorscheme base16-material
 " colorscheme base16-one-light
 " colorscheme base16-tomorrow
 " base16-tomorrow-night-eighties 还不错
@@ -245,8 +245,9 @@ let base16colorspace=256
 "
 
 "  这3个一组
-colorscheme base16-solarized-light
-let g:light_theme = 1
+"  似乎solarized-light有bug，不要用
+" colorscheme base16-solarized-light
+" let g:light_theme = 1
 
 " whichkey
 let g:which_key_map =  {}
@@ -819,11 +820,11 @@ function! HLSLFoldPreprocessor()
 endfunction
 
 " 根据选中，\lh高亮所有行，\lc清理所有行,\ld清理当前行
-if g:light_theme == 1
+if exists("g:light_theme") && (g:light_theme == 1)
     highlight LineHighlight ctermbg=100 guibg=#D2B48C
     highlight CoreReview ctermbg=241 guibg=#35212C
     let g:Lf_PopupColorscheme = 'gruvbox_material'
-elseif
+else
     highlight LineHighlight ctermbg=100 guibg=#374090
     highlight CoreReview ctermbg=241 guibg=#35212C
 endif

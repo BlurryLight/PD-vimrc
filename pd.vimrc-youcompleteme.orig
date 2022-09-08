@@ -235,14 +235,19 @@ let base16colorspace=256
 colorscheme base16-flat
 " colorscheme base16-github
 " colorscheme base16-monokai
-"colorscheme base16-material
+colorscheme base16-material
 " colorscheme base16-one-light
 " colorscheme base16-tomorrow
 " base16-tomorrow-night-eighties 还不错
 " let g:airline_theme = 'solarized'
 " let g:airline_solarized_bg='light'
 "
+
+"  这3个一组
+<<<<<<< HEAD
 "  似乎solarized-light有bug，不要用
+=======
+>>>>>>> private
 " colorscheme base16-solarized-light
 " let g:light_theme = 1
 
@@ -816,7 +821,12 @@ function! HLSLFoldPreprocessor()
     syntax region CoreReview matchgroup=cComment start=/\/\/CR/ end=/\/\/RC/ contains=hlslType,hlslFunc,cCommentL,cComment
 endfunction
 
+<<<<<<< HEAD
+" 根据选中，\lh高亮所有行，\lc清理所有行,\ld清理当前行
+if exists("g:light_theme") && (g:light_theme == 1)
+=======
 if exists('g:light_theme') && g:light_theme == 1
+>>>>>>> private
     highlight LineHighlight ctermbg=100 guibg=#D2B48C
     highlight CoreReview ctermbg=241 guibg=#35212C
     let g:Lf_PopupColorscheme = 'gruvbox_material'

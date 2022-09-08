@@ -18,7 +18,6 @@ let g:root_dir = SearchRoot()
 
 set wildmenu
 
-
 " <leader>cd 切换工作目录到[.root,.git]之类的所在的目录(见函数SearchRoot)
 " //leader dir root:
 nnoremap <silent><leader>dr :<C-U>cd `=g:root_dir`<CR>
@@ -233,7 +232,7 @@ set t_Co=256
 let base16colorspace=256
 " colorscheme base16-onedark
 " colorscheme base16-oceanicnext
-" colorscheme base16-flat
+colorscheme base16-flat
 " colorscheme base16-github
 " colorscheme base16-monokai
 " colorscheme base16-material
@@ -245,8 +244,8 @@ let base16colorspace=256
 "
 
 "  这3个一组
-colorscheme base16-solarized-light
-let g:light_theme = 1
+" colorscheme base16-solarized-light
+" let g:light_theme = 1
 
 " whichkey
 let g:which_key_map =  {}
@@ -818,15 +817,15 @@ function! HLSLFoldPreprocessor()
     syntax region CoreReview matchgroup=cComment start=/\/\/CR/ end=/\/\/RC/ contains=hlslType,hlslFunc,cCommentL,cComment
 endfunction
 
-" 根据选中，\lh高亮所有行，\lc清理所有行,\ld清理当前行
-if g:light_theme == 1
+if exists('g:light_theme') && g:light_theme == 1
     highlight LineHighlight ctermbg=100 guibg=#D2B48C
     highlight CoreReview ctermbg=241 guibg=#35212C
     let g:Lf_PopupColorscheme = 'gruvbox_material'
-elseif
+else
     highlight LineHighlight ctermbg=100 guibg=#374090
     highlight CoreReview ctermbg=241 guibg=#35212C
 endif
+" 根据选中，\lh高亮所有行，\lc清理所有行,\ld清理当前行
 nnoremap <silent> <leader>ll :call matchadd('LineHighlight', '\%'.line('.').'l')<CR>
 vnoremap <leader>ll :<c-u>call HiglightVisualLines()<CR>
 vnoremap <leader>ld :<c-u>call DeleteVisualLines()<CR>

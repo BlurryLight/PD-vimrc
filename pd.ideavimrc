@@ -142,3 +142,4 @@ set keep-english-in-normal-and-restore-in-insert
 
 vnoremap = :action ReformatCode<CR>
 nnoremap = :action ReformatCode<CR>
+vnoremap <leader>ty "+y

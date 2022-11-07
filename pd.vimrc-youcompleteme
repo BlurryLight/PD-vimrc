@@ -216,6 +216,9 @@ Plug 'preservim/tagbar',{'on':  'TagbarToggle'}
 "
 Plug 'babaybus/DoxygenToolkit.vim',{'for':['cpp','c','python']}
 
+"monkey lang
+Plug '~/.vim/ownPlugin/monkeylang.vim'
+
 call plug#end()
 
 

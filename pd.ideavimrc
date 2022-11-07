@@ -121,6 +121,7 @@ nnoremap q: :q
 nnoremap Q <nop>
 nnoremap ; :
 
+" https://gist.github.com/zchee/9c78f91cc5ad771c1f5d
 " nnoremap <leader>gc :action GotoClass<CR>
 " " 弹出输入框，跳转到指定操作
 " nnoremap <leader>ga :action GotoAction<CR>
@@ -136,10 +137,14 @@ nnoremap <leader>fgs :action GotoSymbol<CR>
 nnoremap <leader>fre :action FindInPath<CR>
 " 查找使用
 nnoremap <leader>fgr :action FindUsages<CR>
+"对应普通的ctrl-f功能
+nnoremap <leader>frb :action Replace<CR>
 " " 显示使用
 " nnoremap <Space>su :action ShowUsages<CR>
-set keep-english-in-normal-and-restore-in-insert
 
 vnoremap = :action ReformatCode<CR>
 nnoremap = :action ReformatCode<CR>
 vnoremap <leader>ty "+y
+
+sethandler <C-f> n-i-v:ide
+sethandler <C-h> n-i-v:ide

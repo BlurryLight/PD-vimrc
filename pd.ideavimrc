@@ -148,3 +148,7 @@ vnoremap <leader>ty "+y
 
 sethandler <C-f> n-i-v:ide
 sethandler <C-h> n-i-v:ide
+sethandler <C-C> n-i-v:ide
+sethandler <C-P> n-i-v:ide
+sethandler <C-T> n-i-v:ide
+sethandler <C-T> n-i-v:ide

@@ -18,6 +18,8 @@ set scrolloff=10
 
 " 增强标题显示
 set title
+" after exit vim it set termianl title as Terminal
+set titleold=Terminal
 
 " 离开窗口时自动保存，回到窗口时自动更新
 if has('unix')
@@ -52,7 +54,7 @@ set termencoding=utf-8
 set autoindent
 
 " 高亮第80列
-set colorcolumn=80
+set colorcolumn=120
 
 " 自动折行(这个是硬折行)
 "set linebreak
@@ -98,7 +100,7 @@ nnoremap U <C-r>
 noremap <silent><leader>/ :nohls<CR>
 
 "select all
-nmap <Leader>sa ggVG"
+nnoremap <Leader>aa ggVG"
 " Shift+H goto head of the line, Shift+L goto end of the line
 nnoremap H ^
 nnoremap L $

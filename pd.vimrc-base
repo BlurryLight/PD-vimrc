@@ -37,10 +37,6 @@ filetype on
 filetype plugin on
 filetype indent on
 
-"设置leader
-"let mapleader = ','
-"let g:mapleader = ','
-
 "设置文件编码
 " 内部编码
 set encoding=utf-8
@@ -87,29 +83,24 @@ set ttimeoutlen=100 " 内置的50ms
 " 部分快捷键
 " leader+p复制粘贴模式
 set pastetoggle=<leader>p
-vnoremap <leader>Y :w! /tmp/vitmp<CR>                                                                   
-nnoremap <leader>P :r! cat /tmp/vitmp<CR>
+if has('unix')
+    vnoremap <leader>Y :w! /tmp/vitmp<CR>                                                                   
+    nnoremap <leader>P :r! cat /tmp/vitmp<CR>
+    " :W 表示sudo权限强制保存
+    command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
+endif
+
 " <leader>nu关闭开启数字行号
 nnoremap <leader>nu :set nu! nu?<CR>
-" :W 表示sudo权限强制保存
-command W :execute ':silent w !sudo tee % > /dev/null' | :edit!
 " Upper U to redo
 nnoremap U <C-r>
 
 " <leader>/关闭搜索高亮
 noremap <silent><leader>/ :nohls<CR>
 
-"select all
-nnoremap <Leader>aa ggVG"
 " Shift+H goto head of the line, Shift+L goto end of the line
 nnoremap H ^
 nnoremap L $
-
-" command mode, ctrl-a to head， ctrl-e to tail
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
-
-
 
 " tab替代
 set expandtab "tab to spaces
@@ -188,3 +179,16 @@ endif
 
 colorscheme desert
 syntax on
+
+" 使用256位颜色
+if exists('+termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+      set termguicolors
+endif
+set t_Co=256
+
+augroup disable_paste
+au!
+    au InsertLeave * set nopaste
+augroup END

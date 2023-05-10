@@ -225,13 +225,6 @@ call plug#end()
 
 " ===============================插件配置=====================================
 " 主题设置
-" 使用256位颜色
-if exists('+termguicolors')
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-      set termguicolors
-endif
-set t_Co=256
 let base16colorspace=256
 " colorscheme base16-onedark
 " colorscheme base16-oceanicnext
@@ -397,7 +390,7 @@ augroup lazy_load_ycm
 augroup END
 
 
-inoremap <expr> <cr> ((pumvisible())?("\<C-y>"):("\<cr>"))
+inoremap <expr><CR> pumvisible() ? "\<C-Y>" : "\<CR>"
 " 关闭每次都要load conf的提示
 let g:ycm_confirm_extra_conf = 0
 " 语义补全
@@ -698,10 +691,6 @@ highlight clear SpellRare
 highlight SpellRare term=underline cterm=underline
 highlight clear SpellLocal
 highlight SpellLocal term=underline cterm=underline
-augroup disable_paste
-au!
-    au InsertLeave * set nopaste
-augroup END
 
 " shaderlab, unreal shader set to hlsl
 au BufNewFile,BufRead *.usf,*.shader,*.shaderlab,*.cginc,*.ush setfiletype hlsl

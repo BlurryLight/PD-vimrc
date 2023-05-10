@@ -1,3 +1,29 @@
 source ~/pd.vimrc-base
-colorscheme desert
+if exists('+termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+      set termguicolors
+endif
+set t_Co=256
+colorscheme desert 
+" colorscheme morning
 syntax on
+
+" completion
+packadd! mucomplete
+set completeopt+=menuone
+set completeopt+=noselect
+set shortmess+=c   " Shut off completion messages
+set belloff+=ctrlg " Add only if Vim beeps during completion
+let g:mucomplete#enable_auto_at_startup = 1
+inoremap <expr><CR> pumvisible() ? "\<C-Y>" : "\<CR>"
+
+" tagbar
+packadd! tagbar 
+nnoremap <leader>tt :TagbarToggle<CR>
+
+" ctrlp
+packadd! ctrlp
+
+" comment
+packadd! commentary

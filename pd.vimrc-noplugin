@@ -1,0 +1,3 @@
+source ~/pd.vimrc-base
+colorscheme desert
+syntax on

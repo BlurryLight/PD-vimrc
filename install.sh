@@ -2,10 +2,21 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 echo $SCRIPT_DIR
 
+
 d=`date +%H_%I_%m-%Y%m%d`
 if [ -e ~/.vimrc ]
     then cp ~/.vimrc ~/.vimrcpdbak${d}
     echo "Original .vimrc has been renamed to .vimrcpdbak${d}"
+fi
+
+# MSYS part
+
+if [ -z "${MSYSTEM+}" ]; then
+    echo "MSYS Platform"
+	export MSYS=winsymlinks:nativestrict
+	ln -sfn ${SCRIPT_DIR}/pd.vimrc-base ~/pd.vimrc-base
+	ln -sfn ${SCRIPT_DIR}/pd.vimrc-noplugin ~/.vimrc
+	exit 0
 fi
 
 if [ -d ~/.ctags.d ]
@@ -16,19 +27,12 @@ else
 fi
 
 ln -sfn ${SCRIPT_DIR}/global.ctags ~/.ctags.d/global.ctags
-
 ln -sfn ${SCRIPT_DIR}/pd.vimrc-youcompleteme ~/.vimrc
 ln -sfn ${SCRIPT_DIR}/pd.vimrc-base ~/pd.vimrc-base
 ln -sfn ${SCRIPT_DIR}/globalrc ~/.globalrc
 ln -sfn ${SCRIPT_DIR}/.ideavimrc ~/.ideavimrc
 ln -sfn ${SCRIPT_DIR} ~/.vim
 ln -sfn ${SCRIPT_DIR}/tmux.conf ~/.tmux.conf
-
-# MSYS part
-
-if [ -z "${MSYSTEM+x}" ]; then
-    echo "MSYS Platform"
-fi
 
 # ubuntu part
 echo "Run vim +PlugInstall"

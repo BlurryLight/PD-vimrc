@@ -14,6 +14,7 @@ fi
 if [ -z "${MSYSTEM+}" ]; then
     echo "MSYS Platform"
 	export MSYS=winsymlinks:nativestrict
+	ln -sfn ${SCRIPT_DIR} ~/.vim
 	ln -sfn ${SCRIPT_DIR}/pd.vimrc-base ~/pd.vimrc-base
 	ln -sfn ${SCRIPT_DIR}/pd.vimrc-noplugin ~/.vimrc
 	exit 0

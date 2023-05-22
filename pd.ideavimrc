@@ -19,41 +19,16 @@ set scrolloff=10
 " 增强标题显示
 set title
 
-" 离开窗口时自动保存，回到窗口时自动更新
-au FocusGained,BufEnter * :silent! !
-au FocusLost,WinLeave * :silent! w
-
-" 简写信息，并关闭乌干达可怜儿童
-set shortmess+=atI
-
 "打开自动探测文件类型和缩进
 filetype on
 filetype plugin on
 filetype indent on
 
-"设置文件编码
-" 内部编码
-set encoding=utf-8
-" 读取文件时候顺序猜测编码
-set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-" 用于屏幕显示的编码
-set termencoding=utf-8
-
-
 " 自动缩进
 set autoindent
 
-" 高亮第80列
-set colorcolumn=80
-
-" 自动折行(这个是硬折行)
-"set linebreak
-
 " 高亮选中
 set hlsearch
-
-" 自动换行
-set wrap
 
 " 设置默认进行大小写不敏感查找
 set ignorecase
@@ -72,28 +47,11 @@ set ttimeout " 打开timeout和ttimeout
 set timeoutlen=3000 " 自定义的map 3秒视为超时
 set ttimeoutlen=100 " 内置的50ms
 "============================================= KEYS MAPPING ==================
-" 部分快捷键
-" leader+p复制粘贴模式
-set pastetoggle=<leader>p
-" <leader>nu关闭开启数字行号
-nnoremap <leader>nu :set nu! nu?<CR>
-" Upper U to redo
-" nnoremap U <C-r>
-
-" <leader>/关闭搜索高亮
+"
 noremap <silent><leader>/ :nohls<CR>
 
-"select all
-nnoremap <Leader>a ggVG"
-" Shift+H goto head of the line, Shift+L goto end of the line
 nnoremap H ^
 nnoremap L $
-
-" command mode, ctrl-a to head， ctrl-e to tail
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
-
-
 
 " tab替代
 set expandtab "tab to spaces
@@ -108,13 +66,6 @@ set softtabstop=4                " insert mode tab and backspace use 4 spaces
 " 移动后再次重新选中
 vnoremap < <gv
 vnoremap > >gv
-
-" tabpage
-" <leader>tb 创建tab
-" <leader>tc 关闭tab
-nnoremap <leader>tb :tabnew<CR>
-inoremap <leader>tb <ESC>:tabnew<CR>
-nnoremap <leader>tc :tabclose<CR>
 
 " don't bother me with command history
 nnoremap q: :q
@@ -140,7 +91,11 @@ nnoremap <leader>fgr :action FindUsages<CR>
 "对应普通的ctrl-f功能
 nnoremap <leader>frb :action Replace<CR>
 " " 显示使用
-" nnoremap <Space>su :action ShowUsages<CR>
+nnoremap <leader>fsu :action ShowUsages<CR>
+
+
+" buffer symbols
+nnoremap <leader>fbf :action FileStructurePopup<CR>
 
 vnoremap = :action ReformatCode<CR>
 nnoremap = :action ReformatCode<CR>

@@ -2,30 +2,11 @@
 
 
 "============================================= basic settings =========================================
-"禁止swap file
-set noswapfile
-" I don't care the f**king vi
-set nocompatible
-" 强化正则表达式,没有magic，正则表达式近乎无法使用
-set magic
-
 " 显示
 set number      "行号
-set ruler      "行号和列号
 
 " 加大移动距离
 set scrolloff=10
-
-" 增强标题显示
-set title
-
-"打开自动探测文件类型和缩进
-filetype on
-filetype plugin on
-filetype indent on
-
-" 自动缩进
-set autoindent
 
 " 高亮选中
 set hlsearch
@@ -36,16 +17,8 @@ set ignorecase
 set smartcase
 "
 
-" 让退格键能正常退格
-set backspace=indent,eol,start
-" Vim默认左右方向键不会切换到下一行，调一下，让<>,h,l,[,]都可以换行
-set whichwrap+=<,>,h,l,[,]
-
-
 set timeout
-set ttimeout " 打开timeout和ttimeout
 set timeoutlen=3000 " 自定义的map 3秒视为超时
-set ttimeoutlen=100 " 内置的50ms
 "============================================= KEYS MAPPING ==================
 "
 noremap <silent><leader>/ :nohls<CR>
@@ -53,15 +26,6 @@ noremap <silent><leader>/ :nohls<CR>
 nnoremap H ^
 nnoremap L $
 
-" tab替代
-set expandtab "tab to spaces
-set smarttab  "删除会自动删除等同于tab数量的空格
-set shiftround ">>和<<会处理没对齐的情况
-" indent
-set autoindent smartindent shiftround
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4                " insert mode tab and backspace use 4 spaces
 
 " 移动后再次重新选中
 vnoremap < <gv
@@ -104,6 +68,7 @@ vnoremap <leader>ty "+y
 sethandler <C-f> n-i-v:ide
 sethandler <C-h> n-i-v:ide
 sethandler <C-C> n-i-v:ide
-sethandler <C-P> n-i-v:ide
+sethandler <C-P> n-v:ide
 sethandler <C-T> n-i-v:ide
 sethandler <C-T> n-i-v:ide
+sethandler <C-.> n-i-v:ide

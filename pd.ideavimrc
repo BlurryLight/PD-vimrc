@@ -71,4 +71,15 @@ sethandler <C-C> n-i-v:ide
 sethandler <C-P> n-v:ide
 sethandler <C-T> n-i-v:ide
 sethandler <C-T> n-i-v:ide
-sethandler <C-.> n-i-v:ide
+" sethandler <C-.> n-i-v:ide
+
+" fix for https://youtrack.jetbrains.com/issue/VIM-795
+nnoremap <C-w>h :action PrevSplitter<CR>
+nnoremap <C-w>l :action NextSplitter<CR>
+
+nmap <C-w>= <Action>(MaximizeEditorInSplit)
+
+nmap <C-w><Down> <Action>(StretchSplitToBottom)
+nmap <C-w><Left> <Action>(StretchSplitToLeft)
+nmap <C-w><Right> <Action>(StretchSplitToRight)
+nmap <C-w><Up> <Action>(StretchSplitToTop)

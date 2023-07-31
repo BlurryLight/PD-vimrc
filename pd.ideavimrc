@@ -44,6 +44,14 @@ nnoremap ; :
 nnoremap <leader>gd :action GotoDeclaration<CR>
 " 跳转到实现
 nnoremap <leader>gi :action GotoImplementation<CR>
+# 跳转到Base Method
+nnoremap <leader>gb :action GotoSuperMethod<CR>
+# 跳转到Related Symbols
+nnoremap <leader>gs :action GotoRelated<CR>
+
+# inspect classes
+nnoremap <leader>fgc :action RiderTypeHierarchy.Subtypes<CR>
+
 " 跳转到指定的文件
 nnoremap <leader>ff :action GotoFile<CR>
 " 跳转到变量的声明
@@ -57,6 +65,7 @@ nnoremap <leader>frb :action Replace<CR>
 " " 显示使用
 nnoremap <leader>fsu :action ShowUsages<CR>
 
+nnoremap <leader>fgc :action TypeHierarchy<CR>
 
 " buffer symbols
 nnoremap <leader>fbf :action FileStructurePopup<CR>

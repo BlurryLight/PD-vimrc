@@ -11,7 +11,7 @@ fi
 
 # MSYS part
 
-if [ -z "${MSYSTEM+}" ]; then
+if [ -n "${MSYSTEM}" ]; then
     echo "MSYS Platform"
 	export MSYS=winsymlinks:nativestrict
 	ln -sfn ${SCRIPT_DIR} ~/.vim

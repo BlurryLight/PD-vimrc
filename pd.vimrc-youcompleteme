@@ -607,7 +607,7 @@ vnoremap <leader>ty :OSCYank<CR>
 " Leader-o-_ yank this line
 nmap <leader>o <Plug>OSCYank
 let g:which_key_map.t = { 'name' : '+tab/ternimal' }
-let g:which_key_map.t.s = 'OSC52-Copy'
+let g:which_key_map.t.y = 'OSC52-Copy'
 
 " vim tagbar
 " tagbar toggle

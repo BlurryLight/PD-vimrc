@@ -602,7 +602,7 @@ let g:tex_conceal = 0
 
 "  vim-osc52
 "  <leader>terminal-copy 使用魔法osc-52复制到剪切板
-vnoremap <leader>ty :OSCYank<CR>
+vnoremap <leader>ty :OSCYankVisual<CR>
 " Leader o Yank操作符，后可以接各种text object 
 " Leader-o-_ yank this line
 nmap <leader>o <Plug>OSCYank

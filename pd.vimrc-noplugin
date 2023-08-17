@@ -43,7 +43,7 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 packadd! vim-oscyank
-vnoremap <leader>ty :OSCYank<CR>
+vnoremap <leader>ty :OSCYankVisual<CR>
 set laststatus=2
 set noshowmode
 packadd! lightline.vim

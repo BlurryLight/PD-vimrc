@@ -1,5 +1,5 @@
 " allow vim to use bash alias in th file
-let $BASH_ENV = "$HOME/.pd-common/common.rc"
+let $BASH_ENV = "$HOME/.pd-common/common.bash"
 source $HOME/pd.vimrc-base
 " https://github.com/hanxi/dotfiles/blob/master/etc/vimrc.vim#L118~L131
 "{{ 查找工程目录

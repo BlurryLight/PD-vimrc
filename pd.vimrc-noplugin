@@ -42,6 +42,8 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
+packadd! vim-surround
+
 packadd! vim-oscyank
 vnoremap <leader>ty :OSCYankVisual<CR>
 set laststatus=2

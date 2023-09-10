@@ -80,6 +80,7 @@ sethandler <C-C> n-i-v:ide
 sethandler <C-P> n-v:ide
 sethandler <C-T> n-i-v:ide
 sethandler <C-T> n-i-v:ide
+sethandler <C-s> n-i-v:ide
 " sethandler <C-.> n-i-v:ide
 
 " fix for https://youtrack.jetbrains.com/issue/VIM-795

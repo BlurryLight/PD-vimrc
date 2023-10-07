@@ -34,6 +34,10 @@ nmap <leader>cc <plug>Commentary
 packadd! vim-ripgrep
 let g:rg_highlight=1
 
+" linter
+packadd! vim-ale
+let g:ale_virtualtext_cursor = 'disabled'
+
 " easyalign
 packadd! vim-easy-align 
 " Start interactive EasyAlign in visual mode (e.g. vipga)

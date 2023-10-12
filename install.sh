@@ -1,23 +1,12 @@
 #!/usr/bin/env bash 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-echo $SCRIPT_DIR
+echo "$SCRIPT_DIR"
 
 
-d=`date +%H_%I_%m-%Y%m%d`
+d=$(date +%H_%I_%m-%Y%m%d)
 if [ -e ~/.vimrc ]
     then cp ~/.vimrc ~/.vimrcpdbak${d}
     echo "Original .vimrc has been renamed to .vimrcpdbak${d}"
-fi
-
-# MSYS part
-
-if [ -n "${MSYSTEM}" ]; then
-    echo "MSYS Platform"
-	export MSYS=winsymlinks:nativestrict
-	ln -sfn ${SCRIPT_DIR} ~/.vim
-	ln -sfn ${SCRIPT_DIR}/pd.vimrc-base ~/pd.vimrc-base
-	ln -sfn ${SCRIPT_DIR}/pd.vimrc-noplugin ~/.vimrc
-	exit 0
 fi
 
 if [ -d ~/.ctags.d ]
@@ -27,17 +16,33 @@ else
     mkdir -p ~/.ctags.d
 fi
 
-ln -sfn ${SCRIPT_DIR}/global.ctags ~/.ctags.d/global.ctags
-ln -sfn ${SCRIPT_DIR}/pd.vimrc-youcompleteme ~/.vimrc
-ln -sfn ${SCRIPT_DIR}/pd.vimrc-base ~/pd.vimrc-base
-ln -sfn ${SCRIPT_DIR}/globalrc ~/.globalrc
-ln -sfn ${SCRIPT_DIR}/.ideavimrc ~/.ideavimrc
-ln -sfn ${SCRIPT_DIR} ~/.vim
-ln -sfn ${SCRIPT_DIR}/tmux.conf ~/.tmux.conf
+ln -sfn "${SCRIPT_DIR}"/pd.vimrc-base ~/pd.vimrc-base
+ln -sfn "${SCRIPT_DIR}" ~/.vim
+ln -sfn "${SCRIPT_DIR}"/pd.vimrc-youcompleteme ~/.vimrc-youcompleteme
+ln -sfn "${SCRIPT_DIR}"/pd.vimrc-noplugin ~/.vimrc-noplugin
+# MSYS part
+if [ -n "${MSYSTEM}" ]; then
+    echo "MSYS Platform"
+	export MSYS=winsymlinks:nativestrict
+	ln -sfn "${SCRIPT_DIR}"/pd.vimrc-noplugin ~/.vimrc
+    #msys2
+    if [ -x "$(command -v pacman)" ]; then 
+        pacman -Syu --noconfirm
+        pacman -S --noconfirm vim mingw-w64-ucrt-x86_64-ripgrep mingw-w64-ucrt-x86_64-universal-ctags 
+    fi
+	exit 0
+else
+    ln -sfn "${SCRIPT_DIR}"/global.ctags ~/.ctags.d/global.ctags
+    ln -sfn "${SCRIPT_DIR}"/pd.vimrc-youcompleteme ~/.vimrc
+    ln -sfn "${SCRIPT_DIR}"/globalrc ~/.globalrc
+    ln -sfn "${SCRIPT_DIR}"/.ideavimrc ~/.ideavimrc
+    ln -sfn "${SCRIPT_DIR}"/tmux.conf ~/.tmux.conf
+fi
+
 
 # ubuntu part
 echo "Run vim +PlugInstall"
-if [[ `lsb_release -si` == "Ubuntu" ]] && ! [ -x "$(command -v shellcheck)" ];
+if [[ $(lsb_release -si) == "Ubuntu" ]] && ! [ -x "$(command -v shellcheck)" ];
     then
     sudo apt update -y
     sudo apt install -y build-essential cmake python3-dev
@@ -49,7 +54,7 @@ fi
 
 # wsl part
 if grep -q Microsoft /proc/version; then
-    win_home_path=`wslpath "$(wslvar USERPROFILE)"`
+    win_home_path=$(wslpath "$(wslvar USERPROFILE)")
     echo ${win_home_path}
     src_path=${win_home_path}/.ideavimrc 
     dest_path="${src_path}bak${d}"
@@ -72,6 +77,6 @@ if grep -q Microsoft /proc/version; then
     cp "${SCRIPT_DIR}/pd.vsvimrc" "${win_home_path}/.vsvimrc"
 
     # cp "${SCRIPT_DIR}/pd.vsvimrc" "${win_home_path}/.vsvimrc"
-    printf '(check_files_eq "$WINHOME/.ideavimrc" "$HOME/.vim/pd.ideavimrc" &)\n' >> ~/.bashrc_local
-    printf '(check_files_eq "$WINHOME/.vsvimrc" "$HOME/.vim/pd.vsvimrc" &)\n' >> ~/.bashrc_local
+    # printf '(check_files_eq "$WINHOME/.ideavimrc" "$HOME/.vim/pd.ideavimrc" &)\n' >> ~/.bashrc_local
+    # printf '(check_files_eq "$WINHOME/.vsvimrc" "$HOME/.vim/pd.vsvimrc" &)\n' >> ~/.bashrc_local
 fi

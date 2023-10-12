@@ -140,8 +140,6 @@ Plug 'chriskempson/base16-vim'
 Plug 'vim-airline/vim-airline-themes'
 " Airline
 Plug 'vim-airline/vim-airline'
-" 文件树
-Plug 'scrooloose/nerdtree',{'on':  'NERDTreeToggle'}
 " CMake 字典补全
 " use my own fork
 Plug 'BlurryLight/vim-cmake-complete',{'for':['cmake']}
@@ -254,18 +252,6 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
-
-" nerdtree 配置
-" 下面两行：当打开一个文件夹时，自动打开nerdtree
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
-
-" <leader>n打开nerdtree
-nnoremap <leader>n :NERDTreeToggle<CR>
-let NERDTreeQuitOnOpen=1
-
-" 关闭vim当只剩下nerdtree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " leadF配置
 " 自动更新索引

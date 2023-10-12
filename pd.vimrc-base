@@ -192,3 +192,5 @@ augroup disable_paste
 au!
     au InsertLeave * set nopaste
 augroup END
+
+let g:netrw_browse_split = 2

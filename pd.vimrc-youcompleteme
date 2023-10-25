@@ -99,6 +99,9 @@ Plug 'liuchengxu/vim-which-key'
 
 Plug 'junegunn/vim-easy-align'
 
+" spir-v syntax
+Plug 'kbenzie/vim-spirv'
+
 " " chdir to working buffer
 " Plug 'mattn/vim-findroot'
 

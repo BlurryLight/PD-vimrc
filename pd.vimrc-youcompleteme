@@ -846,3 +846,11 @@ if $WSL_FLAG == 1
     nnoremap <leader>rd :<c-u>call OpenInRider()<CR>
 endif
 
+
+augroup CmakeSettings
+    autocmd!
+    autocmd BufNewFile,BufRead CmakeLists.txt set filetype=cmake
+    if filereadable(expand("$HOME/.vim/template/CMakeLists.txt.tpl"))
+        autocmd BufNewFile CMakeLists.txt 0r $HOME/.vim/template/CMakeLists.txt.tpl
+    endif
+augroup END

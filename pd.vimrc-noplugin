@@ -63,3 +63,8 @@ augroup CmakeSettings
         autocmd BufNewFile CMakeLists.txt 0r $HOME/.vim/template/CMakeLists.txt.tpl
     endif
 augroup END
+set dictionary+=$HOME/.vim/dict/american-english
+let g:mucomplete#chains = {
+	    \ 'default' : ['path', 'omni', 'keyn', 'uspl'],
+	    \ 'vim'     : ['path', 'cmd', 'keyn']
+	    \ }

@@ -417,7 +417,7 @@ let g:ycm_always_populate_location_list = 1
 let g:ycm_key_detailed_diagnostics = '<leader>yd'
 let g:ycm_key_invoke_completion = '<leader>yc'
 set tags=./.ctags;,.ctags " from current dir and upper dir search for .ctags file
-
+set dictionary+=$HOME/.vim/dict/american-english
 let g:which_key_map.y = { 'name' : '+YCM' }
 let g:which_key_map.y.d="key diag"
 let g:which_key_map.y.c="invoke comp"
@@ -857,3 +857,4 @@ augroup CmakeSettings
         autocmd BufNewFile CMakeLists.txt 0r $HOME/.vim/template/CMakeLists.txt.tpl
     endif
 augroup END
+

@@ -1,4 +1,11 @@
 source ~/pd.vimrc-base
+
+if has("mac") && has("unix") && has("arm64")
+    let $PATH = expand('$PATH') . ':' . expand('$HOME/.vim/bin/darwin_arm')
+elseif has("unix")
+    let $PATH = expand('$PATH') . ':' . expand('$HOME/.vim/bin/linux')
+endif
+
 if exists('+termguicolors')
 command! -nargs=+ -complete=file Rg :call ripgrep#search(<q-args>)
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -68,3 +75,4 @@ let g:mucomplete#chains = {
 	    \ 'default' : ['path', 'omni', 'keyn', 'uspl'],
 	    \ 'vim'     : ['path', 'cmd', 'keyn']
 	    \ }
+

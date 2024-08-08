@@ -20,6 +20,7 @@ ln -sfn "${SCRIPT_DIR}"/pd.vimrc-base ~/pd.vimrc-base
 ln -sfn "${SCRIPT_DIR}" ~/.vim
 ln -sfn "${SCRIPT_DIR}"/pd.vimrc-youcompleteme ~/.vimrc-youcompleteme
 ln -sfn "${SCRIPT_DIR}"/pd.vimrc-noplugin ~/.vimrc-noplugin
+
 # MSYS part
 if [ -n "${MSYSTEM}" ]; then
     echo "MSYS Platform"

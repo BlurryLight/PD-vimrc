@@ -36,8 +36,32 @@
 --exclude=*third_party*
 --exclude=Library/[!P]*/*
 --exclude=Library/PackageCache/com.unity.[!r]*/*
-
+--exclude=.git
+--exclude=.svn
+--exclude=.hg
+--exclude=bundle
+--exclude=min
+--exclude=vendor
+--exclude=\*.min.\*
+--exclude=\*.map
+--exclude=\*.swp
+--exclude=\*.bak
+--exclude=\*.pyc
+--exclude=\*.class
+--exclude=\*.sln
+--exclude=\*.Master
+--exclude=\*.csproj
+--exclude=\*.csproj.user
+--exclude=\*.cache
+--exclude=\*.dll
+--exclude=\*.pdb
+--exclude=tags
+--exclude=cscope.\*
+--exclude=\*.tar.\*
+--exclude=vscode
+--exclude=cache/*
+--exclude=venv
 --sort=no
 
 #support unity & UE
---langmap=c:+.cginc,c:+.shader,c:+.hlsl,c:+.usf,c:+.ush
+--langmap=c:+.cginc,c:+.shader,c:+.hlsl,c:+.usf,c:+.ush,c:+.hlsli

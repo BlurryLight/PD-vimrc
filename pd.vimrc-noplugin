@@ -19,6 +19,7 @@ syntax on
 
 " completion
 packadd! mucomplete
+set omnifunc=syntaxcomplete#Complete
 set completeopt+=menuone
 set completeopt+=noselect
 set shortmess+=c   " Shut off completion messages
@@ -58,6 +59,9 @@ nmap ga <Plug>(EasyAlign)
 packadd! vim-surround
 
 packadd! vim-oscyank
+
+packadd! hlsl.vim
+
 vnoremap <leader>ty :OSCYankVisual<CR>
 set laststatus=2
 set noshowmode
@@ -76,3 +80,31 @@ let g:mucomplete#chains = {
 	    \ 'vim'     : ['path', 'cmd', 'keyn']
 	    \ }
 
+"================Auto Update Ctags Begin
+if v:version < 800
+    echo "Vim 8+ is required for async ctags update"
+    finish
+endif
+augroup AutoUpdateCtags
+    autocmd!
+    autocmd BufWritePost *.c,*.cpp,*.h,*.hlsl,*.glsl call AsyncUpdateCtags()
+augroup END
+
+" 异步执行 Ctags
+function! AsyncUpdateCtags()
+    if !executable("ctags")
+        echohl WarningMsg | echom "Ctags not found!" | echohl None
+        return
+    endif
+
+    let l:root = exists('*FindProjectRoot') ? FindProjectRoot() : getcwd()
+
+    " Ctags 命令
+    let l:ctags_cmd = ["ctags", "-R", "-f", l:root . "/.ctags", l:root]
+
+    call system(join(l:ctags_cmd, " "))
+    echom "Ctags updating in " . l:root
+endfunction
+
+
+"================Auto Update Ctags End

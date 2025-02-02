@@ -194,3 +194,24 @@ au!
 augroup END
 
 let g:netrw_browse_split = 2
+
+set tags=./.ctags;,.ctags " from current dir and upper dir search for .ctags file
+
+" 查找项目根目录的函数
+function! FindProjectRoot()
+    let l:markers = ['.git', '.svn', '.hg', '.bzr', 'p4config.txt', '.p4ignore']
+    let l:dir = expand('%:p:h') " 获取当前文件所在的目录
+
+    while l:dir !=# "/"
+        for l:marker in l:markers
+            if isdirectory(l:dir . '/' . l:marker) || filereadable(l:dir . '/' . l:marker)
+                return l:dir  " 找到项目根目录
+            endif
+        endfor
+        let l:dir = fnamemodify(l:dir, ':h') " 继续向上查找
+    endwhile
+
+    return expand('%:p:h')
+endfunction
+
+autocmd BufNewFile,BufRead *.hlsl,*.hlsli setf hlsl

@@ -27,13 +27,11 @@
 --exclude=test
 --exclude=tests
 --exclude=vendor
---exclude=ThirdParty/*
---exclude=build/*
---exclude=Build/*
---exclude=*Build/*
---exclude=CMakeFiles/
---exclude=*CMakeFiles*
---exclude=*third_party*
+--exclude=ThirdParty
+--exclude=Build
+--exclude=*Build
+--exclude=CMakeFiles
+--exclude=third_party
 --exclude=Library/[!P]*/*
 --exclude=Library/PackageCache/com.unity.[!r]*/*
 --exclude=.git
@@ -58,10 +56,15 @@
 --exclude=tags
 --exclude=cscope.\*
 --exclude=\*.tar.\*
---exclude=vscode
+--exclude=.vscode
 --exclude=cache/*
 --exclude=venv
+--exclude=build
+--exclude=*cmake-build*/*
+--exclude=.idea
+--exclude=compile_commands.json
+--exclude=vcpkg.json
+--exclude=.md
 --sort=no
-
 #support unity & UE
 --langmap=c:+.cginc,c:+.shader,c:+.hlsl,c:+.usf,c:+.ush,c:+.hlsli

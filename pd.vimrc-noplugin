@@ -77,6 +77,8 @@ augroup END
 set dictionary+=$HOME/.vim/dict/american-english
 let g:mucomplete#chains = {
 	    \ 'default' : ['path', 'omni', 'keyn', 'uspl'],
+	    \ 'glsl' : ['path', 'omni', 'keyn', 'uspl', 'tags'],
+	    \ 'hlsl' : ['path', 'omni', 'keyn', 'uspl', 'tags'],
 	    \ 'vim'     : ['path', 'cmd', 'keyn']
 	    \ }
 
